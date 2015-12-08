@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style type="text/css">
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<#include "/user/header.html" />
+<div class="container-fluid">
+    <div class="row-fluid" style="width:1000px;margin:0px auto">
+        <#include "/user/left.html" />
+        <div class="span9">
+            <form class="form-horizontal" id="invoiceForm" method="post">
+                <div class="control-group">
+                    <label class="control-label" for="name"><@spring.message "module.meipai"/></label>
+                    <div class="controls">
+                        <input type="text" name="booth" id="booth" value="${booth!''}" disabled="disabled" style="width: 80px;">&nbsp;
+                        <input type="text" name="name" id="name" placeholder="<@spring.message "module.meipai"/>" style="width: 144px;">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="name"><@spring.message "module.meipai_en"/></label>
+                    <div class="controls">
+                        <input type="text" name="ename" id="ename" placeholder="<@spring.message "module.meipai_en"/>">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="button" id="sub" class="btn"><@spring.message "info.insert.exhibition.save"/></button>
+                    </div>
+                </div>
+            </form>
+            <div class="alert alert-block">
+                <h4>备注!</h4>
+                展位为标准展位的企业，组委会将根据您提交的楣牌信息统一制作楣牌。特装企业无需提交。
+            </div>
+        </div>
+        <!--/span-->
+    </div>
+    <!--/row-->
+</div>
+<#include "/footer.html" />
+<!--/.container-->
+<script src="${resource}/bootstrap/b2/js/bootstrap.js"></script>
+<script>
+    (function ($) {
+        $.fn.serializeJson = function () {
+            var serializeObj = {};
+            var array = this.serializeArray();
+            var str = this.serialize();
+            $(array).each(function () {
+                if (serializeObj[this.name]) {
+                    if ($.isArray(serializeObj[this.name])) {
+                        serializeObj[this.name].push(this.value);
+                    } else {
+                        serializeObj[this.name] = [serializeObj[this.name], this.value];
+                    }
+                } else {
+                    serializeObj[this.name] = this.value;
+                }
+            });
+            return serializeObj;
+        };
+    })(jQuery);
+    $(document).ready(function () {
+        $("#leftMeipai").parent().parent().parent().parent().prev().addClass("left_current");
+        $("#leftMeipai").addClass("active");
+        $("#leftMeipai").parent().parent().parent().parent().show();
+        $("#sub").click(function () {
+            var parameters = $("#invoiceForm").serializeJson();
+            <#if rc.locale=="zh_CN">
+            if(parameters.name==''){
+                alert(words.meipaiCNameRequired);
+                return
+            }
+            <#else>
+            if(parameters.ename==''){
+                alert(words.meipaiENameRequired);
+                return
+            }
+            </#if>
+            $("#invoiceForm").submit();
+        });
+    });
+</script>
+</body>
+</html>

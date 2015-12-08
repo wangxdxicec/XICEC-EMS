@@ -1,0 +1,173 @@
+<style type="text/css">
+    .left_nav .bt {
+        cursor: pointer;
+        height: 35px;
+        font-size: 14px;
+        border-top: #eeeeee solid 1px;
+    }
+
+    .left_current {
+        background-color: #8bc015;
+        height: 35px;
+        color: #ffffff;
+    }
+
+    .point{
+        width: 13px;
+        height: 10px;
+        background-image:url("${resource}/images/tea_index_21.gif");
+    }
+
+    .left_current .point{
+        width: 13px;
+        height: 10px;
+        background-image:url("${resource}/images/tea_index_15.gif");
+    }
+
+    .list table td {
+        font-size: 14px;
+        padding-left: 20px;
+        height: 35px;
+        cursor: pointer;
+    }
+
+    #nav .list {
+        display: none;
+    }
+
+    .list .active{
+        background-color: #f8f6f2;
+    }
+
+    .list .active a,.list .active a:hover,.list .active a:visited{
+        color: #eb8300;
+    }
+
+    .list .hover{
+        background-color: #f8f6f2;
+    }
+
+    .list .hover a,.list .hover a:hover,.list .hover a:visited{
+        color: #eb8300;
+    }
+
+    .list a{
+        color: #888888;
+    }
+
+    body {
+        padding-top: 0px;
+    }
+</style>
+<div class="left_nav" style="width: 234px; min-height: 179px;float: left;background-color: #ffffff;color: #666666;font-size: 14px;">
+    <table id="nav" style="width: 100%">
+        <tr class="bt">
+            <td style="padding-left: 20px">
+                <@spring.message "left.exhibitor"/>
+            </td>
+            <td style="width: 35px">
+                <div class="point"></div>
+            </td>
+        </tr>
+        <tr class="list">
+            <td colspan="2" style="padding: 0px">
+                <table style="width: 100%">
+                    <tr id="leftInfo">
+                        <td><a href="${base}/user/info"><@spring.message "left.exhibitor.info"/></a></td>
+                    </tr>
+                    <tr id="leftJoiner">
+                        <td><a href="${base}/user/queryJoiners.html" class=""><@spring.message
+                            "left.exhibitor.joiners"/></a></td>
+                    </tr>
+                    <tr id="leftContact">
+                        <td><a href="${base}/user/contact/index.html" class=""><@spring.message
+                            "left.exhibitor.contacts"/></a></td>
+                    </tr>
+                    <tr id="leftInvoice">
+                        <td><a href="${base}/user/invoice/index.html" class=""><@spring.message
+                            "module.invoice"/></a></td>
+                    </tr>
+                    <tr id="leftMeipai">
+                        <td><a href="${base}/user/addMeipai" class=""><@spring.message "left.meipai"/></a></td>
+                    </tr>
+                    <tr id="leftWixin">
+                        <td><a href="${base}/user/weixin/index" class="">微信分享</a></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr class="bt">
+            <td style="padding-left: 20px">
+                <@spring.message "left.products"/>
+            </td>
+            <td style="width: 35px">
+                <div class="point"></div>
+            </td>
+        </tr>
+        <tr class="list">
+            <td colspan="2" style="padding: 0px">
+                <table style="width: 100%">
+                    <tr id="leftAddProduct">
+                        <td><a href="${base}/user/addProduct" class=""><@spring.message
+                            "left.products.add"/></a></td>
+                    </tr>
+                    <tr id="leftProducts">
+                        <td><a href="${base}/user/products" class=""><@spring.message
+                            "left.products.maintain"/></a></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr class="bt">
+            <td style="padding-left: 20px">
+                <@spring.message "left.account"/>
+            </td>
+            <td style="width: 35px">
+                <div class="point"></div>
+            </td>
+        </tr>
+        <tr class="list">
+            <td colspan="2" style="padding: 0px">
+                <table style="width: 100%">
+                    <tr id="leftModifyPassword">
+                        <td><a href="${base}/user/password" class=""><@spring.message
+                            "left.account.modifyPassword"/></a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="${base}/logout.html" class=""><@spring.message "left.account.quit"/></a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#index").addClass("active");
+        $(".bt").click(function () {
+            $(".left_current").removeClass("left_current");
+            $(this).addClass("left_current");
+            $(".list").hide();
+            $(this).next().show();
+        })
+        $(".list").find("tr").mouseover(function(){
+            $(this).addClass("hover");
+        })
+        $(".list").find("tr").mouseout(function(){
+            $(".list").find("tr").removeClass("hover");
+        })
+        $(".bt").mouseover(function(){
+            $(this).addClass("left_current");
+        });
+        $(".bt").mouseout(function(){
+            if($(this).next().is(":hidden")){
+                $(this).removeClass("left_current");
+            }
+        });
+        $(".list").find("tr").click(function(){
+            window.location.href = $(this).find("a").attr("href");
+        })
+    })
+</script>

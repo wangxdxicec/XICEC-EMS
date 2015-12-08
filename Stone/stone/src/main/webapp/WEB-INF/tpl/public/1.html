@@ -1,0 +1,469 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>
+        ${site.name}
+    </title>
+    <link rel="stylesheet" type="text/css" href="/${res}/css/14fzhc_style.css" />
+</head>
+<style type="text/css">
+    .con3_r a{
+        color: #d8ff00;
+    }
+</style>
+<style type="text/css">
+    .banner{ width:100%; height:310px; overflow:hidden; padding:0; margin-top:0; position:relative; clear:both;}
+    .banCtr,.banCtr .banCtrNext,.banCtr .banCtrPrev,.banCtr .banPager a{ cursor:pointer;}
+    .banCtr .banCtrNext,.banCtr .banCtrPrev{ width:40px; height:40px; position:absolute;top:50%; z-index:10; margin-top:-12px;background-color:#000000;filter:alpha(opacity=30);opacity: 0.3;-moz-opacity:0.3;}
+    .banCtr .banCtrLevel2{ background-color:#000000;filter:alpha(opacity=50);opacity: 0.5;-moz-opacity:0.5; }
+    .banCtr .banCtrNext a,.banCtr .banCtrPrev a{ background-image:url(/${res}/images/banCtr_bg.png); background-repeat:no-repeat; width:15px; height:23px; margin:8px 0 0 12px; display:block;}
+    .banCtr .banCtrNext {right:15px; display:block;}
+    .banCtr .banCtrNext a{ background-position:0 0;}
+    .banCtr .banCtrPrev {left:15px; display:block;}
+    .banCtr .banCtrPrev a{ background-position:0 -25px;}
+    .banCtr .banPager{height:13px; overflow:hidden;background-color:#FFFFFF;filter:alpha(opacity=30);opacity: 0.3;-moz-opacity:0.3; border-radius:10px; position:absolute; bottom:29px; left:50%; margin-left:-32px; z-index:10; }
+    .banCtr .banPager a{ width:9px; height:0; padding-top:9px; margin:2px; overflow:hidden;border-radius:50%; display:inline-block; float:left; background:#b7b7b7; }
+    .banCtr .banPager a.activeSlide{ background:#FF4400;}
+</style>
+<body>
+[#include "../include/header.html"/]
+<div class="con_t">
+</div>
+<div class="con">
+    <div class="con1">
+        <!--首页图片滚动-->
+        <div class="con1_l">
+            <script src="/${res}/js/jQuery.js"></script>
+            <script src="/${res}/js/jquery.cycle.all.js"></script>
+            <div id="indexBan" class="banner">
+                <div class="banBox">
+                    <div class="banItem"><img class="picItem" style="width:615px;height:310px;" src="/${res}/images/14fzhc_ban.jpg"/></div>
+                    <div class="banItem"><img class="picItem" style="width:615px;height:310px;" src="/${res}/images/14fzhc_ban.jpg"/></div>
+                    <div class="banItem"><img class="picItem" style="width:615px;height:310px;" src="/${res}/images/14fzhc_ban.jpg"/></div>
+                </div>
+                <div class="banCtr">
+                    <div class="banCtrPrev"><a href=""></a></div>
+                    <div class="banPager"></div>
+                    <div class="banCtrNext"><a href=""></a></div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    if ($("#indexBan").length > 0) {
+                        $("#indexBan .banBox").cycle({
+                            pause: 1,
+                            timeout: 2000,
+                            speed: 1000,
+                            next: ".banCtrNext",
+                            prev: ".banCtrPrev",
+                            pager: ".banPager"
+                        });
+
+                        $("#indexBan").hover(function () {
+                            $("#indexBan .banCtrPrev,#indexBan .banCtrNext").stop(true, false).show();
+                        }, function () {
+                            $("#indexBan .banCtrPrev,#indexBan .banCtrNext").stop(true, false).hide();
+                        });
+
+                        $("#indexBan .banCtrPrev,#indexBan .banCtrNext").hover(function () {
+                            _this = $(this);
+                            _this.addClass("banCtrLevel2");
+                        }, function () {
+                            _this.removeClass("banCtrLevel2");
+                        });
+                    }
+                });
+            </script>
+        </div>
+        <div class="con1_r">
+            <div class="tit1 twhite1">
+                <span><a href="/pfdt/index.jhtml">更多>></a></span>
+                依法治区
+            </div>
+            [@cms_content_list channelId="131" count='1' dateFormat='M.dd' titLen='15' orderBy='9' channelOption='1']
+            [#list tag_list as a]
+            <div class="con3">
+                <div class="con3_l">
+                    <img src="/${res}/images/14fzhc_tu1.jpg"/>
+                </div>
+                <div class="con3_r">
+                    <h3>
+                        <a href="${a.url}" target="_blank">[@text_cut s=a.title len=titLen append=append /]</a>
+                    </h3>
+                    [@text_cut s=a.description len=40 append=append /]
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            [/#list]
+            [/@cms_content_list]
+            <div class="list twhite1" style="height:120px">
+                <ul>
+                    [@cms_content_list channelId="131" count='5' dateFormat='M.dd' titLen='20' orderBy='9'
+                    channelOption='1']
+                    [#list tag_list as a]
+                    <li>
+                                <span>
+                                    ${a.date?string(dateFormat)}
+                                </span>
+                        · <a href="${a.url}">[@text_cut s=a.title len=titLen append=append /]</a>
+                    </li>
+                    [/#list]
+                    [/@cms_content_list]
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="box">
+                通知公告：
+                [@cms_content_list channelId="140" count='1' dateFormat='M.dd' titLen='15' orderBy='9'
+                channelOption='1']
+                [#if tag_list?size>0]
+                [#list tag_list as a]
+                <a href="${a.url}">[@text_cut s=a.title len=titLen append=append /]</a>
+                [/#list]
+                [#else]
+                暂无公告
+                [/#if]
+                [/@cms_content_list]
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div class="con_b">
+</div>
+<div class="con2_t">
+</div>
+<div class="con2">
+    <div class="con4">
+        <div class="con4_l">
+            <div class="tu">
+                <img src="/${res}/images/14fzhc_tu2.jpg"/>
+            </div>
+            <div class="tit2 twhite1">
+                <ul>
+                    <li class="bar" name="c1" to="cview1">
+                        工作指导
+                    </li>
+                    <li name="c1" to="cview2">
+                        普法动态
+                    </li>
+                    <li name="c1" to="cview3">
+                        经验交流
+                    </li>
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="list1" style="height:192px" name="cview" id="cview1">
+                <ul>
+                    [@cms_content_list channelId="132" count='8' titLen='20' orderBy='9' channelOption='1']
+                    [#list tag_list as a]
+                    <li>
+                        · <a href="${a.url}">[@text_cut s=a.title len=titLen append=append /]</a>
+                    </li>
+                    [/#list]
+                    [/@cms_content_list]
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="list1" style="height:192px;display:none" name="cview" id="cview2">
+                <ul>
+                    [@cms_content_list channelId="133" count='8' titLen='20' orderBy='9' channelOption='1']
+                    [#list tag_list as a]
+                    <li>
+                        · <a href="${a.url}">[@text_cut s=a.title len=titLen append=append /]</a>
+                    </li>
+                    [/#list]
+                    [/@cms_content_list]
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="list1" style="height:192px;display:none" name="cview" id="cview3">
+                <ul>
+                    [@cms_content_list channelId="134" count='8' titLen='20' orderBy='9' channelOption='1']
+                    [#list tag_list as a]
+                    <li>
+                        · <a href="${a.url}">[@text_cut s=a.title len=titLen append=append /]</a>
+                    </li>
+                    [/#list]
+                    [/@cms_content_list]
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+            <br/>
+            <div class="tu">
+                <img src="/${res}/images/14fzhc_tu2.jpg"/>
+            </div>
+            <div class="tit4 twhite1">
+                <ul>
+                    <li class="bar3" name="c3" to="cviewa">
+                        专题一
+                    </li>
+                    <li name="c3" to="cviewb">
+                        专题二
+                    </li>
+                    <li name="c3" to="cviewc">
+                        专题三
+                    </li>
+                    <li name="c3" to="cviewd">
+                        专题四
+                    </li>
+                    <li name="c3" to="cviewe">
+                        专题五
+                    </li>
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="list1" style="height:192px" name="cccview" id="cviewa">
+                <ul>
+                    [@cms_content_list channelId="132" count='8' titLen='20' orderBy='9' channelOption='1']
+                    [#list tag_list as a]
+                    <li>
+                        · <a href="${a.url}">[@text_cut s=a.title len=titLen append=append /]</a>
+                    </li>
+                    [/#list]
+                    [/@cms_content_list]
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="list1" style="height:192px;display:none" name="cccview" id="cviewb">
+                <ul>
+                    [@cms_content_list channelId="133" count='8' titLen='20' orderBy='9' channelOption='1']
+                    [#list tag_list as a]
+                    <li>
+                        · <a href="${a.url}">[@text_cut s=a.title len=titLen append=append /]</a>
+                    </li>
+                    [/#list]
+                    [/@cms_content_list]
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="list1" style="height:192px;display:none" name="cccview" id="cviewc">
+                <ul>
+                    [@cms_content_list channelId="134" count='8' titLen='20' orderBy='9' channelOption='1']
+                    [#list tag_list as a]
+                    <li>
+                        · <a href="${a.url}">[@text_cut s=a.title len=titLen append=append /]</a>
+                    </li>
+                    [/#list]
+                    [/@cms_content_list]
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="list1" style="height:192px;display:none" name="cccview" id="cviewd">
+                <ul>
+                    [@cms_content_list channelId="136" count='8' titLen='20' orderBy='9' channelOption='1']
+                    [#list tag_list as a]
+                    <li>
+                        · <a href="${a.url}">[@text_cut s=a.title len=titLen append=append /]</a>
+                    </li>
+                    [/#list]
+                    [/@cms_content_list]
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="list1" style="height:192px;display:none" name="cccview" id="cviewe">
+                <ul>
+                    [@cms_content_list channelId="137" count='8' titLen='20' orderBy='9' channelOption='1']
+                    [#list tag_list as a]
+                    <li>
+                        · <a href="${a.url}">[@text_cut s=a.title len=titLen append=append /]</a>
+                    </li>
+                    [/#list]
+                    [/@cms_content_list]
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="con4_l">
+            <div class="tu">
+                <img src="/${res}/images/14fzhc_tu3.jpg"/>
+            </div>
+            <div class="tit2 twhite1">
+                <ul>
+                    <li class="bar1" name="c2" to="ccview1">
+                        以案说法
+                    </li>
+                    <li name="c2" to="ccview2">
+                        理论探讨
+                    </li>
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="list1" style="height:192px" name="ccview" id="ccview1">
+                <ul>
+                    [@cms_content_list channelId="136" count='8' titLen='20' orderBy='9' channelOption='1']
+                    [#list tag_list as a]
+                    <li>
+                        · <a href="${a.url}">[@text_cut s=a.title len=titLen append=append /]</a>
+                    </li>
+                    [/#list]
+                    [/@cms_content_list]
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="list1" style="height:192px;display:none" name="ccview" id="ccview2">
+                <ul>
+                    [@cms_content_list channelId="137" count='8' titLen='20' orderBy='9' channelOption='1']
+                    [#list tag_list as a]
+                    <li>
+                        · <a href="${a.url}">[@text_cut s=a.title len=titLen append=append /]</a>
+                    </li>
+                    [/#list]
+                    [/@cms_content_list]
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="con4_r">
+            <div class="tit3">
+                <div class="tit3_l twhite1">
+                    新法速递
+                </div>
+                <div class="tit3_r">
+                    <a href="/xfsd/index.jhtml">更多>></a>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="list1 mar_to" style="height:120px">
+                <ul>
+                    [@cms_content_list channelId="138" count='5' titLen='20' orderBy='9' channelOption='1']
+                    [#list tag_list as a]
+                    <li>
+                        · <a href="${a.url}">[@text_cut s=a.title len=titLen append=append /]</a>
+                    </li>
+                    [/#list]
+                    [/@cms_content_list]
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="line"></div>
+            <div class="tit3 mar_t10">
+                <div class="tit3_l twhite1">
+                    青礁漫笔
+                </div>
+                <div class="tit3_r">
+                    <a href="/qjmb/index.jhtml">更多>></a>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="list2 mar_to" style="height:120px">
+                <ul>
+                    [@cms_content_list channelId="139" count='5' titLen='8' orderBy='9' channelOption='1']
+                    [#list tag_list as a]
+                    <li>
+                        · <a href="${a.url}">[@text_cut s=a.title len=titLen append=append /]</a>
+                    </li>
+                    [/#list]
+                    [/@cms_content_list]
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="line"></div>
+            <div class="tit3">
+                <div class="tit3_l twhite1">
+                    领导最新动态
+                </div>
+                <div class="tit3_r">
+                    <a href="/ldzxdt/index.jhtml">更多>></a>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="list1 mar_to" style="height:120px">
+                <ul>
+                    [@cms_content_list channelId="154" count='5' titLen='20' orderBy='9' channelOption='1']
+                    [#list tag_list as a]
+                    <li>
+                        · <a href="${a.url}">[@text_cut s=a.title len=titLen append=append /]</a>
+                    </li>
+                    [/#list]
+                    [/@cms_content_list]
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="line"></div>
+            <div class="tit3">
+                <div class="tit3_l twhite1">
+                    新闻分栏
+                </div>
+                <div class="tit3_r">
+                    <a href="/xwfl/index.jhtml">更多>></a>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="list1 mar_to" style="height:120px">
+                <ul>
+                    [@cms_content_list channelId="155" count='5' titLen='20' orderBy='9' channelOption='1']
+                    [#list tag_list as a]
+                    <li>
+                        · <a href="${a.url}">[@text_cut s=a.title len=titLen append=append /]</a>
+                    </li>
+                    [/#list]
+                    [/@cms_content_list]
+                </ul>
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="con2_b">
+</div>
+<div class="con_b1">
+</div>
+[#include "../include/footer.html"/]
+<a style="ZOOM: 1" id="J_ScrollTopBtn" class="ui-scrolltop" title="返回顶部"
+   data-spm-anchor-id="3.1000473.0.317" __ks_data_1373428803890="216">
+    返回顶部
+</a>
+<!--[if IE 6]>
+<script type="text/javascript" src="/${res}/js/iepng.js" />
+<![endif]-->
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("[name='c1']").hover(function(){
+            $("[name='c1']").removeClass("bar");
+            $(this).addClass("bar");
+            $("[name='cview']").hide();
+            $("#"+$(this).attr("to")).show();
+        });
+        $("[name='c2']").hover(function(){
+            $("[name='c2']").removeClass("bar1");
+            $(this).addClass("bar1");
+            $("[name='ccview']").hide();
+            $("#"+$(this).attr("to")).show();
+        });
+        $("[name='c3']").hover(function(){
+            $("[name='c3']").removeClass("bar3");
+            $(this).addClass("bar3");
+            $("[name='cccview']").hide();
+            $("#"+$(this).attr("to")).show();
+        })
+    })
+</script>
+</body>
+</html>

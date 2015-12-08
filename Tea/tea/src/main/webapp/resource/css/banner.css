@@ -1,0 +1,96 @@
+/*---topBanner 开始---*/
+#topBanner{ height:120px;margin:10px 0 0 0px;}
+#topBanner .logo{ width:226px;  height:100%;float:left; margin:0px; padding:0;}
+#topBanner .title{width:520px; height:100%; float:left; clear:right; margin-left:4px;}
+/*#topBanner .countDown{ float:left; width:250px;height:100%; padding:0; background:url(../Images/index_countdown_bg_cn.jpg) center no-repeat;}
+#topBanner .countDown .countDownNum{ font-size:20px; font-weight:bold; font-style:normal; float:none; height:auto; line-height:normal; line-height:28px; color:#EB8300; text-align:left; margin-top:68px; padding:0 0 0 80px;}
+#topBanner .countDown .countDownNum .d{color:#497616; font-size:32px; font-weight:bold;}
+#topBanner .countDown .countDownNum .unit{ font-style:normal; font-size:24px;color:#EB8300;}*/
+/*---topMenu 开始---*/
+#topMenu { float:left; width:100%; margin:10px 0 0 0px;}
+/*主导航菜单*/
+#topMenu .menuOut{
+    width:996px;
+    padding:0 0 0 4px;
+    margin-left:0 auto;
+    background:url(../images/menu_left.gif) no-repeat left top;
+}
+#topMenu .menuIn{
+    background:url(../images/menu_right.gif) no-repeat right top;
+    padding-right:4px;
+}
+#topMenu .menuBg{
+    background:url(../images/menu_bg.gif) repeat-x;
+    height:73px;
+}
+#topMenu .menuBg ul{
+    padding:0;
+    border:0;
+    list-style:none;
+    line-height:150%;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 15px;
+}
+#topMenu .menuMain{ float:left}
+
+
+#topMenu .mainLine{
+    float:left;
+    background:url(../images/menu_line.gif) no-repeat center top;
+    width:2px;
+    height:35px;
+}
+#topMenu .mainLine2{
+    background:url(../images/menu_line2.gif) no-repeat center top;
+    width:15px;
+}
+#topMenu .mainBox{
+    padding-left:20px;
+    float:left;
+    position:relative;
+    clear:right;
+}
+#topMenu .mainItem{
+    float:left;
+    height:35px;
+}
+#topMenu .mainItem a{
+    float:left;
+    display:block;
+    padding-left:6px;
+    height:35px;
+    background:url(../images/menu_on_left.gif) no-repeat left top;
+    cursor:pointer;
+    text-decoration:none;
+}
+#topMenu .mainItem a span{
+    float:left;
+    padding:11px 14px 10px 10px;
+    line-height:14px;
+    background:url(../images/menu_on_right.gif) no-repeat right top;
+    font-size:14px;
+    font-weight:bold;
+    color:#FFFFFF;
+    text-decoration:none;
+}
+#topMenu .mainItemOn a{   /*鼠标经过时变换背景，方便JS获取样式*/
+    background-position:left 100%;
+}
+#topMenu .mainItemOn a span{  /*鼠标经过时变换背景，方便JS获取样式*/
+    background-position:right 100%;
+    color:#333333;
+    text-decoration:none;
+    padding:14px 14px 7px 10px;
+}
+/***子栏目***/
+#topMenu .menuSub{text-align:left;clear:both;height:30px;margin-left:15px;position:relative;}
+#topMenu .menuSub div{ position:absolute;}
+#topMenu .menuSub ul{ float:left; margin:0;}
+#topMenu .menuSub li{float:left;height:22px;margin-top:8px;}
+#topMenu .menuSub li a{display:block;float:left;background:url(../images/menu_on_left2.gif) no-repeat left top;cursor:pointer;padding-left:3px;color:#eb8300;}
+#topMenu .menuSub li a span{float:left;padding:6px 10px 4px 10px;line-height:12px;background:url(../images/menu_on_right2.gif) no-repeat right top;}
+#topMenu .menuSub li a:hover{text-decoration:none;background:url(../images/menu_on_left2.gif) no-repeat left bottom;}
+#topMenu .menuSub li a:hover span{background:url(../images/menu_on_right2.gif) no-repeat right bottom;}
+/*---topMenu 结束---*/

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style type="text/css">
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+        h3{
+            margin: 0px 0px;
+        }
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+<body>
+<div style="width: 1024px;margin: 0px auto;">
+    <#if info?exists>
+        <div style="width: 100%">
+            <img src="${base}/user/logoImg?eid=${info.eid}" class="img-rounded" style="width: 100px;height: 100px">
+            <h3>${info.company}</h3>
+            <h3>${info.companyEn}</h3>
+            <h4>地址/Add：${info.address}</h4>
+            <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${info.addressEn}</h4>
+            <h4>电话/Tel：${info.phone}</h4>
+            <h4>传真/Fax：${info.fax}</h4>
+            <h4>网址/website：${info.website}</h4>
+            <h4>电子邮箱/E-mail：${info.email}</h4>
+            <hr>
+            <h4>主营产品/Special Products：</h4>
+            <h4>${info.mainProduct}</h4>
+            <h4>${info.mainProductEn}</h4>
+        </div>
+    <#else>
+        <div style="width: 100%">
+            <h2>未填写展商信息</h2>
+            <button class="btn btn-large btn-primary" type="button">点击添加</button>
+        </div>
+    </#if>
+</div>
+</body>
+<script src="${resource}/bootstrap/b2/js/bootstrap.js"></script>
+</html>

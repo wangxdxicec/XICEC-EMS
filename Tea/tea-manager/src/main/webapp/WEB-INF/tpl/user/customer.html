@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>金泓信展商管理后台</title>
+    <link rel="stylesheet" type="text/css" href="${base}/resource/easyui/themes/metro-blue/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${base}/resource/easyui/themes/icon.css">
+    <script type="text/javascript" src="${base}/resource/jquery.min.js"></script>
+    <script type="text/javascript" src="${base}/resource/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${base}/resource/common.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        input {
+            width: 200px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+<!-- 客商列表 -->
+<table id="customers" data-options="url:'${base}/user/queryCustomersByPage',
+         						   loadMsg: '数据加载中......',
+						           singleSelect:false,	//只能当行选择：关闭
+						           fit:true,
+						           fitColumns:true,
+								   toolbar:'#customerbar',
+						           rownumbers: 'true',
+						           pagination:'true',
+						           pageSize:'20'">
+	<thead>
+		<tr>
+			<th data-options="field:'ck',checkbox:true"></th>
+			<th data-options="field: 'firstName', width: $(this).width() / 14">
+				姓名<br/>
+				<input id="customerFirstName" style="width:100%;height:15px;" type="text" onkeyup="filter();"/>
+			</th>
+			<th data-options="field: 'sex', width: $(this).width() / 14">
+				性别<br/>
+				<input id="customerSex" style="width:100%;height:15px;" type="text" onkeyup="filter();"/>
+			</th>
+			<th data-options="field: 'company', width: $(this).width() / 14">
+				公司名称<br/>
+				<input id="customerCompany" style="width:100%;height:15px;" type="text" onkeyup="filter();"/>
+			</th>
+			<th data-options="field: 'position', width: $(this).width() / 14">
+				职位/部门<br/>
+				<input id="customerPosition" style="width:100%;height:15px;" type="text" onkeyup="filter();"/>
+			</th>
+			<th data-options="field: 'country', width: $(this).width() / 14">
+				国家<br/>
+				<input id="customerCountry" style="width:100%;height:15px;" type="text" onkeyup="filter();"/>
+			</th>
+			<th data-options="field: 'city', width: $(this).width() / 14">
+				城市<br/>
+				<input id="customerCity" style="width:100%;height:15px;" type="text" onkeyup="filter();"/>
+			</th>
+			<th data-options="field: 'address', width: $(this).width() / 14">
+				地址<br/>
+				<input id="customerAddress" style="width:100%;height:15px;" type="text" onkeyup="filter();"/>
+			</th>
+			<th data-options="field: 'mobilePhone', width: $(this).width() / 14">
+				手机<br/>
+				<input id="customerMobilePhone" style="width:100%;height:15px;" type="text" onkeyup="filter();"/>
+			</th>
+			<th data-options="field: 'telephone', width: $(this).width() / 14">
+				电话<br/>
+				<input id="customerTelephone" style="width:100%;height:15px;" type="text" onkeyup="filter();"/>
+			</th>
+			<th data-options="field: 'email', width: $(this).width() / 14">
+				邮箱<br/>
+				<input id="customerEmail" style="width:100%;height:15px;" type="text" onkeyup="filter();"/>
+			</th>
+			<th data-options="field: 'backupEmail', width: $(this).width() / 14">
+				备用邮箱<br/>
+				<input id="customerBackupEmail" style="width:100%;height:15px;" type="text" onkeyup="filter();"/>
+			</th>
+			<th data-options="field: 'fax', width: $(this).width() / 14">
+				传真<br/>
+				<input id="customerFax" style="width:100%;height:15px;" type="text" onkeyup="filter();"/>
+			</th>
+			<th data-options="field: 'website', width: $(this).width() / 14">
+				网址<br/>
+				<input id="customerWebsite" style="width:100%;height:15px;" type="text" onkeyup="filter();"/>
+			</th>
+			<th data-options="field: 'remark', width: $(this).width() / 14">
+				备注<br/>
+				<input id="customerRemark" style="width:100%;height:15px;" type="text" onkeyup="filter();"/>
+			</th>
+		</tr>
+	</thead>
+</table>
+<!-- 工具栏 -->
+<div id="customerbar">
+    <div>
+        <div id="addCustomer" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加客商</div>
+        <div id="deleteCustomers" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除客商</div>
+    </div>
+</div>
+
+<script>
+	var checkedItems = [];
+
+//----------------------------------------------------工具栏函数开始--------------------------------------------------------//
+
+//----------------------------------------------------工具栏函数结束--------------------------------------------------------//
+//----------------------------------------------------自定义函数开始--------------------------------------------------------//
+	function filter(){
+		var filterParm = "?";
+		if(document.getElementById("articleTitle").value != ""){
+			filterParm += '&title=' + document.getElementById("articleTitle").value;
+		}
+		if(document.getElementById("articleAbstract").value != ""){
+			filterParm += '&digest=' + document.getElementById("articleAbstract").value;
+		}
+		if(document.getElementById("articleContent").value != ""){
+			filterParm += '&content=' + document.getElementById("articleContent").value;
+		}
+		if(document.getElementById("articleTitleEn").value != ""){
+			filterParm += '&titleEn=' + document.getElementById("articleTitleEn").value;
+		}
+		if(document.getElementById("articleAbstractEn").value != ""){
+			filterParm += '&digestEn=' + document.getElementById("articleAbstractEn").value;
+		}
+		if(document.getElementById("articleContentEn").value != ""){
+			filterParm += '&contentEn=' + document.getElementById("articleContentEn").value;
+		}
+		$('#articles').datagrid('options').url = '${base}/user/queryArticlesByPage' + filterParm;
+	    $('#articles').datagrid('reload'); 
+	}
+//----------------------------------------------------自定义函数结束--------------------------------------------------------//
+
+    $(document).ready(function () {
+    	// 文章列表渲染
+        $('#customers').datagrid({
+       		onSelect:function (rowIndex, rowData){
+	        	var row = $('#customers').datagrid('getSelections');
+				for (var i = 0; i < row.length; i++) {
+					if (findCheckedItem(row[i].id) == -1) {
+						checkedItems.push(row[i].id);
+					}
+				}
+// 					alert(checkedItems);
+	        },
+	        onUnselect:function (rowIndex, rowData){
+				var k = findCheckedItem(rowData.id);
+				if (k != -1) {
+					checkedItems.splice(k, 1);
+				}
+// 					alert(checkedItems);
+	        },
+	        onSelectAll:function (rows){
+	        	for (var i = 0; i < rows.length; i++) {
+	        		var k = findCheckedItem(rows[i].id);
+					if (k == -1) {
+						checkedItems.push(rows[i].id);
+					}
+				}
+// 					alert(checkedItems);
+	        },
+	        onUnselectAll:function (rows){
+	        	for (var i = 0; i < rows.length; i++) {
+					var k = findCheckedItem(rows[i].id);
+					if (k != -1) {
+						checkedItems.splice(k, 1);
+					}
+				}
+// 					alert(checkedItems);
+	        }
+        }).datagrid('getPager').pagination({  
+            pageSize: 20,//每页显示的记录条数，默认为10  
+            pageList: [10,20,30,40,50],//可以设置每页记录条数的列表  
+            beforePageText: '第',//页数文本框前显示的汉字  
+            afterPageText: '页    共 {pages} 页',  
+            displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
+        });
+        function findCheckedItem(id) {
+			for (var i = 0; i < checkedItems.length; i++) {
+				if (checkedItems[i] == id) return i;
+			}
+			return -1;
+		}
+    });
+</script>
+</body>
+</html>

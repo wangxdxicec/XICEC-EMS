@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<!-- /.navbar -->
+<#include "/user/header.html" />
+<style type="text/css">
+    .module {
+        margin-left: 20px;
+        width: 270px;
+        height: 150px;
+        float: left;
+        cursor: pointer;
+    }
+
+    .module a,.module a:hover,.module a:link {
+        color: #666666;
+    }
+
+    .moduleOn {
+        width: 270px;
+        height: 150px;
+        background-image: url('${resource}/images/tea_index_18.gif');
+        float: left;
+        margin-left: 20px;
+        cursor: pointer;
+    }
+
+    .moduleOn a,.moduleOn a:hover,.moduleOn a:link {
+        color: #ffffff;
+    }
+
+    .line {
+        width: 900px;
+        height: 1px;
+        background-image: url("${resource}/images/line.jpg");
+        margin-bottom: 20px;
+        margin-top: 13px;
+    }
+
+    .zline {
+        margin-left: 9px;
+        background-image: url('${resource}/images/zline.jpg');
+        float: left;
+        height: 150px;
+        width: 1px;
+    }
+
+</style>
+<div style="width: 100%;background-color: #eeeeee;padding-bottom: 40px;">
+    <div style="width: 1150px;margin: 0px auto">
+        <!-- left -->
+        <#include "/user/left.html" />
+        <div style="margin-left: 28px;width: 900px;min-height: 548px;float: right;background-color: #ffffff;padding: 20px 0px;border: #dcdcdc 1px solid">
+            <div>
+                <div class="module" style="position: relative">
+                    <span class="badge badge-important" style="position:absolute;right: 0px">${unReadMessageCount}</span>
+                    <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                        <h4><a href="${base}/user/notice/1"><@spring.message "notification"/></a></h4>
+                        <h6><a href="${base}/user/notice/1"><@spring.message "notification_des"/></a></h6>
+                    </div>
+                </div>
+                <div class="zline"></div>
+                <div class="module">
+                    <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                        <h4><a href="${base}/user/info"><@spring.message "module.exhibitor"/></a></h4>
+                        <h6><a href="${base}/user/info"><@spring.message "module.exhibitor.desc"/></a></h6>
+                    </div>
+                </div>
+                <div class="zline"></div>
+                <div class="module">
+                    <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                        <h4><a href="${base}/user/products.html"><@spring.message "module.product"/></a></h4>
+                        <h6><a href="${base}/user/products.html"><@spring.message "module.product.desc"/></a></h6>
+                    </div>
+                </div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="line"></div>
+            <div>
+                <div class="module">
+                    <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                        <h4><a href="${base}/user/invoice/index.html"><@spring.message "module.invoice"/></a></h4>
+                        <h6><a href="${base}/user/invoice/index.html"><@spring.message "module.invoice.desc"/></a></h6>
+                    </div>
+                </div>
+                <div class="zline"></div>
+                <div class="module">
+                    <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                        <h4><a href="${base}/user/addMeipai"><@spring.message "module.meipai"/></a></h4>
+                        <h6><a href="${base}/user/addMeipai"><@spring.message "module.meipai.desc"/></a></h6>
+                    </div>
+                </div>
+                <div class="zline"></div>
+                <div class="module">
+                    <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                        <h4><a href="${base}/user/queryJoiners.html"><@spring.message "module.joiner"/></a></h4>
+                        <h6><a href="${base}/user/queryJoiners.html"><@spring.message "module.joiner.desc"/></a></h6>
+                    </div>
+                </div>
+
+
+                <div style="clear: both"></div>
+            </div>
+            <div class="line"></div>
+            <div>
+                <div class="module">
+                    <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                        <h4><a href="${base}/user/visa/index.html"><@spring.message "module.visa"/></a></h4>
+                        <h6><a href="${base}/user/visa/index.html"><@spring.message "module.visa.desc"/></a></h6>
+                    </div>
+                </div>
+                <div class="zline"></div>
+                <div class="module">
+                    <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                        <h4><a href="${base}/user/visa/index.html"><@spring.message "module.advise"/></a></h4>
+                        <h6><a href="${base}/user/visa/index.html"><@spring.message "module.advise.desc"/></a></h6>
+                    </div>
+                </div>
+                <div class="zline"></div>
+                <div class="module">
+                    <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                        <h4><a href="${base}/user/password"><@spring.message "module.account"/></a></h4>
+                        <h6><a href="${base}/user/password"><@spring.message "module.account.desc"/></a></h6>
+                    </div>
+                </div>
+                <div style="clear: both"></div>
+            </div>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+</div>
+<#include "/footer.html" />
+<!--/.container-->
+<script src="${resource}/bootstrap/b2/js/bootstrap.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#leftInfo").parent().parent().parent().parent().prev().addClass("left_current");
+        $("#leftInfo").parent().parent().parent().parent().show();
+        $(".module").mouseover(function () {
+            if ($(this).hasClass("module")) {
+                $(".moduleOn").each(function () {
+                    $(this).removeClass("moduleOn").addClass("module");
+                })
+                $(this).removeClass("module").addClass("moduleOn");
+            }
+        });
+    })
+</script>
+</body>
+</html>

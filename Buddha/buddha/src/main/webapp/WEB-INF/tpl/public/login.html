@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <#include "../common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style>
+        #dLabel a {
+            color: #ffffff;
+        }
+
+        body {
+            padding-top: 0px;
+            background-image: url('${resource}/images/body_back.jpg');
+            background-repeat: repeat-x;
+        }
+        .header_link a{
+            margin-right: 20px;
+            color: #61590e;
+        }
+        .header_link a:link{
+            color: #61590e;
+        }
+    </style>
+</head>
+
+<body>
+<div style="height: 217px;width: 100%;background-image: url('${resource}/images/banner_back.jpg');background-repeat: repeat-x">
+    <div style="margin: 0px auto;width: 982px;position: relative">
+        <div class="header_link" style="color:#61590e;position: absolute;right: 0px;top: 5px;">
+            <a href="http://www.buddhafair.com/" target="view_window"><@spring.message "guanwang"/></a>
+        </div>
+        <img src="${resource}/images/banner.jpg">
+        <div style="position: absolute;top: 80px;left: 300px;color: #61590e">
+            <p style="font-size: 24px;font-weight: bold"><@spring.message "site"/></p>
+            <p style="font-size: 14px"><@spring.message "site.desc"/></p>
+        </div>
+        <font style="color:#666666;position: absolute;right: 3px;bottom: 10px;"><@spring.message "banner.time"/></font>
+        <font id="baiwei" style="color:#666666;position: absolute;right: 70px;bottom: 10px;">0</font>
+        <font id="shiwei" style="color:#666666;position: absolute;right: 47px;bottom: 10px;">0</font>
+        <font id="gewei" style="color:#666666;position: absolute;right: 25px;bottom: 10px;">0</font>
+    </div>
+</div>
+<div class="navbar navbar-inverse navbar-fixed-top" style="position: inherit;margin-bottom: 20px">
+</div>
+<script>
+    $(document).ready(function(){
+        var kaishi = new Date("2015-10-15");
+        var now = new Date();
+        var day = ((kaishi.getTime()-now.getTime())/1000/60/60/24);
+        var dayString = Math.ceil(day)+"";
+        var p = 0;
+        if(dayString.length>2){
+            $("#baiwei").text(dayString.charAt(p++))
+        }
+        if(dayString.length>1){
+            $("#shiwei").text(dayString.charAt(p++))
+        }
+        if(dayString.length>0){
+            $("#gewei").text(dayString.charAt(p++))
+        }
+    })
+</script>
+<div class="container">
+    <div style="margin: 0px auto;margin-top: 50px;width: 400px">
+        <form role="form" class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label" for="username"><@spring.message "login.username"/></label>
+
+                <div class="controls">
+                    <input type="text" class="form-control" id="username" placeholder='<@spring.message "login.username"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="password"><@spring.message "login.password"/></label>
+
+                <div class="controls">
+                    <input type="password" class="form-control" id="password" placeholder='<@spring.message "login.password"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="button" id="loginButton" class="btn btn-lg btn-danger"><@spring.message "login.login"/></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--[if lt IE 8]>
+    <div style="margin: 0px auto;margin-top: 10px;width: 400px">
+        <@spring.message "login.browser"/>
+    </div>
+    <![endif]-->
+</div>
+
+<hr>
+<#include "/footer.html" />
+
+<script>
+    $(document).ready(function () {
+        $("[name='language']").click(function(){
+             window.location.href = "${base}/?locale="+$(this).attr("id");
+        });
+        if(window.location.href.indexOf("=le")!=-1){
+            $("#le").attr("checked","checked");
+        }else{
+            $("#lc").attr("checked","checked");
+        }
+        $("#loginButton").click(function () {
+            if($("#username").val()==''||$("#password").val()==''){
+                alert("用户名或密码不能为空");
+                return;
+            }
+            $(this).addClass("disabled");
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: $.toJSON({"username": $("#username").val(), "password": $("#password").val()}),
+                url: "${base}/login",
+                success: function (result) {
+                    $("#loginButton").removeClass("disabled");
+                    if (result.resultCode == 1) {
+                        alert("用户密码错误。")
+                    } else if (result.resultCode > 1) {
+                        alert("服务器错误")
+                    } else {
+                        window.location.href = "${base}/user/main.html"
+                    }
+                    $(this).removeClass("disabled");
+                },
+                dataType: "json"
+            });
+        });
+    })
+</script>
+<script src="${resource}/bootstrap/b2/js/bootstrap.js"></script>
+</body>
+</html>

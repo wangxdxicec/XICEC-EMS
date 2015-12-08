@@ -1,0 +1,135 @@
+<style>
+    .leftNav {
+        height: 36px;
+        padding-left: 20px;
+        font-size: 16px;
+        line-height: 36px;
+        position: relative;
+        border-bottom: 1px #dfdfdf solid;
+        color: #888888;
+        cursor: pointer;
+    }
+
+    .leftNav i {
+        height: 13px;
+        width: 13px;
+        position: absolute;
+        right: 28px;
+        bottom: 10px;
+        background-image: url("${resource}/images/nav3.jpg");
+    }
+
+    .hover {
+        background-color: #f1b426;
+        color: #ffffff;
+    }
+
+    .lcurrent {
+        background-color: #f1b426;
+        color: #ffffff;
+    }
+
+    .leftNav a,.leftNav a:visited,.leftNav a:hover{
+        color: #888888;
+        text-decoration: none;
+    }
+
+    .hover a,.hover a:visited,.hover a:hover{
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .lcurrent a,.lcurrent a:visited,.lcurrent a:hover{
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .hover i {
+        height: 13px;
+        width: 13px;
+        position: absolute;
+        right: 28px;
+        bottom: 10px;
+        background-image: url("${resource}/images/nav2.jpg");
+    }
+
+    .lcurrent i {
+        height: 13px;
+        width: 13px;
+        position: absolute;
+        right: 28px;
+        bottom: 10px;
+        background-image: url("${resource}/images/nav2.jpg");
+    }
+</style>
+<div style="float: left;width: 234px;min-height: 200px;background-color: #ffffff">
+    <div id="leftExhibitor" class="leftNav">
+        <a href="${base}/user/info.html"><@spring.message "module.exhibitor"/></a>
+        <i></i>
+    </div>
+    <!--<div id="leftProduct" class="leftNav">-->
+        <!--<a href="${base}/user/products.html"><@spring.message "module.product"/></a>-->
+        <!--<i></i>-->
+    <!--</div>-->
+    <div id="leftJoiner" class="leftNav">
+        <a href="${base}/user/queryJoiners.html" class=""><@spring.message "left.exhibitor.joiners"/></a>
+        <i></i>
+    </div>
+    <#if zone==1>
+        <div id="leftInvoice" class="leftNav">
+            <a href="${base}/user/invoice/index.html"><@spring.message "module.invoice"/></a>
+            <i></i>
+        </div>
+    <#else>
+        <div id="leftVisa" class="leftNav">
+            <a href="${base}/user/visa/index.html"><@spring.message "module.visa"/></a>
+            <i></i>
+        </div>
+    </#if>
+    <div id="leftAdvise" class="leftNav">
+        <#if rc.locale=="zh_CN">
+            <a href="${base}/resource/2016厦门石材展广告招租函.pdf" target="_blank" class=""><@spring.message "module.advise"/></a>
+        <#else>
+            <a href="${base}/resource/Advertise Here-Xiamen Stone Fair 2016.pdf" target="_blank" class=""><@spring.message "module.advise"/></a>
+        </#if>
+        <i></i>
+    </div>
+    <div id="leftEmail" class="leftNav">
+        <a href="${base}/user/sendMail" class=""><@spring.message "module.email"/></a>
+        <i></i>
+    </div>
+    <div id="leftBanner" class="leftNav">
+        <a href="${base}/user/banners" class=""><@spring.message "module.banner"/></a>
+        <i></i>
+    </div>
+    <div id="leftContact" class="leftNav">
+        <a href="${base}/user/contact/index.html" class=""><@spring.message "module.contact"/></a>
+        <i></i>
+    </div>
+    <div id="leftNotice" class="leftNav">
+        <a href="${base}/user/notice/1" class=""><@spring.message "module.notice"/></a>
+        <i></i>
+    </div>
+    <div id="leftModifyPassword" class="leftNav">
+        <a href="${base}/user/password.html" class=""><@spring.message "info.modifypassword.title"/></a>
+        <i></i>
+    </div>
+    <div class="leftNav">
+        <a href="${base}/logout.html" class=""><@spring.message "left.account.quit"/></a>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $(".leftNav").mouseover(function(){
+            $(this).addClass("hover");
+        })
+
+        $(".leftNav").mouseout(function(){
+            $(this).removeClass("hover");
+        })
+    })
+
+    $(".leftNav").click(function(){
+        window.location.href = $(this).find("a").attr("href");
+    })
+</script>

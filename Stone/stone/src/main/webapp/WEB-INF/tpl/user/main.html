@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style>
+        .ttt {
+            cursor: pointer;
+            width: 315px;
+            height: 170px;
+            float: left;
+            color: #888888;
+            background-image: url('${resource}/images/bak2.gif')
+        }
+        .boxOn {
+            cursor: pointer;
+            width: 315px;
+            height: 170px;
+            float: left;
+            background-image: url('${resource}/images/bak1.gif')
+        }
+
+        .boxOn a, .boxOn a:hover, .boxOn a:visited {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .boxOff {
+            cursor: pointer;
+            width: 315px;
+            height: 170px;
+            float: left;
+            background-image: url('${resource}/images/bak2.gif')
+        }
+
+        .boxClose {
+            cursor: pointer;
+            width: 315px;
+            height: 170px;
+            float: left;
+            background-image: url('${resource}/images/bak2.gif')
+        }
+
+        .boxClose a{
+            color: #888888;
+            text-decoration: none;
+        }
+
+        .boxOff a, .boxOff a:hover, .boxOff a:visited {
+            color: #888888;
+            text-decoration: none;
+        }
+
+        /* 微信1 */
+        .FixedRight1 {width:75px; height:190px; overflow:hidden; position:fixed; _position:absolute; bottom:230px; left:0px; z-index:100000001;}
+        .FixedRight1 {left:auto; right:10px;}
+        .FixedLeft1 iframe:hover,.FixedRight1 iframe:hover {filter:alpha(opacity=86);opacity:0.86;}
+        .FixedLeft1 .Cls,.FixedRight1 .Cls {float:right; height:14px; width:14px; line-height:14px; color:#999; border:#999 1px solid; font-family:Tahoma; text-align:center;}
+        .FixedLeft1 .Cls:hover,.FixedRight1 .Cls:hover {color:#f60;}
+        /* 微信1 */
+        /* 微信2 */
+        .FixedRight2 {width:75px; height:200px; overflow:hidden; position:fixed; _position:absolute; bottom:20px; left:0px; z-index:100000001;}
+        .FixedRight2 {left:auto; right:10px;}
+        .FixedLeft2 iframe:hover,.FixedRight2 iframe:hover {filter:alpha(opacity=86);opacity:0.86;}
+        .FixedLeft2 .Cls,.FixedRight2 .Cls {float:right; height:14px; width:14px; line-height:14px; color:#999; border:#999 1px solid; font-family:Tahoma; text-align:center;}
+        .FixedLeft2 .Cls:hover,.FixedRight2 .Cls:hover {color:#f60;}
+        /* 微信2 */
+        /* 微信1 */
+        .FixedRight3 {width:75px; height:230px; overflow:hidden; position:fixed; _position:absolute; bottom:20px; left:0px; z-index:100000001;}
+        .FixedRight3 {left:auto; right:10px;}
+        .FixedLeft3 iframe:hover,.FixedRight3 iframe:hover {filter:alpha(opacity=86);opacity:0.86;}
+        .FixedLeft3 .Cls,.FixedRight3 .Cls {float:right; height:14px; width:14px; line-height:14px; color:#999; border:#999 1px solid; font-family:Tahoma; text-align:center;}
+        .FixedLeft3 .Cls:hover,.FixedRight3 .Cls:hover {color:#f60;}
+        /* 微信1 */
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<!-- /.navbar -->
+<#include "/user/header.html" />
+<div style="width: 100%;padding-bottom: 20px;border-bottom: 1px #d3d3d3 solid;margin-bottom: 40px">
+    <div style="width: 973px;margin: 0px auto;">
+        <div>
+            <div style="margin-left: 7px;float: left">
+                <img src="${resource}/images/index_16.gif">
+            </div>
+            <div style="margin-left: 7px;float:left;margin-left: 30px">
+                <img src="${resource}/images/index_18.gif">
+            </div>
+            <div style="margin-left: 7px;float: left;margin-left: 30px">
+                <img src="${resource}/images/index_19.gif">
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        <div style="margin-top: 18px">
+            <div class="boxOff">
+                <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                    <h4><a href="${base}/user/info.html"><@spring.message "module.exhibitor"/></a></h4>
+                    <h6><a href="${base}/user/info.html"><@spring.message "module.exhibitor.desc"/></a></h6>
+                </div>
+            </div>
+            <div class="boxClose" style="margin-left: 14px">
+                <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                    <!--<h4><a href="${base}/user/products.html"><@spring.message "module.product"/></a></h4>-->
+                    <!--<h6><a href="${base}/user/products.html"><@spring.message "module.product.desc"/></a></h6>-->
+                    <h4><a href="#"><@spring.message "module.product"/></a></h4>
+                    <h6><a href="#"><@spring.message "module.product.desc"/></a></h6>
+                </div>
+            </div>
+            <div class="boxOff" style="margin-left: 14px">
+                <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                    <h4><a href="${base}/user/queryJoiners.html"><@spring.message "module.joiner"/></a></h4>
+                    <h6><a href="${base}/user/queryJoiners.html"><@spring.message "module.joiner.desc"/></a></h6>
+                </div>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        <div style="margin-top: 5px">
+            <#if zone==1>
+                <div class="boxOff">
+                    <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                        <h4><a href="${base}/user/invoice/index.html"><@spring.message "module.invoice"/></a></h4>
+                        <h6><a href="${base}/user/invoice/index.html"><@spring.message "module.invoice.desc"/></a></h6>
+                    </div>
+                </div>
+                <#else>
+                    <div class="boxOff">
+                        <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                            <h4><a href="${base}/user/visa/index.html"><@spring.message "module.visa"/></a></h4>
+                            <h6><a href="${base}/user/visa/index.html"><@spring.message "module.visa.desc"/></a></h6>
+                        </div>
+                    </div>
+            </#if>
+            <div class="boxOff" style="margin-left: 14px">
+                <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                    <#if rc.locale=="zh_CN">
+                        <h4><a href="${base}/resource/2016厦门石材展广告招租函.pdf"><@spring.message "module.advise"/></a></h4>
+                        <h6><a href="${base}/resource/2016厦门石材展广告招租函.pdf">2016.2.1截止</a></h6>
+                        <#else>
+                            <h4><a href="${base}/resource/Advertise Here-Xiamen Stone Fair 2016.pdf"><@spring.message "module.advise"/></a></h4>
+                            <h6><a href="${base}/resource/Advertise Here-Xiamen Stone Fair 2016.pdf">Submitting Deadline: Jan. 31, 2015</a></h6>
+                    </#if>
+                </div>
+            </div>
+            <!--<div class="boxOff" style="margin-left: 14px">-->
+            <!--<div style="width: 200px;margin: 0px auto;margin-top: 40px;">-->
+            <!--<#if rc.locale=="zh_CN">-->
+            <!--<h4><a target="_blank" href="http://stonefair.org.cn/down/2014%E5%B9%B4%E5%B9%BF%E5%91%8A%E6%8B%9B%E7%A7%9F%E5%87%BD.pdf"><@spring.message "module.advise"/></a></h4>-->
+            <!--<h6><a target="_blank" href="http://stonefair.org.cn/down/2014%E5%B9%B4%E5%B9%BF%E5%91%8A%E6%8B%9B%E7%A7%9F%E5%87%BD.pdf"><@spring.message "module.advise.desc"/></a></h6>-->
+            <!--<#else>-->
+            <!--<h4><a target="_blank" href="http://stonefair.org.cn/down/Advertise%20of%20China%20Xiamen%20Stone%20Fair%202013.pdf"><@spring.message "module.advise"/></a></h4>-->
+            <!--<h6><a target="_blank" href="http://stonefair.org.cn/down/Advertise%20of%20China%20Xiamen%20Stone%20Fair%202013.pdf"><@spring.message "module.advise.desc"/></a></h6>-->
+            <!--</#if>-->
+            <!--</div>-->
+            <!--</div>-->
+            <div class="boxOff" style="margin-left: 14px">
+                <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                    <h4><a href="${base}/user/sendMail"><@spring.message "module.email"/></a></h4>
+                    <h6><a href="${base}/user/sendMail"><@spring.message "module.email.desc"/></a></h6>
+                </div>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        <div style="margin-top: 5px">
+            <div class="boxOff">
+                <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                    <h4><a href="${base}/user/banners.html"><@spring.message "module.banner"/></a></h4>
+                    <h6><a href="${base}/user/banners.html"><@spring.message "module.banner.desc"/></a></h6>
+                </div>
+            </div>
+            <div class="boxOff" style="margin-left: 14px">
+                <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                    <h4><a href="${base}/user/contact/index.html"><@spring.message "module.contact"/></a></h4>
+                    <h6><a href="${base}/user/contact/index.html"><@spring.message "module.contact.desc"/></a></h6>
+                </div>
+            </div>
+            <div class="boxOff" style="margin-left: 14px;position:relative;">
+                <span id="unReadMessageBox" class="badge badge-important" style="position:absolute;right: 0px">${unReadMessageCount}</span>
+                <div style="width: 100px;margin: 0px auto;margin-top: 70px;">
+                    <h4><a href="${base}/user/notice/1"><@spring.message "module.notice"/></a></h4>
+                </div>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--<#if rc.locale=="zh_CN">-->
+    <!--&lt;!&ndash;微信1右侧漂浮&ndash;&gt;-->
+    <!--<div class="FixedRight1" id="FixedRight1">-->
+        <!--<a href="javascript:void(0)" onclick="document.getElementById('FixedRight').style.display='none'"-->
+           <!--class="Cls" title="关闭">X</a>-->
+        <!--<img src="http://117.28.237.21:29956/qrcode/qrcode?content=http://www.stonefair.org.cn/exhibitor/sharepage_cn.asp?id=${PRINCIPLE_SESSION_ATTRIBUTE.exhibitor.eid!''}&size=110&border=0" width="75" height="75" border="0" alt="石材官方微信">-->
+        <!--<p align="center" style="line-height: 15px;">扫此二维码，可将贵司参展信息分享至朋友圈！（中文版）</p>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;微信2右侧漂浮&ndash;&gt;-->
+    <!--<div class="FixedRight2" id="FixedRight2">-->
+        <!--<a href="javascript:void(0)" onclick="document.getElementById('FixedRight').style.display='none'"-->
+           <!--class="Cls" title="关闭">X</a>-->
+        <!--<img src="http://117.28.237.21:29956/qrcode/qrcode?content=http://www.stonefair.org.cn/exhibitor/sharepage_en.asp?id=${PRINCIPLE_SESSION_ATTRIBUTE.exhibitor.eid!''}&size=110&border=0" width="75" height="75" border="0" alt="石材官方微信">-->
+        <!--<p align="center" style="line-height: 13px;">扫此二维码，可将贵司参展信息分享至朋友圈！（英文版）</p>-->
+    <!--</div>-->
+<!--<#else>-->
+    <!--&lt;!&ndash;微信3右侧漂浮&ndash;&gt;-->
+    <!--<div class="FixedRight3" id="FixedRight2">-->
+        <!--<a href="javascript:void(0)" onclick="document.getElementById('FixedRight').style.display='none'"-->
+           <!--class="Cls" title="关闭">X</a>-->
+        <!--<img src="http://117.28.237.21:29956/qrcode/qrcode?content=http://www.stonefair.org.cn/exhibitor/sharepage_en.asp?id=${PRINCIPLE_SESSION_ATTRIBUTE.exhibitor.eid!''}&size=110&border=0" width="75" height="75" border="0" alt="石材官方微信">-->
+        <!--<p align="center" style="line-height: 13px;">Scan the QR code to share your exhibition information to your Wechat friends.</p>-->
+    <!--</div>-->
+<!--</#if>-->
+
+
+
+
+<#include "/footer.html" />
+<script>
+    $(document).ready(function () {
+        if($("#unReadMessageBox").val()=='0'||$("#unReadMessageBox").val()=='0'){
+            $("#unReadMessageBox").hide();
+        }
+        $(".b").unbind("mouseover");
+        $(".b").unbind("mouseout");
+        $("#index").removeClass("buttonOff").addClass("buttonOn");
+        $(".b").mouseover(function(){
+            $(".b").removeClass("buttonOn").addClass("buttonOff");
+            $(this).removeClass("buttonOff").addClass("buttonOn");
+            $("#index").removeClass("buttonOff").addClass("buttonOn");
+        });
+        $(".b").mouseout(function(){
+            $(".b").removeClass("buttonOn").addClass("buttonOff");
+            $("#index").removeClass("buttonOff").addClass("buttonOn");
+        });
+        $(".boxOn,.boxOff").mouseover(function () {
+            $(".boxOn").removeClass("boxOn").addClass("boxOff");
+            $(this).addClass("boxOn").removeClass("boxOff");
+        })
+        $(".boxOn,.boxOff").click(function(){
+            window.location.href = $(this).find("a").attr("href");
+        })
+    });
+</script>
+</body>
+</html>

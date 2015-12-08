@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>金泓信展商管理后台</title>
+    <link rel="stylesheet" type="text/css" href="${base}/resource/easyui/themes/metro-blue/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${base}/resource/easyui/themes/icon.css">
+    <script type="text/javascript" src="${base}/resource/jquery.min.js"></script>
+    <script type="text/javascript" src="${base}/resource/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${base}/resource/easyui/empty-view.js"></script>
+    <script type="text/javascript" src="${base}/resource/ajaxfileupload.js"></script>
+    <script type="text/javascript" src="${base}/resource/common.js"></script>
+    <script type="text/javascript" src="${base}/resource/easyui/easyui-validate.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        input {
+            width: 200px;
+            height: 20px;
+        }
+        
+       .exhibitors:hover{
+        	background-color:#6caef5;
+        }
+        .exhibitors{
+        	padding:8px;
+        }
+    </style>
+</head>
+<body style="color: #ffffff" class="easyui-layout">
+<!-- 标题LOGO -->
+<div data-options="region:'north'" style="height:100px;">
+    <h1 style="margin-top: 30px;margin-left: 30px">厦门金泓信佛事展展商信息管理中心</h1>
+</div>
+<!-- 菜单栏 -->
+<div data-options="region:'west',split:true" title="菜单栏" style="width:200px;">
+    <div id="menu" class="easyui-accordion" data-options="fit:true,border:false">
+        <div title="展商管理" style="padding-left:10px;padding-top:5px;padding-right:5px;">
+	        <div id="exhibitorsList" class="exhibitors">展商列表</div>
+			<div id="exhibitorsGroupList" class="exhibitors">展团列表</div>
+        </div>
+        <div title="标签管理" style="padding:10px;">标签列表</div>
+        <div title="公告管理" style="padding:10px;">公告列表</div>
+    </div>
+</div>
+<!-- 展商列表 -->
+<div data-options="region:'center',title:'',iconCls:'icon-ok'">
+    <#include "/user/exhibitor.html">
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<p>Retrieve Password of Xiamen Buddha Fair App</p>
+<p> </p>
+<p>Please click to reset your account password:</p>
+<p><a href="http://foshi.zhanhappy.com/HuizhanApp/client/resetPassword/${verify.verifyId}/${verify.checkcode}">http://foshi.zhanhappy.com/HuizhanApp/client/resetPassword/${verify.verifyId}/${verify.checkcode}</a></p>
+<p> </p>
+<p>If you cannot open the link, please copy the url to your browser to activate.</p>
+<p> </p>
+<p>This is sent by the system. Please do not reply.</p>
+<p>If any question, please feel free to contact us.</p>
+<p> </p>
+<p>Organization of China Xiamen International Buddha Fair</p>
+<p>Add: Xiamen International Conference &amp; Exhibition Center, China</p>
+<p>P.C.: 361008</p>
+<p>Tel : 86-592-5959616</p>
+<p>Fax: 86-592-5959611</p>
+<p>E-mail: app@buddhafair.com</p>
+<p>Http://www.buddhafair.com</p>
+</body>
+</html>

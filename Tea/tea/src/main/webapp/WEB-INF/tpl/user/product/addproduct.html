@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <link href="${resource}/bootstrap/b2/css/docs.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+        a {
+            color: #eb8300;
+            text-decoration: none;
+        }
+        .nav-list > .active > a,
+        .nav-list > .active > a:hover,
+        .nav-list > .active > a:focus {
+            color: #ffffff;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+            background-color: #eb8300;
+        }
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<#include "/user/header.html" />
+<!-- /.navbar -->
+
+<div class="container-fluid">
+
+<div class="row-fluid" style="width: 1000px;margin: 0px auto">
+    <#include "/user/left.html" />
+    <div class="span9">
+        <!--<div class="alert alert-success">选择展商所属产品分类</div>-->
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-success">
+                <h4><@spring.message "addproduct.catagory"/></h4>
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body" style="min-height: 300px">
+                        <div class="row-fluid">
+                            <div class="span5">
+                                <ul class="nav nav-list bs-docs-sidenav" style="margin-top: 10px;">
+                                    <#list types as type>
+                                        <li>
+                                            <a role="parent" id="${type.id}" typeName="${type.typeName}"
+                                               sort="parent_${type_index}"
+                                               href="javascript:void(0)">
+                                                <i class="icon-chevron-right"></i>
+                                            <span name="selectedCount" id="parent_count_${type.id}" count="0"
+                                                  class="badge pull-right hide"></span>
+                                                ${type.typeName}
+                                            </a>
+                                        </li>
+                                    </#list>
+                                </ul>
+                            </div>
+                            <div class="span6">
+                                <#list types as type>
+                                    <div role="childContainer" sort="child_${type_index}" parentId="${type.id}"
+                                         class="nav nav-list bs-docs-sidenav hide" style="margin-top: 10px;">
+                                        <#list type.childrenTypes as ctype>
+                                            <li><a id="subTypeId_${ctype.id}" role="child" parentId="${type.id}"
+                                                   subTypeId="${ctype.id}" typeName="${ctype.typeName}"
+                                                   parentName="${type.typeName}"
+                                                   other="${ctype.isOther!"0"}" href="javascript:void(0)">
+                                                <i class="icon-ok pull-right hide"></i>
+                                                ${ctype.typeName}
+                                                </a>
+                                            </li>
+                                        </#list>
+                                        <textarea id="child_other_${type.id}" style="margin-top: 10px;"
+                                                  class="form-control hide" placeholder="<@spring.message "product.otherClassify"/>"></textarea>
+                                    </div>
+                                </#list>
+                            </div>
+                        </div>
+                    </div>
+                    <h4><@spring.message "addproduct.brands"/></h4>
+                    <script>
+                        defaultBrandId = null;
+                    </script>
+                    <div class="row-fluid" style="margin-bottom: 20px;">
+                        <div class="span5">
+                            <ul id="brands" class="nav nav-list bs-docs-sidenav" style="margin-top: 10px;">
+                                <#list brands as brand>
+                                    <#if brand.isDefault==0>
+                                        <li>
+                                            <a id="${brand.id}"
+                                               href="javascript:void(0)">
+                                                <i class="icon-ok pull-right hide"></i>
+                                                ${brand.brandName}
+                                            </a>
+                                        </li>
+                                    <#else>
+                                        <script>
+                                            defaultBrandId = ${brand.id};
+                                        </script>
+                                    </#if>
+                                </#list>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button id="showAddProductionDialog" type="button" class="btn btn-danger"><@spring.message "product.addproduct.add"/></button>
+                        <span style="margin-left: 20px"><@spring.message "product.addproduct.tip"/></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/row-->
+    </div>
+    <!--/span-->
+    <div class="modal hide fade" id="addProductDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"><@spring.message "product.addproduct.add.title"/></h4>
+    </div>
+    <div class="modal-body">
+    <form class="form-horizontal" action="${base}/user/addProduct" method="post"
+          enctype="multipart/form-data" role="form" id="addProductForm" target="submitFrame">
+    <div id="showSelected" class="alert alert-info">
+        已选分类：
+    </div>
+    <#if rc.locale=="zh_CN">
+        <div class="acaccordion" id="accordion2">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#productCnInfo">
+                        填写产品中文信息
+                    </a>
+                </div>
+                <div id="productCnInfo" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.name"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productName" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.name"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.model"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productModel" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.model"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.origin"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="origin" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.origin"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.keywords"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="keyWords" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.keywords"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.description"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="description" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.description"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.brand"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productBrand" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.brand"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.spec"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productSpec" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.spec"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.count"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productCount" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.count"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.pkgdescription"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="packageDescription" class="form-control"
+
+                                       placeholder='<@spring.message "product.addproduct.add.pkgdescription"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.pricedescription"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="priceDescription" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.pricedescription"/>'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#productEnInfo">
+                        Fill in Product English Information
+                    </a>
+                </div>
+                <div id="productEnInfo" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.name"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productNameEn" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.name"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.model"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productModelEn" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.model"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.origin"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="originEn" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.origin"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.keywords"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="keyWordsEn" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.keywords"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.description"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="descriptionEn" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.description"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.brand"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productBrandEn" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.brand"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.spec"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productSpecEn" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.spec"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.count"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productCountEn" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.count"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.pkgdescription"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="packageDescriptionEn" class="form-control"
+
+                                       placeholder='<@spring.message "product.addproduct.add.pkgdescription"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.pricedescription"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="priceDescriptionEn" class="form-control"
+                                       placeholder='<@spring.message "product.addproduct.add.pricedescription"/>'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <#else>
+        <div class="acaccordion" id="accordion2">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#productEnInfo">
+                        Fill in Product English Information
+                    </a>
+                </div>
+                <div id="productEnInfo" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.name"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productNameEn" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.name"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.model"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productModelEn" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.model"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.origin"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="originEn" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.origin"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.keywords"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="keyWordsEn" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.keywords"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.description"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="descriptionEn" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.description"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.brand"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productBrandEn" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.brand"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.spec"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productSpecEn" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.spec"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.count"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productCountEn" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.count"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.pkgdescription"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="packageDescriptionEn" class="form-control"
+                                        
+                                       placeholder='<@spring.message "product.addproduct.add.pkgdescription"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.pricedescription"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="priceDescriptionEn" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.pricedescription"/>'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#productCnInfo">
+                        填写产品中文信息
+                    </a>
+                </div>
+                <div id="productCnInfo" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.name"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productName" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.name"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.model"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productModel" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.model"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.origin"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="origin" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.origin"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.keywords"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="keyWords" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.keywords"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.description"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="description" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.description"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.brand"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productBrand" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.brand"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.spec"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productSpec" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.spec"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.count"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="productCount" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.count"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.pkgdescription"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="packageDescription" class="form-control"
+                                        
+                                       placeholder='<@spring.message "product.addproduct.add.pkgdescription"/>'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.pricedescription"/></label>
+
+                            <div class="controls">
+                                <input type="text" name="priceDescription" class="form-control"  
+                                       placeholder='<@spring.message "product.addproduct.add.pricedescription"/>'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </#if>
+    <div class="control-group">
+        <label  class="col-sm-2 control-label"><@spring.message "product.addproduct.add.photo"/></label>
+
+        <div class="controls">
+            <input type="file" name="productLogo" class="form-control">
+        </div>
+    </div>
+    <div id="picture" class="control-group">
+        <label  class="col-sm-2 control-label"></label>
+
+        <div class="controls">
+            <a id="addMorePicture" href="javascript:void(0)"><@spring.message "product.addproduct.add.morephoto"/></a>
+        </div>
+    </div>
+    <input type="hidden" name="selectString" id="selectString">
+    </form>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" id="resetAdd"><@spring.message "product.addproduct.add.reset"/></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><@spring.message "product.addproduct.add.close"/></button>
+        <button type="button" class="btn btn-primary" id="saveAddProduct"><@spring.message "product.addproduct.add.save"/></button>
+    </div>
+    </div>
+    <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+    </div>
+
+
+</div>
+<!--/row-->
+
+<iframe id="subimtFrame" name="submitFrame" style="display: none"></iframe>
+</div>
+<!--/.container-->
+<#include "/footer.html" />
+<script src="${base}/resource/common/offcanvas.js"></script>
+<script>
+    function addSuccess() {
+        $("#addProductForm input").each(function () {
+            $(this).val("");
+        });
+        $("input[name='productLogo']").each(function (index) {
+            if (index > 0) {
+                $(this).parent().parent().remove();
+            }
+        });
+        alert(words.addSuccess);
+        window.location.href="${base}/user/products.html"
+    }
+
+    function addFailure() {
+        alert(words.addFailure);
+    }
+    (function ($) {
+        $.fn.serializeJson = function () {
+            var serializeObj = {};
+            var array = this.serializeArray();
+            var str = this.serialize();
+            $(array).each(function () {
+                if (serializeObj[this.name]) {
+                    if ($.isArray(serializeObj[this.name])) {
+                        serializeObj[this.name].push(this.value);
+                    } else {
+                        serializeObj[this.name] = [serializeObj[this.name], this.value];
+                    }
+                } else {
+                    serializeObj[this.name] = this.value;
+                }
+            });
+            return serializeObj;
+        };
+    })(jQuery);
+
+    function initShowSelectedCount() {
+        $("[name='selectedCount']").each(function () {
+            if (parseInt($(this).attr("count")) > 0) {
+                $(this).text(words.selected + parseInt($(this).attr("count")));
+                $(this).removeClass("hide");
+            } else {
+                $(this).addClass("hide");
+            }
+        });
+    }
+    $(document).ready(function () {
+        $("#leftAddProduct").parent().parent().parent().parent().prev().addClass("left_current");
+        $("#leftAddProduct").addClass("active");
+        $("#leftAddProduct").parent().parent().parent().parent().show();
+        //init
+        $("a[sort='parent_0']").parent().addClass("active");
+        $("div[sort='child_0']").removeClass("hide");
+        //load exhibitor class info
+        initShowSelectedCount();
+        //parent type click event handle
+        $("[role='parent']").click(function () {
+            $("[role='parent']").each(function () {
+                $(this).parent().removeClass("active");
+            });
+            $(this).parent().addClass("active");
+            $("[role='childContainer']").each(function () {
+                $(this).addClass("hide");
+            })
+            $("div[parentId='" + $(this).attr("id") + "']").removeClass("hide");
+        });
+
+        //children type click event handle
+        $("[role='child']").click(function () {
+            if ($(this).attr("other") == 1) {
+                if ($("#child_other_" + $(this).attr("parentId")).hasClass("hide")) {
+                    $("#child_other_" + $(this).attr("parentId")).removeClass("hide");
+                } else {
+                    $("#child_other_" + $(this).attr("parentId")).addClass("hide");
+                }
+            }
+            if ($($(this).children()[0]).hasClass("hide")) {
+                $($(this).children()[0]).removeClass("hide");
+                $("#parent_count_" + $(this).attr("parentId")).attr("count", parseInt($("#parent_count_" + $(this).attr("parentId")).attr("count")) + 1);
+            } else {
+                $($(this).children()[0]).addClass("hide");
+                $("#parent_count_" + $(this).attr("parentId")).attr("count", parseInt($("#parent_count_" + $(this).attr("parentId")).attr("count")) - 1);
+            }
+            initShowSelectedCount();
+        });
+
+        $("#showAddProductionDialog").click(function () {
+            nowSelected = new Array();
+//            data.selected = nowSelected;
+            //find all selected
+            $("[role='child']").each(function () {
+                if (!$($(this).children()[0]).hasClass("hide")) {
+                    //no hide. selected
+                    selectItem = {};
+                    selectItem.parentTypeId = $(this).attr("parentid");
+                    selectItem.subTypeId = $(this).attr("subTypeId");
+                    selectItem.parentName = $(this).attr("parentName");
+                    selectItem.subName = $(this).attr("typeName");
+                    selectItem.isOther = $(this).attr("other");
+                    if (selectItem.isOther == 1) {
+                        selectItem.otherDescription = $("#child_other_" + $(this).attr("parentid")).val();
+                    }
+                    nowSelected.push(selectItem);
+                }
+            });
+            if(nowSelected.length==0){
+                alert(words.productClassifyRequired);
+                return;
+            }
+            showString = ""
+            $(nowSelected).each(function () {
+                showString = showString + "" + this.parentName + ":" + this.subName + "   "
+            })
+            if (showString == '') {
+                showString = words.noneSelected
+            }
+            $("#showSelected").text(showString);
+            if($("#brands li").length>0){
+                var selected = false;
+                $("#brands i").each(function(){
+                    if(!$(this).hasClass("hide")){
+                        selected = true;
+                        defaultBrandId = $(this).find("a").id;
+                    }
+                });
+                if(!selected){
+                    alert(words.brandRequired);
+                    return;
+                }
+            }else{
+
+            }
+            $("#addProductDialog").modal();
+        });
+
+        $("#saveAddProduct").click(function () {
+            //check data
+            var data = $("#addProductForm").serializeJson();
+            <#if rc.locale=="zh_CN">
+                if (data.productName == '') {
+                    alert(words.productNameRequired);
+                    return;
+                }
+            if (data.keyWords == '') {
+                alert(words.productKeywordsRequired);
+                return;
+            }
+            if (data.description == '') {
+                alert(words.productDescRequired);
+                return;
+            }
+            <#else>
+            if (data.productNameEn == '') {
+                alert(words.productNameRequired);
+                return;
+            }
+            if (data.keyWordsEn == '') {
+                alert(words.productKeywordsRequired);
+                return;
+            }
+            if (data.descriptionEn == '') {
+                alert(words.productDescRequired);
+                return;
+            }
+            </#if>
+
+            //get product types
+            nowSelected = new Array();
+//            data.selected = nowSelected;
+            //find all selected
+            $("[role='child']").each(function () {
+                if (!$($(this).children()[0]).hasClass("hide")) {
+                    //no hide. selected
+                    selectItem = {};
+                    selectItem.parentTypeId = $(this).attr("parentid");
+                    selectItem.subTypeId = $(this).attr("subTypeId");
+                    selectItem.parentName = $(this).attr("parentName");
+                    selectItem.subName = $(this).attr("typeName");
+                    selectItem.isOther = $(this).attr("other");
+                    if (selectItem.isOther == 1) {
+                        selectItem.otherDescription = $("#child_other_" + $(this).attr("parentid")).val();
+                        if(selectItem.otherDescription==''){
+                            alert("选择“其他”，描述不能为空")
+                            return;
+                        }
+                    }
+//                    console.log(selectItem);
+                    nowSelected.push(selectItem);
+                }
+            });
+            if (nowSelected.length == 0) {
+                alert(words.productClassifyRequired);
+                return;
+            }
+            var selectString = $.toJSON(nowSelected);
+            $("#selectString").val(selectString);
+            $("#brandId").val(defaultBrandId);
+            $("#addProductForm").submit();
+        });
+
+        $("#resetAdd").click(function () {
+            $("#addProductForm input").each(function () {
+                $(this).val("");
+            });
+        });
+
+        $("#addMorePicture").click(function () {
+            var file = $('<div class="control-group"><label  class="col-sm-2 control-label">'+words.productImage+'</label><div class="controls"><input type="file" name="productLogo" class="form-control"></div></div>');
+            $("#picture").before(file);
+        });
+
+        $("#brands li").click(function(){
+            $("#brands li i").addClass("hide");
+            $(this).find("i").removeClass("hide");
+        })
+    });
+</script>
+<script src="${resource}/bootstrap/b2/js/bootstrap.js"></script>
+</body>
+</html>

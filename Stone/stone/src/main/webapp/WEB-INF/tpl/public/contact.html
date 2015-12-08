@@ -1,0 +1,87 @@
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style type="text/css">
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+
+        body {
+
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<#include "/user/header.html" />
+<div style="width: 100%">
+    <div class="row-fluid" style="width: 962px;margin: 0px auto;">
+        <#include "/user/left.html" />
+		<#if rc.locale=="zh_CN">
+				<div style="width: 639px;float: left;margin-left: 31px;background-color: #ffffff;padding: 20px;">
+					<p><span style="color:#333399;font-size:x-small;"><strong>厦门会展金泓信展览有限公司</strong></span></p>
+					<p> &nbsp;地 址：中国·厦门市思明区会展路198号 厦门国际会展中心<br>
+						&nbsp;邮 编：361008<br>
+						&nbsp;电 话：(86)592-5959616<br>
+						&nbsp;传 真：(86)592-5959611<br>
+						&nbsp;网 址：<a href="http://www.stonefair.org.cn/">www.stonefair.org.cn</a><br>
+						&nbsp;信 箱：<a href="mailto:info@stonefair.org.cn">info@stonefair.org.cn</a>&nbsp;&nbsp;&nbsp;<a href="mailto:info@cxisf.com">info@cxisf.com</a></p>
+					<p><strong>&nbsp;开户名称：厦门会展金泓信展览有限公司<br>
+						&nbsp;开 户 行：建行厦门市前埔支行<br>
+						&nbsp;银行帐号：35101514001050000589</strong></p>
+				</div>
+			<#else>
+				<div style="width: 639px;float: left;margin-left: 31px;background-color: #ffffff;padding: 20px;">
+					<p><strong>Xiamen Jinhongxin Exhibition Co., Ltd</strong></p>
+					<p><strong>Add: Xiamen International Conference &amp; Exhibition Center, China<br />
+						P.C.: 361008<br />
+						Tel : 86-592-5959616</strong></p>
+					<p><strong>Fax: 86-592-5959611<br />
+						<a href="http://www.stonefair.org.cn/">Http://www.stonefair.org.cn</a> </strong></p>
+					<p><strong>E-mail: <a href="mailto:info@stonefair.org.cn">info@stonefair.org.cn</a> <a href="mailto:info@cxisf.com">info@cxisf.com</a></strong> </p>
+					<p><strong>Intermediary Bank</strong><br />
+						Bank of America New York<br />
+						SWIFT BIC: BOFAUS3N </p>
+					<p><strong>Account with Bank</strong><br />
+						China Construction Bank Xiamen Branch<br />
+						SWIFT BIC: PCBCCNBJSMX </p>
+					<p><strong>BENEFICIARY</strong>: <br />
+						<strong>Account NO. 35114577000220100209 </strong><br />
+						<strong>Name:</strong> Xiamen Jinhongxin Exhibition Co., Ltd. <br />
+						<strong>Address:</strong> 198# Huizhan Road, Siming District, Xiamen, China<br />
+						<strong>Tel:</strong> 86-592-5959616</p>
+				</div>
+		</#if>
+    </div>
+</div>
+<hr>
+<#include "/footer.html" />
+</body>
+</html>

@@ -1,0 +1,158 @@
+<style type="text/css">
+    .left_nav .bt {
+        cursor: pointer;
+        height: 35px;
+        font-size: 14px;
+        border-top: #eeeeee solid 1px;
+    }
+
+    .left_current {
+        background-color: #8bc015;
+        height: 35px;
+        color: #ffffff;
+    }
+
+    .point {
+        width: 13px;
+        height: 10px;
+        background-image: url("${resource}/images/tea_index_21.gif");
+    }
+
+    .left_current .point {
+        width: 13px;
+        height: 10px;
+        background-image: url("${resource}/images/tea_index_15.gif");
+    }
+
+    .list table td {
+        font-size: 14px;
+        padding-left: 20px;
+        height: 35px;
+        cursor: pointer;
+    }
+
+    #nav .list {
+        display: none;
+    }
+
+    .list .active {
+        background-color: #f8f6f2;
+    }
+
+    .list .active a, .list .active a:hover, .list .active a:visited {
+        color: #eb8300;
+    }
+
+    .list .hover {
+        background-color: #f8f6f2;
+    }
+
+    .list .hover a, .list .hover a:hover, .list .hover a:visited {
+        color: #eb8300;
+    }
+
+    .list a {
+        color: #888888;
+    }
+
+    body {
+        padding-top: 0px;
+    }
+
+    #leftContent {
+        width: 180px;
+        float: left;
+    }
+
+    .leftMenu .hover {
+        background-color: #e27b58;
+        padding: 0;
+        text-align: center;
+        font-size: 14px;
+        line-height: 40px;
+        height: 40px;
+    }
+
+    .leftMenu .menuItem {
+        background: url(http://teafair.com.cn/Images/leftMenu_line.png) center bottom no-repeat;
+    }
+
+    .leftMenu .menuItem a {
+        padding-left: 0;
+        text-align: center;
+        line-height: 40px;
+        display: block;
+        text-decoration: none;
+        color: #666666;
+        font-size: 14px;
+        list-style-type: none;
+    }
+
+    ul, li, ol {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    .leftMenu .menuItem a:hover {
+        color: #e17c57;
+        background: url(http://teafair.com.cn/Images/leftMenu_mainOn.jpg) center no-repeat;
+    }
+</style>
+
+<div id="leftContent">
+    <div id="exhibitorManage" class="leftMenu"><h3 class="hover"><a href="#" style="color: #ffffff;"><@spring.message "left.exhibitor"/></a>
+    </h3>
+        <ul class="menuList">
+            <li class="menuItem menuSeparate1"><a href="${base}/user/info"><@spring.message "left.exhibitor.info"/></a></li>
+            <li class="menuItem menuSeparate2"><a href="${base}/user/queryJoiners"><@spring.message "left.exhibitor.joiners"/></a></li>
+            <li class="menuItem menuSeparate1"><a href="${base}/user/contact/index"><@spring.message "left.exhibitor.contacts"/></a></li>
+            <li class="menuItem menuSeparate2"><a href="${base}/user/invoice/index"><@spring.message "module.invoice"/></a></li>
+            <li class="menuItem menuSeparate1"><a href="${base}/user/addMeipai"><@spring.message "left.meipai"/></a></li>
+            <li class="menuItem menuSeparate2"><a href="${base}/user/weixin/index"><@spring.message "left.weixin"/></a></li>
+        </ul>
+    </div>
+    <div id="productManage" class="leftMenu"><h3 class="hover"><a href="#" style="color: #ffffff;"><@spring.message "left.products"/></a>
+    </h3>
+        <ul class="menuList">
+            <li class="menuItem menuSeparate1"><a href="${base}/user/addProduct"><@spring.message "left.products.add"/></a></li>
+            <li class="menuItem menuSeparate2"><a href="${base}/user/products"><@spring.message "left.products.maintain"/></a></li>
+        </ul>
+    </div>
+    <div id="accountManage" class="leftMenu"><h3 class="hover"><a href="#" style="color: #ffffff;"><@spring.message "left.account"/></a>
+    </h3>
+        <ul class="menuList">
+            <li class="menuItem menuSeparate1"><a href="${base}/user/password"><@spring.message "left.account.modifyPassword"/></a></li>
+            <li class="menuItem menuSeparate2"><a href="${base}/logout"><@spring.message "left.account.quit"/></a></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#index").addClass("active");
+        $(".bt").click(function () {
+            $(".left_current").removeClass("left_current");
+            $(this).addClass("left_current");
+            $(".list").hide();
+            $(this).next().show();
+        })
+        $(".list").find("tr").mouseover(function () {
+            $(this).addClass("hover");
+        })
+        $(".list").find("tr").mouseout(function () {
+            $(".list").find("tr").removeClass("hover");
+        })
+        $(".bt").mouseover(function () {
+            $(this).addClass("left_current");
+        });
+        $(".bt").mouseout(function () {
+            if ($(this).next().is(":hidden")) {
+                $(this).removeClass("left_current");
+            }
+        });
+        $(".list").find("tr").click(function () {
+            window.location.href = $(this).find("a").attr("href");
+        })
+    })
+</script>

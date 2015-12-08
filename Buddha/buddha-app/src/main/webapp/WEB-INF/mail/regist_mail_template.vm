@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<p>Activate Your App Account of Xiamen Stone Fair</p>
+<p>Thank you for registering Xiamen Stone Fair App.</p>
+<p>Your Registered Email is : ${verify.email}</p>
+<p>Please click to activate your account:</p>
+<p><a href="http://foshi.zhanhappy.com/HuizhanApp/client/verify/${verify.verifyId}/${verify.checkcode}">http://foshi.zhanhappy.com/HuizhanApp/client/verify/${verify.verifyId}/${verify.checkcode}</a></p>
+<p>If you cannot open the link, please copy the url to your browser to activate.</p>
+<p>The link is available within 48 hours. Re-register is acquired in case of expiration.</p>
+<p>This is sent by the system. Please do not reply.</p>
+<p>If any question, please feel free to contact us.</p>
+<p>&nbsp;</p>
+<p>Organization of China Xiamen International Buddha Fair</p>
+<p>Add: Xiamen International Conference &amp; Exhibition Center, China</p>
+<p>P.C.: 361008</p>
+<p>Tel : 86-592-5959616</p>
+<p>Fax: 86-592-5959611</p>
+<p>E-mail: app@buddhafair.com</p>
+<p>Http://www.stonefair.org.cn</p>
+<p>Activation succeeded. Please log in on your mobile app.</p>
+<p>Activation failed. Please contact the administer on app@buddhafair.com.</p>
+</body>
+</html>

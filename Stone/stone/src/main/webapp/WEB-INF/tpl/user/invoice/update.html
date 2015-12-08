@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style type="text/css">
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+
+        body {
+
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<#include "/user/header.html" />
+<div style="width: 100%">
+    <div class="row-fluid" style="width: 962px;margin: 0px auto;">
+        <#include "/user/left.html" />
+        <div style="width: 639px;float: left;margin-left: 31px;background-color: #ffffff;padding: 20px;">
+            <div style="color: #f1b426;font-size: 16px;border-bottom: 1px #dbdbdb solid;line-height: 32px;font-weight: bolder"><@spring.message "module.invoice"/></div>
+            <div class="alert alert-block">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4>注意!</h4>
+                由于发票开具方式改革（由传统手写发票改革为电脑打印发票），2012年1月1日起，厦门国际石材展组委会开具的一切发票均需要贵单位提供地税税号。请贵单位填写详细并在2016年1月31日前填好提交或发送到info@stonefair.org.cn邮箱。谢谢！
+                若以现金或个人名义汇款，需填写发票抬头；若以公司账户汇款，则组委会以汇款名称为准开具相关发票。如有不详敬请咨询：0592-5959616
+            </div>
+            <form class="form-horizontal" id="invoiceForm">
+                <div class="control-group">
+                    <label class="control-label" for="exhibitorNo">展位号</label>
+
+                    <div class="controls">
+                        <input type="text" value="${invoice.exhibitorNo!''}" name="exhibitorNo" id="exhibitorNo" placeholder="展位号" >
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="title">抬头</label>
+
+                    <div class="controls">
+                        <input type="text" value="${invoice.title!''}" name="title" id="title" placeholder="抬头" >
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="invoiceNo">地税税号</label>
+
+                    <div class="controls">
+                        <input type="text" value="${invoice.invoiceNo!''}" name="invoiceNo" id="invoiceNo" placeholder="地税税号" >
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <input type="hidden" value="${invoice.id}" name="id">
+                        <input type="hidden" value="${invoice.createTime}" name="createTime">
+                        <button type="button" id="sub" class="btn btn-warning">保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--/span-->
+    </div>
+    <!--/row-->
+    <hr>
+    <#include "/footer.html" />
+</div>
+<!--/.container-->
+<script src="${resource}/bootstrap/b2/js/bootstrap.js"></script>
+<script>
+    (function ($) {
+        $.fn.serializeJson = function () {
+            var serializeObj = {};
+            var array = this.serializeArray();
+            var str = this.serialize();
+            $(array).each(function () {
+                if (serializeObj[this.name]) {
+                    if ($.isArray(serializeObj[this.name])) {
+                        serializeObj[this.name].push(this.value);
+                    } else {
+                        serializeObj[this.name] = [serializeObj[this.name], this.value];
+                    }
+                } else {
+                    serializeObj[this.name] = this.value;
+                }
+            });
+            return serializeObj;
+        };
+    })(jQuery);
+    $(document).ready(function () {
+        $("#leftInvoice").addClass("lcurrent");
+        $("#sub").click(function () {
+            var parameters = $("#invoiceForm").serializeJson();
+            if(parameters.exhibitorNo==''){
+                alert("展位号不能为空");
+                return
+            }
+            if(parameters.invoiceNo==''){
+                alert("地税税号不能为空");
+                return
+            }
+            if(parameters.title==''){
+                alert("抬头不能为空");
+                return
+            }
+            $.ajax({
+                url:"${base}/user/invoice/save",
+                type:"POST",
+                dataType:"json",
+                data:parameters,
+                success:function(data){
+                    if(data.resultCode==0){
+                        alert("修改成功");
+                        window.location.href = window.location.href;
+                    }else{
+                        alert("修改失败");
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

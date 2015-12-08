@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <link href="${resource}/bootstrap/b2/css/docs.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<#include "/user/header.html" />
+<!-- /.navbar -->
+
+<div class="container-fluid">
+
+    <div class="row-fluid">
+        <#include "/user/left.html" />
+        <!--/span-->
+
+        <div class="span7">
+            <!--<div class="alert alert-success">选择展商所属产品分类</div>-->
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><@spring.message "info.class.exhibition.category.title"/></h3>
+                </div>
+                <div class="panel-body" style="min-height: 400px">
+                    <div class="row-fluid">
+                        <div class="span1"></div>
+                        <div class="span3">
+                            <ul class="nav nav-list bs-docs-sidenav">
+                                <#list types as type>
+                                    <li><a role="parent" id="${type.id}" sort="parent_${type_index}"
+                                           href="javascript:void(0)">
+                                        <i class="icon-chevron-right pull-right"></i>
+                                        <span name="selectedCount" id="parent_count_${type.id}" count="0"
+                                              class="badge pull-right hide"></span>
+                                        ${type.typeName}
+                                    </a>
+                                    </li>
+                                </#list>
+                            </ul>
+                        </div>
+                        <div class="span5">
+                            <#list types as type>
+                                <div role="childContainer" sort="child_${type_index}" parentId="${type.id}"
+                                     class="nav nav-list bs-docs-sidenav hide">
+                                    <#list type.childrenTypes as ctype>
+                                        <li><a id="subTypeId_${ctype.id}" role="child" parentId="${type.id}"
+                                               subTypeId="${ctype.id}"
+                                               other="${ctype.isOther!"0"}" href="#"
+                                            class="list-group-item">
+                                            <i class="icon-ok pull-right hide"></i>
+                                            ${ctype.typeName}
+                                            </a>
+                                        </li>
+                                    </#list>
+                                    <textarea id="child_other_${type.id}" style="margin-top: 10px;width: 245px"
+                                              class="form-control hide" placeholder="其他产品类型描述"></textarea>
+                                </div>
+                            </#list>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button name="saveButton" type="button" class="btn btn-danger"><@spring.message "info.class.exhibition.category.save"/></button>
+                    <span id="saveAlert" class="label label-success" style="display: none;margin-left: 20px"><@spring.message "info.class.exhibition.category.save.success"/></span>
+                </div>
+            </div>
+            <!--/row-->
+        </div>
+        <!--/span-->
+
+
+    </div>
+    <!--/row-->
+
+
+</div>
+<#include "/footer.html" />
+
+<!--/.container-->
+
+<script src="${base}/resource/common/offcanvas.js"></script>
+<script>
+    selected = eval('${selected}');
+    function initShowSelectedCount() {
+        $("[name='selectedCount']").each(function () {
+            if (parseInt($(this).attr("count")) > 0) {
+                $(this).text("已选" + parseInt($(this).attr("count")));
+                $(this).removeClass("hide");
+            } else {
+                $(this).addClass("hide");
+            }
+        });
+    }
+    $(document).ready(function () {
+        $("#nav_eclass").addClass("active")
+        //init
+        $("a[sort='parent_0']").parent().addClass("active");
+        $("div[sort='child_0']").removeClass("hide");
+        //load exhibitor class info
+        $(selected).each(function () {
+            $("#parent_count_" + this.parentTypeId).attr("count", parseInt($("#parent_count_" + this.parentTypeId).attr("count")) + 1);
+            $($("#subTypeId_" + this.subTypeId).children()[0]).removeClass("hide")
+            if (this.isOther != null && this.isOther == 1) {
+                $("#child_other_" + this.parentTypeId).removeClass("hide");
+                $("#child_other_" + this.parentTypeId).text(this.otherDescription);
+            }
+        });
+        initShowSelectedCount();
+        //parent type click event handle
+        $("[role='parent']").click(function () {
+            $("[role='parent']").each(function () {
+                $(this).parent().removeClass("active");
+            });
+            $(this).parent().addClass("active");
+            $("[role='childContainer']").each(function () {
+                $(this).addClass("hide");
+            })
+            $("div[parentId='" + $(this).attr("id") + "']").removeClass("hide");
+        });
+
+        //children type click event handle
+        $("[role='child']").click(function () {
+            if ($(this).attr("other") == 1) {
+                if ($("#child_other_" + $(this).attr("parentId")).hasClass("hide")) {
+                    $("#child_other_" + $(this).attr("parentId")).removeClass("hide");
+                } else {
+                    $("#child_other_" + $(this).attr("parentId")).addClass("hide");
+                }
+            }
+            if ($($(this).children()[0]).hasClass("hide")) {
+                $($(this).children()[0]).removeClass("hide");
+                $("#parent_count_" + $(this).attr("parentId")).attr("count", parseInt($("#parent_count_" + $(this).attr("parentId")).attr("count")) + 1);
+            } else {
+                $($(this).children()[0]).addClass("hide");
+                $("#parent_count_" + $(this).attr("parentId")).attr("count", parseInt($("#parent_count_" + $(this).attr("parentId")).attr("count")) - 1);
+            }
+            initShowSelectedCount();
+        });
+        //save event
+        $("[name='saveButton']").click(function () {
+
+            nowSelected = new Array();
+            request = {"selected": nowSelected}
+            //find all selected
+            $("[role='child']").each(function () {
+                if (!$($(this).children()[0]).hasClass("hide")) {
+                    //no hide. selected
+                    selectItem = {};
+                    selectItem.parentTypeId = $(this).attr("parentid");
+                    selectItem.subTypeId = $(this).attr("subTypeId");
+                    selectItem.isOther = $(this).attr("other");
+                    if (selectItem.isOther == 1) {
+                        selectItem.otherDescription = $("#child_other_" + $(this).attr("parentid")).val();
+                    }
+//                    console.log(selectItem);
+                    nowSelected.push(selectItem);
+                }
+            });
+            $("[name='saveButton']").addClass("disabled")
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: $.toJSON(request),
+                url: "${base}/user/exhibitorclass",
+                success: function (result) {
+                    $("[name='saveButton']").removeClass("disabled")
+                    if (result.resultCode == 1) {
+                        alert("保存失败")
+                    } else if (result.resultCode > 1) {
+                        alert("服务器错误")
+                    } else {
+                        $("#saveAlert").show();
+                        setInterval(function () {
+                            $("#saveAlert").hide(500);
+                        }, 3000);
+                    }
+                },
+                dataType: "json"
+            })
+        });
+
+    });
+</script>
+<script src="${resource}/bootstrap/b2/js/bootstrap.js"></script>
+</body>
+</html>

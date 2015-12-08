@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <link href="${resource}/bootstrap/b2/css/docs.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style type="text/css">
+        .form-signin-heading {
+            border-bottom: solid 3px #e1e1e1;
+            padding-bottom: 10px;
+            position: relative;
+            line-height: 40px;
+            color: #d84c31;
+            font-size: 24px;
+        }
+
+        .rowself {
+            width: 680px;
+            margin: 30px auto;
+            margin-bottom: 50px;
+            border: 1px solid #e1e1e1;
+            -webkit-box-shadow: 0 0 3px #eee, inset 0 0 3px #fff;
+            box-shadow: 0 0 3px #eee, inset 0 0 3px #fff;
+            background: #fbfbfb;
+            padding: 20px;
+            margin-top: 0px;
+        }
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+        .nav a{
+            color: #4a1f07;
+        }
+
+        .nav a:hover{
+            color: #000000;
+        }
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<#include "/user/header.html" />
+<!-- /.navbar -->
+
+<div class="container-fluid">
+    <div class="row-fluid" style="width:1000px;margin:0px auto">
+        <#include "/user/left.html" />
+        <div class="span9">
+            <div class="row-fluid">
+                <#include "/common/message.ftl" />
+                <p class="text-error">1、<@spring.message "info.notice.one"/></p>
+                <p class="text-error">2、<@spring.message "info.notice.two"/></p>
+                <p class="text-error">3、<@spring.message "info.notice.three"/></p>
+                <p class="text-error">4、<@spring.message "info.notice.four"/></p>
+                <form class="form-horizontal" id="infoform" action="${base}/user/updateinfo" method="post" role="form"
+                      enctype="multipart/form-data">
+                    <h3 class="form-signin-heading"><@spring.message "info.update.exhibition.title"/></h3>
+
+                    <div class="control-group">
+                        <label for="inputEmail3" class="control-label" required><@spring.message "info.update.exhibition.company_zh"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="company" value="${newinfo.company!""}"
+                            class="form-control" placeholder='<@spring.message "info.update.exhibition.company_zh"/>'><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.update.exhibition.company_en"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="companyEn" value="${newinfo.companyEn!""}" class="form-control"
+                            id="inputPassword3" placeholder='<@spring.message "info.update.exhibition.company_en"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputEmail3" class="control-label"><@spring.message "info.update.exhibition.phone"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="phone" value="${newinfo.phone!""}" class="form-control" id="inputEmail3"
+                            placeholder='<@spring.message "info.update.exhibition.phone"/>'><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.update.exhibition.fax"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="fax" value="${newinfo.fax!""}" class="form-control" id="inputPassword3"
+                            placeholder='<@spring.message "info.update.exhibition.fax"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputEmail3" class="control-label"><@spring.message "info.update.exhibition.email"/></label>
+
+                        <div class="controls">
+                            <input type="email" name="email" value="${newinfo.email!""}" class="form-control" id="inputEmail3"
+                            placeholder='<@spring.message "info.update.exhibition.email"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.update.exhibition.website"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="website" value="${newinfo.website!""}" class="form-control"
+                            id="inputPassword3" placeholder='<@spring.message "info.update.exhibition.website"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputEmail3" class="control-label"><@spring.message "info.update.exhibition.address_zh"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="address" value="${newinfo.address!""}" class="form-control"
+                            id="inputEmail3" placeholder='<@spring.message "info.update.exhibition.address_zh"/>'><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.update.exhibition.address_en"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="addressEn" value="${newinfo.addressEn!""}" class="form-control"
+                            id="inputPassword3" placeholder='<@spring.message "info.update.exhibition.address_en"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputEmail3" class="control-label"><@spring.message "info.update.exhibition.zipcode"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="zipcode" value="${newinfo.zipcode!""}" class="form-control"
+                            id="inputEmail3" placeholder='<@spring.message "info.update.exhibition.zipcode"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.update.exhibition.product_zh"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="mainProduct" value="${newinfo.mainProduct!""}" class="form-control"
+                            id="inputPassword3" placeholder='<@spring.message "info.update.exhibition.product_zh"/>'><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.update.exhibition.product_en"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="mainProductEn" value="${newinfo.mainProductEn!""}" class="form-control"
+                            id="inputPassword3" placeholder='<@spring.message "info.update.exhibition.product_en"/>'>
+                        </div>
+                    </div>
+                    <!--<div class="control-group">-->
+                        <!--<label for="inputPassword3" class=" control-label"><@spring.message "info.meipai"/></label>-->
+
+                        <!--<div class="controls">-->
+                            <!--<input type="text" name="meipai" value="${newinfo.meipai!""}" class="form-control" id="inputPassword3"-->
+                            <!--placeholder='<@spring.message "info.meipai"/>'>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="control-group">
+                        <label for="inputEmail3" class="control-label"><@spring.message "info.update.exhibition.remark"/></label>
+
+                        <div class="controls">
+                            <textarea name="mark" value="${newinfo.mark!""}" class="form-control" id="inputEmail3"
+                            placeholder='<@spring.message "info.update.exhibition.remark"/>'>${newinfo.mark!""}</textarea><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.update.exhibition.logo"/></label>
+
+                        <div class="controls">
+                            <input type="file" name="companyLogo" class="form-control" id="inputPassword3"
+                                   placeholder='<@spring.message "info.update.exhibition.logo"/>'>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"></label>
+
+                        <div class="controls">
+                            <a href="#" class="img-thumbnail">
+                                <img style="width: 100px;height: 100px" data-src="holder.js/100x100" src="${base}/user/logoImg?eid=${newinfo.eid}">
+                            </a>
+                        </div>
+                    </div>
+                    <p class="text-error"><@spring.message "info.notice.five"/></p>
+                    <hr>
+                    <h3 style="color: #d84c31;display: none"><@spring.message "info.productRange"/></h3>
+                    <div class="row-fluid">
+                        <div class="span5">
+                            <ul class="nav nav-list bs-docs-sidenav">
+                                <#list types as type>
+                                    <li><a role="parent" id="${type.id}" sort="parent_${type_index}"
+                                           href="javascript:void(0)">
+                                        <i class="icon-chevron-right pull-right"></i>
+                                        <span name="selectedCount" id="parent_count_${type.id}" count="0"
+                                              class="badge pull-right hide"></span>
+                                        ${type.typeName}
+                                    </a>
+                                    </li>
+                                </#list>
+                            </ul>
+                        </div>
+                        <div class="span5">
+                            <#list types as type>
+                                <div role="childContainer" sort="child_${type_index}" parentId="${type.id}"
+                                     class="nav nav-list bs-docs-sidenav hide">
+                                    <#list type.childrenTypes as ctype>
+                                        <li><a id="subTypeId_${ctype.id}" role="child" parentId="${type.id}"
+                                               subTypeId="${ctype.id}"
+                                               other="${ctype.isOther!"0"}" href="javascript:void(0)"
+                                            class="list-group-item">
+                                            <i class="icon-ok pull-right hide"></i>
+                                            ${ctype.typeName}
+                                            </a>
+                                        </li>
+                                    </#list>
+                                    <textarea id="child_other_${type.id}" style="margin-top: 10px;width: 245px"
+                                              class="form-control hide" placeholder="其他产品类型描述"></textarea>
+                                </div>
+                            </#list>
+                        </div>
+                    </div>
+                    <div class="control-group" style="margin-top: 10px">
+                        <button type="button" name="saveButton" class="btn btn-success"><@spring.message "info.update.exhibition.save"/></button>
+                        <input name="einfoid" value="${newinfo.einfoid!""}" type="hidden">
+                        <input name="logo" value="${newinfo.logo!""}" type="hidden">
+                        <input name="classjson" id="classjson" type="hidden">
+                    </div>
+                </form>
+            </div>
+            <!--/row-->
+        </div>
+        <!--/span-->
+
+    </div>
+    <!--/row-->
+
+
+</div>
+<#include "/footer.html" />
+<!--/.container-->
+<script>
+    $(document).ready(function(){
+        $("#leftInfo").parent().parent().parent().parent().prev().addClass("left_current");
+        $("#leftInfo").addClass("active");
+        $("#leftInfo").parent().parent().parent().parent().show();
+    });
+</script>
+<script>
+    selected = eval('${selected}');
+    function initShowSelectedCount() {
+        $("[name='selectedCount']").each(function () {
+            if (parseInt($(this).attr("count")) > 0) {
+                $(this).text("已选" + parseInt($(this).attr("count")));
+                $(this).removeClass("hide");
+            } else {
+                $(this).addClass("hide");
+            }
+        });
+    }
+    $(document).ready(function () {
+        //init
+        $("a[sort='parent_0']").parent().addClass("active");
+        $("div[sort='child_0']").removeClass("hide");
+        //load exhibitor class info
+        $(selected).each(function () {
+            $("#parent_count_" + this.parentTypeId).attr("count", parseInt($("#parent_count_" + this.parentTypeId).attr("count")) + 1);
+            $($("#subTypeId_" + this.subTypeId).children()[0]).removeClass("hide")
+            if (this.isOther != null && this.isOther == 1) {
+                $("#child_other_" + this.parentTypeId).removeClass("hide");
+                $("#child_other_" + this.parentTypeId).text(this.otherDescription);
+            }
+        });
+        initShowSelectedCount();
+        //parent type click event handle
+        $("[role='parent']").click(function () {
+            $("[role='parent']").each(function () {
+                $(this).parent().removeClass("active");
+            });
+            $(this).parent().addClass("active");
+            $("[role='childContainer']").each(function () {
+                $(this).addClass("hide");
+            })
+            $("div[parentId='" + $(this).attr("id") + "']").removeClass("hide");
+        });
+
+        //children type click event handle
+        $("[role='child']").click(function () {
+            if ($(this).attr("other") == 1) {
+                if ($("#child_other_" + $(this).attr("parentId")).hasClass("hide")) {
+                    $("#child_other_" + $(this).attr("parentId")).removeClass("hide");
+                } else {
+                    $("#child_other_" + $(this).attr("parentId")).addClass("hide");
+                }
+            }
+            if ($($(this).children()[0]).hasClass("hide")) {
+                $($(this).children()[0]).removeClass("hide");
+                $("#parent_count_" + $(this).attr("parentId")).attr("count", parseInt($("#parent_count_" + $(this).attr("parentId")).attr("count")) + 1);
+            } else {
+                $($(this).children()[0]).addClass("hide");
+                $("#parent_count_" + $(this).attr("parentId")).attr("count", parseInt($("#parent_count_" + $(this).attr("parentId")).attr("count")) - 1);
+            }
+            initShowSelectedCount();
+        });
+        //save event
+        $("[name='saveButton']").click(function () {
+
+            nowSelected = new Array();
+            request = {"selected": nowSelected}
+            //find all selected
+            $("[role='child']").each(function () {
+                if (!$($(this).children()[0]).hasClass("hide")) {
+                    //no hide. selected
+                    selectItem = {};
+                    selectItem.parentTypeId = $(this).attr("parentid");
+                    selectItem.subTypeId = $(this).attr("subTypeId");
+                    selectItem.isOther = $(this).attr("other");
+                    if (selectItem.isOther == 1) {
+                        selectItem.otherDescription = $("#child_other_" + $(this).attr("parentid")).val();
+                        if(selectItem.otherDescription==''){
+                            alert("选择“其他”，描述不能为空")
+                            return;
+                        }
+                    }
+//                    console.log(selectItem);
+                    nowSelected.push(selectItem);
+                }
+            });
+
+            $("#classjson").val($.toJSON(request));
+            function needValidate(o){
+                if(o.name=='fax'||o.name=='email'||o.name=='website'||o.name=='zipcode'){
+                    return false;
+                }
+                if($("#infoform [name='"+o.name+"']").attr("placeholder")==undefined){
+                    return false;
+                }
+                if(o.name.indexOf("En")!=-1){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+            var formData = $("#infoform").serializeArray();
+            for(var i=0;i<formData.length;i++){
+                if(formData[i].value==''&&needValidate(formData[i])){
+                    alert($("#infoform [name='"+formData[i].name+"']").attr("placeholder")+" 不能为空！");
+                    return;
+                }
+            }
+            $("#infoform").submit();
+        });
+
+    });
+
+</script>
+<script src="${resource}/bootstrap/b2/js/bootstrap.js"></script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style type="text/css">
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<#include "/user/header.html" />
+<div class="container-fluid">
+    <div class="row-fluid" style="width:1000px;margin:0px auto">
+        <#include "/user/left.html" />
+        <div class="span9">
+            <!--<div class="alert alert-success">选择展商所属产品分类</div>-->
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><@spring.message "contact.title"/></h3>
+                </div>
+                <div class="panel-body" style="min-height: 400px">
+                    <div>
+                        <button id="addJoiner" type="button" class="btn btn-success"><@spring.message "info.joiner.participants.add"/></button>
+                    </div>
+                    <table class="table table-striped" style="margin-top: 10px">
+                        <thead>
+                        <tr>
+                            <th style="width: 100px"><@spring.message "info.joiner.participants.table.name"/></th>
+                            <th><@spring.message "info.joiner.participants.table.phone"/></th>
+                            <th><@spring.message "info.joiner.participants.table.email"/></th>
+                            <th><@spring.message "info.joiner.participants.table.position"/></th>
+                            <th style="width: 150px"><@spring.message "info.joiner.participants.table.option"/></th>
+                        </tr>
+                        </thead>
+                        <tbody id="datas">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--/row-->
+        </div>
+        <!--/span-->
+
+
+    </div>
+    <!--/row-->
+
+</div>
+<#include "/footer.html" />
+<div class="modal hide fade" id="joiner" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"><@spring.message "info.joiner.participants.add.title"/></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="addJoinerForm" target="submitFrame">
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.joiner.participants.add.name"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="name" class="form-control" id="inputPassword3"
+                                   placeholder='<@spring.message "info.joiner.participants.add.name"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.joiner.participants.add.position"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="position" class="form-control" id="inputPassword3"
+                                   placeholder='<@spring.message "info.joiner.participants.add.position"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.joiner.participants.add.phone"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="phone" class="form-control" id="inputPassword3"
+                                   placeholder='<@spring.message "info.joiner.participants.add.phone"/>'/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.joiner.participants.add.email"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="email" class="form-control" id="inputPassword3"
+                                   placeholder='<@spring.message "info.joiner.participants.add.email"/>'>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id">
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><@spring.message "info.joiner.participants.add.close"/></button>
+                <button type="button" class="btn btn-primary" id="saveJoiner"><@spring.message "info.joiner.participants.add.save"/></button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<div class="modal hide fade" id="modifyJoinerDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"><@spring.message "info.joiner.participants.edit.title"/></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="modifyJoinerForm" target="submitFrame">
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.joiner.participants.edit.name"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="name" class="form-control" id="inputPassword3"
+                                   placeholder='<@spring.message "info.joiner.participants.edit.name"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.joiner.participants.edit.position"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="position" class="form-control" id="inputPassword3"
+                                   placeholder='<@spring.message "info.joiner.participants.edit.position"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.joiner.participants.edit.phone"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="phone" class="form-control" id="inputPassword3"
+                                   placeholder='<@spring.message "info.joiner.participants.edit.phone"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.joiner.participants.edit.email"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="email" class="form-control" id="inputPassword3"
+                                   placeholder='<@spring.message "info.joiner.participants.edit.email"/>'>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id">
+                    <input type="hidden" name="eid">
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><@spring.message "info.joiner.participants.edit.close"/></button>
+                <button type="button" class="btn btn-primary" id="modifyJoiner"><@spring.message "info.joiner.participants.edit.save"/></button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<div class="modal hide fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><@spring.message "yes"/></h4>
+            </div>
+            <div class="modal-body">
+                <h5><@spring.message "sureToDelete"/></h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><@spring.message "close"/></button>
+                <button type="button" class="btn btn-danger" id="confirmDelete"><@spring.message "yes"/></button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<script>
+    var joiners = null;
+    var joiner = null;
+    (function ($) {
+        $.fn.serializeJson = function () {
+            var serializeObj = {};
+            var array = this.serializeArray();
+            var str = this.serialize();
+            $(array).each(function () {
+                if (serializeObj[this.name]) {
+                    if ($.isArray(serializeObj[this.name])) {
+                        serializeObj[this.name].push(this.value);
+                    } else {
+                        serializeObj[this.name] = [serializeObj[this.name], this.value];
+                    }
+                } else {
+                    serializeObj[this.name] = this.value;
+                }
+            });
+            return serializeObj;
+        };
+    })(jQuery);
+    function loadData() {
+        $("#datas").html("")
+        $.ajax({
+            url: "${base}/user/contact/list",
+            type: "POST",
+            data: {},
+            dataType: "json",
+            success: function (data) {
+                if (data.resultCode == 0) {
+                    joiners = data.contacts;
+                    for (var i in data.contacts) {
+                        var joiner = joiners[i];
+                        $("#datas").append('<tr joiner="' + i + '"><td>' + joiner.name + '</td>'
+                                +'<td>' + joiner.phone + '</td>'
+                                +'<td>' + joiner.email + '</td>'
+                                +'<td>' + joiner.position + '</td>'
+                                +'<td><button name="viewJoiner" type="button" class="btn btn-success" style="margin-right: 10px"><@spring.message "info.joiner.participants.table.view"/></button>'
+                                    +'<button name="deleteJoiner" type="button" class="btn btn-danger"><@spring.message "info.joiner.participants.table.delete"/></button>'
+                                +'</td>'
+                            +'</tr>')
+                    }
+                    $("[name='viewJoiner']").click(function () {
+                        joiner = joiners[parseInt($(this).parent().parent().attr("joiner"))];
+                        $("#modifyJoinerForm input").val("");
+                        $("[name='name']").val(joiner.name);
+                        $("[name='position']").val(joiner.position);
+                        $("[name='phone']").val(joiner.phone);
+                        $("[name='email']").val(joiner.email);
+                        $("[name='id']").val(joiner.id);
+                        $("[name='eid']").val(joiner.eid);
+                        $("#modifyJoinerDialog").modal();
+                    });
+
+                    $("[name='deleteJoiner']").click(function () {
+                        joiner = joiners[parseInt($(this).parent().parent().attr("joiner"))];
+                        $("#confirm").modal();
+                        $("#confirmDelete").unbind("click");
+                        $("#confirmDelete").click(function () {
+                            $.ajax({
+                                url: "${base}/user/contact/delete",
+                                type: "post",
+                                dataType: "json",
+                                data: {"cid": joiner.id},
+                                success: function (result) {
+                                    if (result.resultCode == 0) {
+                                        $("#confirm").modal('hide');
+                                        alert(words.operateSuccess);
+                                        loadData();
+                                    } else {
+                                        alert(words.operateFailure);
+                                    }
+                                }
+                            });
+                        });
+                    });
+                } else {
+                    alert(words.loadDataFailure);
+                }
+            }
+        });
+    }
+    $(document).ready(function () {
+        $("#leftContact").parent().parent().parent().parent().prev().addClass("left_current");
+        $("#leftContact").addClass("active");
+        $("#leftContact").parent().parent().parent().parent().show();
+        loadData();
+        $("#addJoiner").click(function () {
+            $("#addJoinerForm input").val("");
+            $("#joiner").modal();
+        });
+
+        $("#saveJoiner").click(function () {
+            var data = $("#addJoinerForm").serializeJson();
+            if (data.name == '') {
+                alert(words.nameNotEmpty)
+                return;
+            }
+            if (data.position == '') {
+                alert(words.positionNotEmpty)
+                return;
+            }
+            if (data.email == '') {
+                alert(words.mailNotEmpty)
+                return;
+            }else{
+                if(!checkEmail(data.email)){
+                    alert(words.mailNotRight);
+                    return;
+                }
+            }
+            if (data.phone == '') {
+                alert(words.phoneNotEmpty)
+                return;
+            }else{
+                if(!checkNum(data.phone)){
+                    alert(words.phoneNotRight);
+                    return;
+                }
+            }
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: "${base}/user/contact/save",
+                success: function (data) {
+                    if (data.resultCode == 0) {
+                        $("#addJoinerForm input").val("");
+                        loadData();
+                        $("#joiner").modal("hide");
+                        alert(words.addSuccess);
+                    } else {
+                        alert(words.addFailure);
+                    }
+                }
+            });
+
+        });
+
+        $("#modifyJoiner").click(function () {
+            var data = $("#modifyJoinerForm").serializeJson();
+            if (data.name == '') {
+                alert(words.nameNotEmpty)
+                return;
+            }
+            if (data.position == '') {
+                alert(words.positionNotEmpty)
+                return;
+            }
+            if (data.email == '') {
+                alert(words.mailNotEmpty)
+                return;
+            }else{
+                if(!checkEmail(data.email)){
+                    alert(words.mailNotRight);
+                    return;
+                }
+            }
+            if (data.phone == '') {
+                alert(words.phoneNotEmpty)
+                return;
+            }else{
+                if(!checkNum(data.phone)){
+                    alert(words.phoneNotRight);
+                    return;
+                }
+            }
+            data.isDelete = 0;
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: "${base}/user/contact/save",
+                success: function (data) {
+                    if (data.resultCode == 0) {
+                        loadData();
+                        alert(words.operateSuccess);
+                        $("#modifyJoinerDialog").modal("hide")
+                    } else {
+                        alert(words.operateFailure);
+                    }
+                }
+            });
+        });
+    });
+</script>
+<!--/.container-->
+<script src="${resource}/bootstrap/b2/js/bootstrap.js"></script>
+</body>
+</html>

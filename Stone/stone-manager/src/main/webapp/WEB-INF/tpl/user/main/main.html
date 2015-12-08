@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>金泓信展商管理后台</title>
+    <link rel="stylesheet" type="text/css" href="${base}/resource/easyui/themes/metro-blue/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${base}/resource/easyui/themes/icon.css">
+    <script type="text/javascript" src="${base}/resource/jquery.min.js"></script>
+    <script type="text/javascript" src="${base}/resource/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${base}/resource/easyui/empty-view.js"></script>
+    <script type="text/javascript" src="${base}/resource/ajaxfileupload.js"></script>
+    <script type="text/javascript" src="${base}/resource/common.js"></script>
+    <script type="text/javascript" src="${base}/resource/easyui/easyui-validate.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        input {
+            width: 200px;
+            height: 20px;
+        }
+        
+       .exhibitors:hover{
+        	background-color:#6caef5;
+        }
+        .exhibitors{
+        	padding:8px;
+        }
+    </style>
+</head>
+<body style="color: #ffffff" class="easyui-layout">
+<!-- 标题LOGO -->
+<div data-options="region:'north'" style="height:100px;">
+    <h1 style="margin-top: 30px;margin-left: 30px">厦门金泓信石材展展商信息管理中心</h1>
+</div>
+<!-- 菜单栏 -->
+<div data-options="region:'west',split:true" title="菜单栏" style="width:200px;">
+    <div id="menu" class="easyui-accordion" data-options="fit:true,border:false">
+        <div title="展商管理" style="padding-left:10px;padding-top:5px;padding-right:5px;">
+	        <div id="exhibitorsList" class="exhibitors">展商列表</div>
+			<div id="exhibitorsGroupList" class="exhibitors">展团列表</div>
+        </div>
+		<div title="客商管理" style="padding-left:10px;padding-top:5px;padding-right:5px;"><!--石材展需求开始-->
+			<div id="inlandCustomerList" class="exhibitors">国内客商</div>
+			<div id="foreignCustomerList" class="exhibitors">国外客商</div>
+		</div><!--石材展需求结束-->
+		<div title="VISA管理" style="padding-left:10px;padding-top:5px;padding-right:5px;"><!--石材展需求开始-->
+			<div id="tVisaList" class="exhibitors">展商VISA列表</div>
+			<div id="wVisaList" class="exhibitors">客商VISA列表</div>
+		</div><!--石材展需求结束-->
+        <div title="标签管理" style="padding:10px;">标签列表</div>
+        <div title="公告管理" style="padding:10px;">公告列表</div>
+    </div>
+</div>
+<!-- 展商列表 -->
+<div data-options="region:'center',title:'',iconCls:'icon-ok'">
+    <#include "/user/exhibitor/exhibitor.html">
+</div>
+<script>
+//----------------------------------------------------------折叠面板按钮开始-----------------------------------------------------------//
+// 动态添加标签页
+function addTab(title, url){
+	if ($('#tabs').tabs('exists', title)){
+		$('#tabs').tabs('select', title);
+	} else {
+		var content = '<iframe scrolling="auto" frameborder="0" src="'+url+'" style="width:100%;height:99%;"></iframe>';
+		$('#tabs').tabs('add',{
+			title:title,
+			content:content,
+			closable:true
+		});
+	}
+}
+
+//打开展商列表
+$('#exhibitorsList').click(function(){
+	$('#tabs').tabs('select', "展商列表");
+});
+//打开展团列表
+$('#exhibitorsGroupList').click(function(){
+	addTab("展团列表","${base}/user/exhibitorGroup");
+});
+//打开国内客商
+$('#inlandCustomerList').click(function(){
+	addTab("国内客商","${base}/user/inlandCustomer");
+});
+//打开国外客商
+$('#foreignCustomerList').click(function(){
+	addTab("国外客商","${base}/user/foreignCustomer");
+});
+//打开展商VISA
+$('#tVisaList').click(function(){
+	addTab("展商VISA列表","${base}/user/tVisa");
+});
+//打开客商VISA
+$('#wVisaList').click(function(){
+	addTab("客商VISA列表","${base}/user/wVisa");
+});
+//----------------------------------------------------------折叠面板按钮开始-----------------------------------------------------------//
+</script>
+</body>
+</html>

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <link href="${resource}/bootstrap/b2/css/docs.css" rel="stylesheet">
+    <link href="${resource}/bootstrap/b2/css/bootstrap-select.min.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style type="text/css">
+        .form-signin-heading {
+            border-bottom: solid 3px #e1e1e1;
+            padding-bottom: 10px;
+            position: relative;
+            line-height: 40px;
+            color: #d84c31;
+            font-size: 24px;
+        }
+
+        .rowself {
+            width: 680px;
+            margin: 30px auto;
+            margin-bottom: 50px;
+            border: 1px solid #e1e1e1;
+            -webkit-box-shadow: 0 0 3px #eee, inset 0 0 3px #fff;
+            box-shadow: 0 0 3px #eee, inset 0 0 3px #fff;
+            background: #fbfbfb;
+            padding: 20px;
+            margin-top: 0px;
+        }
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+        a {
+            color: #eb8300;
+            text-decoration: none;
+        }
+        .nav-list > .active > a,
+        .nav-list > .active > a:hover,
+        .nav-list > .active > a:focus {
+            color: #ffffff;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+            background-color: #eb8300;
+        }
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<#include "/user/header.html" />
+<!-- /.navbar -->
+
+<div class="container-fluid">
+    <div class="row-fluid" style="width:1000px;margin:0px auto">
+        <#include "/user/left.html" />
+        <div class="span9">
+            <div class="row-fluid">
+                <#include "/common/message.ftl" />
+                <@spring.message "info.notice"/>
+                <form class="form-horizontal" id="infoform" action="${base}/user/updateinfo" method="post" role="form"
+                      enctype="multipart/form-data">
+                    <h3 class="form-signin-heading"><@spring.message "info.update.exhibition.title"/></h3>
+                    <div style="color: red"><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span><@spring.message "info.must"/></div>
+                    <div class="control-group">
+                        <label for="inputEmail3" class="control-label" required><@spring.message "info.update.exhibition.company_zh"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="company" value="${newinfo.company!""}"
+                            class="form-control" placeholder='<@spring.message "info.update.exhibition.company_zh"/>'><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.update.exhibition.company_en"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="companyEn" value="${newinfo.companyEn!""}" class="form-control"
+                            id="inputPassword3" placeholder='<@spring.message "info.update.exhibition.company_en"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPhone" class="control-label"><@spring.message "info.update.exhibition.phone"/></label>
+
+                        <div class="controls">
+                        <input placeholder="国家代码" id="inputPhone" catValidate="required:true" name="phoneCountryNumber" type="text" style="width: 25px;" />-<input placeholder="区号" catValidate="required:true" id="areaNumber" name="areaNumber" type="text" style="width: 40px;" />-<input catValidate="required:true" placeholder="电话号码" id="phoneNumber" name="phoneNumber" type="text" style="width: 102px;" /><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputFax" class="control-label"><@spring.message "info.update.exhibition.fax"/></label>
+
+                        <div class="controls">
+                        <input placeholder="国家代码" id="inputFax" catValidate="required:true" name="faxCountryNumber" type="text" style="width: 25px;" />-<input placeholder="区号" catValidate="required:true" id="faxAreaNumber" name="faxAreaNumber" type="text" style="width: 40px;" />-<input catValidate="required:true" placeholder="号码" id="faxNumber" name="faxNumber" type="text" style="width: 102px;" /><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputEmail3" class="control-label"><@spring.message "info.update.exhibition.email"/></label>
+
+                        <div class="controls">
+                            <input type="email" name="email" value="${newinfo.email!""}" class="form-control" id="inputEmail3"
+                            placeholder='<@spring.message "info.update.exhibition.email"/>'><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.update.exhibition.website"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="website" value="${newinfo.website!""}" class="form-control"
+                            id="inputPassword3" placeholder='<@spring.message "info.update.exhibition.website"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputEmail3" class="control-label"><@spring.message "info.update.exhibition.address_zh"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="address" value="${newinfo.address!""}" class="form-control"
+                            id="inputEmail3" placeholder='<@spring.message "info.update.exhibition.address_zh"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.update.exhibition.address_en"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="addressEn" value="${newinfo.addressEn!""}" class="form-control"
+                            id="inputPassword3" placeholder='<@spring.message "info.update.exhibition.address_en"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputEmail3" class="control-label"><@spring.message "info.update.exhibition.zipcode"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="zipcode" value="${newinfo.zipcode!""}" class="form-control"
+                            id="inputEmail3" placeholder='<@spring.message "info.update.exhibition.zipcode"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.update.exhibition.product_zh"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="mainProduct" value="${newinfo.mainProduct!""}" class="form-control"
+                            id="inputPassword3" placeholder='<@spring.message "info.update.exhibition.product_zh"/>'><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputPassword3" class="control-label"><@spring.message "info.update.exhibition.product_en"/></label>
+
+                        <div class="controls">
+                            <input type="text" name="mainProductEn" value="${newinfo.mainProductEn!""}" class="form-control"
+                            id="inputPassword3" placeholder='<@spring.message "info.update.exhibition.product_en"/>'>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputMark" class="control-label"><@spring.message "info.update.exhibition.remark"/></label>
+
+                        <div class="controls">
+                            <textarea name="mark" cols="40" rows="10" class="form-control" id="inputMark" style="margin: 0px; width: 350px; height: 150px;" placeholder='<@spring.message "info.update.exhibition.remark"/>' onkeydown="countCharZh('inputMark','counterZh');" onkeyup="countCharZh('inputMark','counterZh');">${newinfo.mark!""}</textarea>
+                            <span style="font-weight: bolder;color: red;padding-left: 5px;">*</span><span id="counterZh">您还可以输入200字</span>
+                            <!--<div><@spring.message "info.description.max"/></div>-->
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputLogo1" class="control-label"><@spring.message "info.update.exhibition.logo"/></label>
+
+                        <div class="controls">
+                            <input type="file" name="companyLogo1" style="width: 220px;" class="form-control" id="inputLogo1"
+                                   placeholder='<@spring.message "info.update.exhibition.logo"/>'>
+                            <span>大小不超过200k</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="inputLogo2" class="control-label"><@spring.message "info.update.exhibition.logo"/></label>
+
+                        <div class="controls">
+                            <input type="file" name="companyLogo2" style="width: 220px;" class="form-control" id="inputLogo2"
+                                   placeholder='<@spring.message "info.update.exhibition.logo"/>'>
+                            <span>大小不超过200k</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <a href="#" class="img-thumbnail">
+                                <img style="width: 100px;height: 100px" data-src="holder.js/100x100" src="${base}/user/logoImg?eid=${newinfo.eid}">
+                            </a>
+                            <a href="#" class="img-thumbnail">
+                                <img style="width: 100px;height: 100px" data-src="holder.js/100x100" src="${base}/user/logoImg?eid=${newinfo.eid}">
+                            </a>
+                        </div>
+                    </div>
+                    <hr>
+                    <!--<h3 style="color: #d84c31;"><@spring.message "exhibitor.brands"/></h3>-->
+                    <!--<div id="brands">-->
+                        <!--<#list brands as brand>-->
+                            <!--<#if brand.isDefault==0>-->
+                                <!--<div name="brand_item" class="alert alert-success" style="width: 250px"><button type="button" class="close" data-dismiss="alert">&times;</button><input bid="${brand.id}" value="${brand.brandName!""}" type="text" style="width: 200px;height: 20px" /></div>-->
+                                <!--<#else>-->
+                                    <!--<div name="brand_item" style="width: 250px;display: none"><button type="button" class="close" data-dismiss="alert">&times;</button><input bid="${brand.id}" value="${brand.brandName!""}" type="text" style="width: 200px;height: 20px" /></div>-->
+                            <!--</#if>-->
+                        <!--</#list>-->
+                    <!--</div>-->
+                    <!--<button id="addBrandButton" class="btn btn-mini" type="button"><@spring.message "info.addbrands"/></button>-->
+                    <!--<hr>-->
+                    <!--<h3 style="color: #d84c31;display: none"><@spring.message "info.productRange"/></h3>-->
+                    <!--<div class="row-fluid" style="display: none">-->
+                        <!--<div class="span5">-->
+                            <!--<ul class="nav nav-list bs-docs-sidenav">-->
+                                <!--<#list types as type>-->
+                                    <!--<li><a role="parent" id="${type.id}" sort="parent_${type_index}"-->
+                                           <!--href="javascript:void(0)">-->
+                                        <!--<i class="icon-chevron-right pull-right"></i>-->
+                                        <!--<span name="selectedCount" id="parent_count_${type.id}" count="0"-->
+                                              <!--class="badge pull-right hide"></span>-->
+                                        <!--${type.typeName}-->
+                                    <!--</a>-->
+                                    <!--</li>-->
+                                <!--</#list>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                        <!--<div class="span5">-->
+                            <!--<#list types as type>-->
+                                <!--<div role="childContainer" sort="child_${type_index}" parentId="${type.id}"-->
+                                     <!--class="nav nav-list bs-docs-sidenav hide">-->
+                                    <!--<#list type.childrenTypes as ctype>-->
+                                        <!--<li><a id="subTypeId_${ctype.id}" role="child" parentId="${type.id}"-->
+                                               <!--subTypeId="${ctype.id}"-->
+                                               <!--other="${ctype.isOther!"0"}" href="javascript:void(0)"-->
+                                            <!--class="list-group-item">-->
+                                            <!--<i class="icon-ok pull-right hide"></i>-->
+                                            <!--${ctype.typeName}-->
+                                            <!--</a>-->
+                                        <!--</li>-->
+                                    <!--</#list>-->
+                                    <!--<textarea id="child_other_${type.id}" style="margin-top: 10px;width: 245px"-->
+                                              <!--class="form-control hide" placeholder="其他产品类型描述"></textarea>-->
+                                <!--</div>-->
+                            <!--</#list>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="control-group">
+                        <button type="button" name="saveButton" style="margin-top: 15px" class="btn btn-warning"><@spring.message "info.modifypassword.save" /></button>
+                        <input name="einfoid" value="${newinfo.einfoid!""}" type="hidden">
+                        <input name="logo" value="${newinfo.logo!""}" type="hidden">
+                        <input name="classjson" id="classjson" type="hidden">
+                        <input name="brandsData" id="brandsData" type="hidden">
+                        <input name="phone" type="hidden" />
+                        <input name="fax" type="hidden" />
+                    </div>
+                </form>
+            </div>
+            <!--/row-->
+        </div>
+        <!--/span-->
+
+    </div>
+    <!--/row-->
+
+
+</div>
+<#include "/footer.html" />
+<!--/.container-->
+<script>
+    $(document).ready(function(){
+        $("#leftInfo").parent().parent().parent().parent().prev().addClass("left_current");
+        $("#leftInfo").addClass("active");
+        $("#leftInfo").parent().parent().parent().parent().show();
+
+        var fax = '${newinfo.fax!""}';
+        var f = '';
+        var _f = '';
+        if(fax.indexOf(",") >= 0){
+            f = fax.split(",");
+            if(f.length>1){
+                _f = f[0].split("-");
+                if(_f.length == 3){
+                    $("[name='faxCountryNumber']").val(_f[0]);
+                    $("[name='faxAreaNumber']").val(_f[1]);
+                    $("[name='faxNumber']").val(_f[2]);
+                }else if(_f.length == 2){
+                    $("[name='faxAreaNumber']").val(_f[0]);
+                    $("[name='faxNumber']").val(_f[1]);
+                }else{
+                    $("[name='faxNumber']").val(f[0]);
+                }
+            }
+        }else if(fax.indexOf("，") >= 0){
+            f = fax.split("，");
+            if(f.length>1){
+                _f = f[0].split("-");
+                if(_f.length == 3){
+                    $("[name='faxCountryNumber']").val(_f[0]);
+                    $("[name='faxAreaNumber']").val(_f[1]);
+                    $("[name='faxNumber']").val(_f[2]);
+                }else if(_f.length == 2){
+                    $("[name='faxAreaNumber']").val(_f[0]);
+                    $("[name='faxNumber']").val(_f[1]);
+                }else{
+                    $("[name='faxNumber']").val(f[0]);
+                }
+            }
+        }else{
+            f = fax.split("-");
+            if(f.length == 3){
+                $("[name='faxCountryNumber']").val(f[0]);
+                $("[name='faxAreaNumber']").val(f[1]);
+                $("[name='faxNumber']").val(f[2]);
+            }else if(f.length == 2){
+                console.log("2");
+                $("[name='faxAreaNumber']").val(f[0]);
+                $("[name='faxNumber']").val(f[1]);
+            }else{
+                $("[name='faxNumber']").val(fax);
+            }
+        }
+
+        var phone = '${newinfo.phone!""}';
+        var p = '';
+        var _p = '';
+        if(phone.indexOf(",") >= 0){
+            p = phone.split(",");
+            if(p.length>1){
+                _p = p[0].split("-");
+                if(_p.length == 3){
+                    $("[name='phoneCountryNumber']").val(_p[0]);
+                    $("[name='areaNumber']").val(_p[1]);
+                    $("[name='phoneNumber']").val(_p[2]);
+                }else if(_f.length == 2){
+                    $("[name='areaNumber']").val(_p[0]);
+                    $("[name='phoneNumber']").val(_p[1]);
+                }else{
+                    $("[name='phoneNumber']").val(phone[0]);
+                }
+            }
+        }else if(phone.indexOf("，") >= 0){
+            p = phone.split("，");
+            if(p.length>1){
+                _p = p[0].split("-");
+                if(_p.length == 3){
+                    $("[name='phoneCountryNumber']").val(_p[0]);
+                    $("[name='areaNumber']").val(_p[1]);
+                    $("[name='phoneNumber']").val(_p[2]);
+                }else if(_f.length == 2){
+                    $("[name='areaNumber']").val(_p[0]);
+                    $("[name='phoneNumber']").val(_p[1]);
+                }else{
+                    $("[name='phoneNumber']").val(phone[0]);
+                }
+            }
+        }else{
+            p = phone.split("-");
+            if(p.length == 3){
+                $("[name='phoneCountryNumber']").val(p[0]);
+                $("[name='areaNumber']").val(p[1]);
+                $("[name='phoneNumber']").val(p[2]);
+            }else if(f.length == 2){
+                $("[name='areaNumber']").val(p[0]);
+                $("[name='phoneNumber']").val(p[1]);
+            }else{
+                $("[name='phoneNumber']").val(phone);
+            }
+        }
+    });
+</script>
+<script>
+    selected = eval('${selected}');
+    function initShowSelectedCount() {
+        $("[name='selectedCount']").each(function () {
+            if (parseInt($(this).attr("count")) > 0) {
+                $(this).text(words.selected + parseInt($(this).attr("count")));
+                $(this).removeClass("hide");
+            } else {
+                $(this).addClass("hide");
+            }
+        });
+    }
+    function countCharZh(textareaName,spanName){
+        if(document.getElementById(textareaName).value.length > 200){
+            document.getElementById(spanName).innerHTML = "您已经输入超过200个字了";
+            document.getElementById(textareaName).value = document.getElementById(textareaName).value.substring(0, 200);
+            $("#counterZh").css("color","#e9322d");
+            $("#inputMark").css("border-color","#e9322d");
+        }else{
+            document.getElementById(spanName).innerHTML = "您还可以输入" + (200 - document.getElementById(textareaName).value.length) + "字";
+            $("#counterZh").css("color","#000");
+            $("#inputMark").css("border-color","rgba(82, 168, 236, 0.8)");
+        }
+    }
+    $(document).ready(function () {
+        //init
+        $("a[sort='parent_0']").parent().addClass("active");
+        $("div[sort='child_0']").removeClass("hide");
+        //load exhibitor class info
+        $(selected).each(function () {
+            $("#parent_count_" + this.parentTypeId).attr("count", parseInt($("#parent_count_" + this.parentTypeId).attr("count")) + 1);
+            $($("#subTypeId_" + this.subTypeId).children()[0]).removeClass("hide")
+            if (this.isOther != null && this.isOther == 1) {
+                $("#child_other_" + this.parentTypeId).removeClass("hide");
+                $("#child_other_" + this.parentTypeId).text(this.otherDescription);
+            }
+        });
+        initShowSelectedCount();
+        //parent type click event handle
+        $("[role='parent']").click(function () {
+            $("[role='parent']").each(function () {
+                $(this).parent().removeClass("active");
+            });
+            $(this).parent().addClass("active");
+            $("[role='childContainer']").each(function () {
+                $(this).addClass("hide");
+            })
+            $("div[parentId='" + $(this).attr("id") + "']").removeClass("hide");
+        });
+
+        //children type click event handle
+        $("[role='child']").click(function () {
+            if ($(this).attr("other") == 1) {
+                if ($("#child_other_" + $(this).attr("parentId")).hasClass("hide")) {
+                    $("#child_other_" + $(this).attr("parentId")).removeClass("hide");
+                } else {
+                    $("#child_other_" + $(this).attr("parentId")).addClass("hide");
+                }
+            }
+            if ($($(this).children()[0]).hasClass("hide")) {
+                $($(this).children()[0]).removeClass("hide");
+                $("#parent_count_" + $(this).attr("parentId")).attr("count", parseInt($("#parent_count_" + $(this).attr("parentId")).attr("count")) + 1);
+            } else {
+                $($(this).children()[0]).addClass("hide");
+                $("#parent_count_" + $(this).attr("parentId")).attr("count", parseInt($("#parent_count_" + $(this).attr("parentId")).attr("count")) - 1);
+            }
+            initShowSelectedCount();
+        });
+        //save event
+        $("[name='saveButton']").click(function () {
+
+            nowSelected = new Array();
+            request = {"selected": nowSelected};
+            //find all selected
+            $("[role='child']").each(function () {
+                if (!$($(this).children()[0]).hasClass("hide")) {
+                    //no hide. selected
+                    selectItem = {};
+                    selectItem.parentTypeId = $(this).attr("parentid");
+                    selectItem.subTypeId = $(this).attr("subTypeId");
+                    selectItem.isOther = $(this).attr("other");
+                    if (selectItem.isOther == 1) {
+                        selectItem.otherDescription = $("#child_other_" + $(this).attr("parentid")).val();
+                        if(selectItem.otherDescription==''){
+                            alert("选择“其他”，描述不能为空")
+                            return;
+                        }
+                    }
+//                    console.log(selectItem);
+                    nowSelected.push(selectItem);
+                }
+            });
+            $("#classjson").val($.toJSON(request));
+            var brands = new Array();
+            $("#brands input").each(function(){
+                brands.push({"brandName":$(this).val(),"id":$(this).attr("bid")});
+            })
+            $("#brandsData").val($.toJSON(brands));
+            function needValidate(o){
+                if(o.name=='fax'||o.name=='website'||o.name=='zipcode'|| o.name=='mark'|| o.name=='address'){
+                    return false;
+                }
+                if($("#infoform [name='"+o.name+"']").attr("placeholder")==undefined){
+                    return false;
+                }
+                if(o.name.indexOf("En")!=-1){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+            var formData = $("#infoform").serializeArray();
+            for(var i=0;i<formData.length;i++){
+                if(formData[i].value==''&&needValidate(formData[i])){
+                    alert($("#infoform [name='"+formData[i].name+"']").attr("placeholder")+words.isRequired+" ！");
+                    return;
+                }
+            }
+            var phone = $("[name='phoneCountryNumber']").val()+"-"+$("[name='areaNumber']").val()+"-"+$("[name='phoneNumber']").val();
+            var fax = $("[name='faxCountryNumber']").val()+"-"+$("[name='faxAreaNumber']").val()+"-"+$("[name='faxNumber']").val();
+            $("[name='phone']").val(phone);
+            $("[name='fax']").val(fax);
+            $("#infoform").submit();
+        });
+
+        $("#addBrandButton").click(function(){
+            var item = '<div name="brand_item" class="alert alert-success" style="width: 250px"><button type="button" class="close" data-dismiss="alert">&times;</button><input type="text" style="width: 200px;height: 20px" /></div>';
+            $("#brands").append(item);
+        });
+
+    });
+</script>
+<script src="${resource}/bootstrap/b2/js/bootstrap.js"></script>
+<script src="${resource}/bootstrap/b2/js/bootstrap-select.min.js"></script>
+</body>
+</html>

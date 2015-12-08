@@ -1,0 +1,30 @@
+<script src="${base}/resource/common/jquery.min.js"></script>
+<link rel="shortcut icon" href="http://www.teafair.com.cn/favicon.ico"/>
+<#if rc.locale=="zh_CN">
+    <script src="${base}/resource/language/cn.js"></script>
+<#else>
+    <script src="${base}/resource/language/en.js"></script>
+</#if>
+<script language="JavaScript" type="text/javascript">
+    function checkEmail(str) {
+        var re = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
+        if (re.test(str)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function checkNum(str) {
+        if(str==null||str==''){
+            return false;
+        }else{
+            return true;
+        }
+//        var re = /^1\d{10}$/;
+//        if (re.test(str)) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+    }
+</script>

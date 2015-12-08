@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <link href="${resource}/bootstrap/b2/css/docs.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style type="text/css">
+        .form-signin-heading {
+            border-bottom: solid 3px #e1e1e1;
+            padding-bottom: 10px;
+            position: relative;
+            line-height: 40px;
+            color: #d84c31;
+            font-size: 24px;
+        }
+
+        .rowself {
+            width: 680px;
+            margin: 30px auto;
+            margin-bottom: 50px;
+            border: 1px solid #e1e1e1;
+            -webkit-box-shadow: 0 0 3px #eee, inset 0 0 3px #fff;
+            box-shadow: 0 0 3px #eee, inset 0 0 3px #fff;
+            background: #fbfbfb;
+            padding: 20px;
+            margin-top: 0px;
+        }
+        body {
+            padding-top: 0px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        .bs-docs-sidenav {
+            min-width: 180px;
+        }
+
+        .nav-list > .active > a,
+        .nav-list > .active > a:hover,
+        .nav-list > .active > a:focus {
+            color: #ffffff;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+            background-color: #f1b426;
+        }
+
+        a:hover, a:focus {
+            color: #f1b426;
+            text-decoration: underline;
+        }
+        a:hover, a:active {
+            outline: 0;
+        }
+        a {
+            color: #f1b426;
+            text-decoration: none;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<#include "/user/header.html" />
+<!-- /.navbar -->
+
+<div style="width: 100%">
+    <div class="row-fluid" style="width: 962px;margin: 0px auto;">
+        <#include "/user/left.html" />
+        <div style="width: 639px;float: left;margin-left: 31px;background-color: #ffffff;padding: 20px;">
+            <#include "/common/message.ftl" />
+            <form class="form-horizontal" id="infoform" action="${base}/user/updateinfo" method="post" role="form"
+                  enctype="multipart/form-data">
+                <div style="color: #f1b426;font-size: 16px;border-bottom: 1px #dbdbdb solid;line-height: 32px;font-weight: bolder"><@spring.message "info.update.exhibition.title"/></div>
+                <#if rc.locale=="zh_CN">
+                    <div class="alert alert-block">
+                        2015.12.15截止，所提交的信息将同步到官网、会刊、App和微信公众号等平台供采购商查阅。
+                    </div>
+                <#else>
+                    <div class="alert alert-block">
+                        The information will be published simultaneously on Official Website, Catalogue, APP and WeChat.
+                        Submitting Deadline: Dec 15, 2015
+                    </div>
+                </#if>
+                <div style="color: red"><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>为必填项</div>
+                <div class="control-group">
+                    <label for="inputCompanyZh" class="control-label" required><@spring.message "info.update.exhibition.company_zh"/></label>
+
+                    <div class="controls">
+                        <textarea disabled="disabled" catValidate="required:true" name="company" class="form-control" id="inputCompanyZh">${exhibitor.company!''}</textarea><span style="font-weight: bolder;color: red;padding-left: 5px;">*请核对，如有误请联系组委会</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="inputCompanyEn" class="control-label"><@spring.message "info.update.exhibition.company_en"/></label>
+
+                    <div class="controls">
+                        <textarea disabled="disabled" catValidate="required:true" name="companyEn" class="form-control" id="inputCompanyEn">${exhibitor.companye!''}</textarea><span style="font-weight: bolder;color: red;padding-left: 5px;">*请核对，如有误请联系组委会</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="inputPhone" class="control-label"><@spring.message "info.update.exhibition.phone"/></label>
+
+                    <div class="controls">
+						<#if area?exists && area==2>
+								<input placeholder="国家代码" id="inputPhone" catValidate="required:true" name="phoneCountryNumber" type="text" style="width: 25px;" value="" />-
+							<#else>
+								<input placeholder="国家代码" id="inputPhone" catValidate="required:true" name="phoneCountryNumber" type="text" style="width: 25px;" value="+86" />-
+						</#if><input placeholder="区号" catValidate="required:true" id="areaNumber" name="areaNumber" type="text" style="width: 40px;" />-<input catValidate="required:true" placeholder="电话号码" id="phoneNumber" name="phoneNumber" type="text" style="width: 105px;" /><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="inputFax" class="control-label"><@spring.message "info.update.exhibition.fax"/></label>
+
+                    <div class="controls">
+						<#if area?exists && area==2>
+								<input placeholder="国家代码" id="inputFax" catValidate="required:false" name="faxCountryNumber" type="text" style="width: 25px;" value="" />-
+							<#else>
+								<input placeholder="国家代码" id="inputFax" catValidate="required:false" name="faxCountryNumber" type="text" style="width: 25px;" value="+86" />-
+						</#if><input placeholder="区号" catValidate="required:false" id="faxAreaNumber" name="faxAreaNumber" type="text" style="width: 40px;" />-<input catValidate="required:false" placeholder="号码" id="faxNumber" name="faxNumber" type="text" style="width: 105px;" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="inputEmail" class="control-label"><@spring.message "info.update.exhibition.email"/></label>
+
+                    <div class="controls">
+                        <input type="email" catValidate="required:true" name="email" value="${updateInfo.email!""}" class="form-control" id="inputEmail"
+                        placeholder='<@spring.message "info.update.exhibition.email"/>'><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="inputWebsite" class="control-label"><@spring.message "info.update.exhibition.website"/></label>
+
+                    <div class="controls">
+                        <input type="text" catValidate="required:false" name="website" value="${updateInfo.website!""}" class="form-control"
+                        id="inputWebsite" placeholder='<@spring.message "info.update.exhibition.website"/>'>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="inputAddressZh" class="control-label"><@spring.message "info.update.exhibition.address_zh"/></label>
+
+                    <div class="controls">
+                        <input type="text" catValidate="required:true" name="address" value="${updateInfo.address!""}" class="form-control"
+                        id="inputAddressZh" placeholder='<@spring.message "info.update.exhibition.address_zh"/>'><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="inputAddressEn" class="control-label"><@spring.message "info.update.exhibition.address_en"/></label>
+
+                    <div class="controls">
+                        <input type="text" catValidate="required:true" name="addressEn" value="${updateInfo.addressEn!""}" class="form-control"
+                        id="inputAddressEn" placeholder='<@spring.message "info.update.exhibition.address_en"/>'><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="inputZipcode" class="control-label"><@spring.message "info.update.exhibition.zipcode"/></label>
+
+                    <div class="controls">
+                        <input type="text" catValidate="required:false" name="zipcode" value="${updateInfo.zipcode!""}" class="form-control"
+                        id="inputZipcode" placeholder='<@spring.message "info.update.exhibition.zipcode"/>'>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="inputProductZh" class="control-label"><@spring.message "info.update.exhibition.product_zh"/></label>
+
+                    <div class="controls">
+                        <input type="text" catValidate="required:true" name="mainProduct" value="${updateInfo.mainProduct!""}" class="form-control"
+                        id="inputProductZh" placeholder='<@spring.message "info.update.exhibition.product_zh"/>'><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="inputProductEn" class="control-label"><@spring.message "info.update.exhibition.product_en"/></label>
+
+                    <div class="controls">
+                        <input type="text" catValidate="required:true" name="mainProductEn" value="${updateInfo.mainProductEn!""}" class="form-control"
+                        id="inputProductEn" placeholder='<@spring.message "info.update.exhibition.product_en"/>'><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                    </div>
+                </div>
+                <!--<div class="control-group">-->
+                    <!--<label for="inputMark" class="control-label">公司简介</label>-->
+
+                    <!--<div class="controls">-->
+                        <!--<textarea name="mark" catValidate="required:true" value="${updateInfo.mark!""}" class="form-control" id="inputMark" onkeydown="countCharZh('inputMark','counterZh');" onkeyup="countCharZh('inputMark','counterZh');"-->
+                        <!--placeholder='中文公司简介'>${updateInfo.mark!""}</textarea><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span><span id="counterZh">您还可以输入200字</span>-->
+						<!--<div>限200字以内</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="control-group">-->
+                    <!--<label for="inputEMark" class="control-label">Company Introduce</label>-->
+
+                    <!--<div class="controls">-->
+                        <!--<textarea name="emark" catValidate="required:true" value="${updateInfo.mark!""}" class="form-control" id="inputEMark" onkeydown="countCharEn('inputEMark','counterEn');" onkeyup="countCharEn('inputEMark','counterEn');"-->
+                        <!--placeholder='English Company Introduce'>${updateInfo.emark!""}</textarea><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span></span><span id="counterEn">您还可以输入200字</span>-->
+                        <!--<div>Max. 200 words</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="control-group">
+                    <label for="inputMeipai" class=" control-label"><@spring.message "module.meipai"/></label>
+
+                    <div class="controls">
+                        <textarea name="meipai" catValidate="required:false" class="form-control" id="inputMeipai" placeholder='<@spring.message "module.meipai"/>'>${updateInfo.meipai!""}</textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="inputMeipaiEn" class=" control-label"><@spring.message "module.meipai_en"/></label>
+
+                    <div class="controls">
+                        <textarea name="meipaiEn" catValidate="required:false" class="form-control" id="inputMeipaiEn" placeholder='<@spring.message "module.meipai_en"/>'>${updateInfo.meipaiEn!""}</textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="inputLogo" class="control-label"><@spring.message "info.update.exhibition.logo"/></label>
+
+                    <div class="controls">
+                        <input type="file" name="companyLogo" class="form-control" id="inputLogo"
+                               placeholder='<@spring.message "info.update.exhibition.logo"/>'>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label"></label>
+
+                    <div class="controls">
+                        <a href="#" class="img-thumbnail">
+                            <img style="width: 100px;height: 100px" data-src="holder.js/100x100" src="${base}/user/logoImg?eid=${updateInfo.eid}">
+                        </a>
+                    </div>
+                </div>
+                <hr>
+                <div style="color: #f1b426;font-size: 16px;border-bottom: 1px #dbdbdb solid;line-height: 32px;font-weight: bolder"><@spring.message "info.products"/><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span></div>
+                <div class="row-fluid">
+                    <div style="min-width: 200px;float: left">
+                        <ul class="nav nav-list bs-docs-sidenav">
+                            <#list types as type>
+                                <li><a role="parent" id="${type.id}" sort="parent_${type_index}"
+                                       href="javascript:void(0)">
+                                    <i class="icon-chevron-right pull-right"></i>
+                                        <span name="selectedCount" id="parent_count_${type.id}" count="0"
+                                              class="badge pull-right hide"></span>
+                                    ${type.typeName}
+                                </a>
+                                </li>
+                            </#list>
+                        </ul>
+                    </div>
+                    <div class="span5">
+                        <#list types as type>
+                            <div role="childContainer" sort="child_${type_index}" parentId="${type.id}"
+                                 class="nav nav-list bs-docs-sidenav hide">
+                                <#list type.childrenTypes as ctype>
+                                    <li><a id="subTypeId_${ctype.id}" role="child" parentId="${type.id}"
+                                           subTypeId="${ctype.id}" typeName="${ctype.typeName}"
+                                           parentName="${type.typeName}"
+                                           other="${ctype.isOther!"0"}" href="javascript:void(0)"
+                                        class="list-group-item">
+                                        <i class="icon-ok pull-right hide"></i>
+                                        ${ctype.typeName}
+                                        </a>
+                                    </li>
+                                </#list>
+                                <textarea id="child_other_${type.id}" style="margin-top: 10px;width: 245px"
+                                          class="form-control hide" placeholder="其他产品类型描述"></textarea>
+                            </div>
+                        </#list>
+                    </div>
+                </div>
+                <button type="button" style="margin-top: 10px;" name="previewCatagory" class="btn btn-warning"><@spring.message "info.update.exhibition.preview"/></button><button type="button" style="margin-top: 10px;margin-left: 10px" id="saveButton" name="saveButton" class="btn btn-warning"><@spring.message "info.update.exhibition.save"/></button>
+                <input name="einfoid" value="${updateInfo.einfoid!""}" type="hidden">
+                <input name="logo" value="${updateInfo.logo!""}" type="hidden">
+                <input name="classjson" id="classjson" type="hidden">
+                <input name="phone" type="hidden" />
+                <input name="fax" type="hidden" />
+            </form>
+        </div>
+        <!--/row-->
+    </div>
+    <!--/span-->
+
+</div>
+<!--/row-->
+
+<hr>
+<#include "/footer.html" />
+
+</div>
+
+<div class="modal hide fade" id="preview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><@spring.message "close"/></button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!--/.container-->
+<script>
+    $(document).ready(function(){
+        //fill phone and fax
+        var fax = '${updateInfo.fax!""}';
+        var f = fax.split("-");
+        if(f.length>1){
+			$("[name='faxCountryNumber']").val(f[0]);
+            $("[name='faxAreaNumber']").val(f[1]);
+            $("[name='faxNumber']").val(f[2]);
+        }else{
+            $("[name='faxNumber']").val(f[0]);
+        }
+        var phone = '${updateInfo.phone!""}';
+        var p = phone.split("-");
+        if(p.length>1){
+			$("[name='phoneCountryNumber']").val(p[0]);
+            $("[name='areaNumber']").val(p[1]);
+            $("[name='phoneNumber']").val(p[2]);
+        }else{
+            $("[name='phoneNumber']").val(p[0]);
+        }
+//        DisableInput();
+        $("#nav_einfo").addClass("active")
+    });
+</script>
+<script>
+    function checkDate(year, mouth, day){
+        $.ajax({
+            url: "${base}/user/getCurrentDate",
+            type: "POST",
+            dataType: "json",
+            success: function (currentDate) {
+                console.log(currentDate.year);
+                console.log(currentDate.month);
+                console.log(currentDate.date);
+                if (currentDate.year <= year){
+                    if (currentDate.month <= mouth) {
+                        if (currentDate.date <= day) {
+                            console.log(currentDate.date);
+                        }else{
+                            DisableInput();
+                        }
+                    }else{
+                        DisableInput();
+                    }
+                }else{
+                    DisableInput();
+                }
+            },
+            error: function (data) {
+                alert("出错了");
+            }
+        });
+    }
+    function DisableInput(){
+        $("#inputCompanyZh").attr({"disabled":"disabled"});
+        document.getElementById("inputCompanyZh").disabled=true;
+        $("#inputCompanyEn").attr({"disabled":"disabled"});
+        document.getElementById("inputCompanyEn").disabled=true;
+        $("#inputPhone").attr({"disabled":"disabled"});
+        document.getElementById("inputPhone").disabled=true;
+        $("#areaNumber").attr({"disabled":"disabled"});
+        document.getElementById("areaNumber").disabled=true;
+        $("#phoneNumber").attr({"disabled":"disabled"});
+        document.getElementById("phoneNumber").disabled=true;
+        $("#inputFax").attr({"disabled":"disabled"});
+        document.getElementById("inputFax").disabled=true;
+        $("#faxAreaNumber").attr({"disabled":"disabled"});
+        document.getElementById("faxAreaNumber").disabled=true;
+        $("#faxNumber").attr({"disabled":"disabled"});
+        document.getElementById("faxNumber").disabled=true;
+        $("#inputEmail").attr({"disabled":"disabled"});
+        document.getElementById("inputEmail").disabled=true;
+        $("#inputWebsite").attr({"disabled":"disabled"});
+        document.getElementById("inputWebsite").disabled=true;
+        $("#inputAddressZh").attr({"disabled":"disabled"});
+        document.getElementById("inputAddressZh").disabled=true;
+        $("#inputAddressEn").attr({"disabled":"disabled"});
+        document.getElementById("inputAddressEn").disabled=true;
+        $("#inputZipcode").attr({"disabled":"disabled"});
+        document.getElementById("inputZipcode").disabled=true;
+        $("#inputProductZh").attr({"disabled":"disabled"});
+        document.getElementById("inputProductZh").disabled=true;
+        $("#inputProductEn").attr({"disabled":"disabled"});
+        document.getElementById("inputProductEn").disabled=true;
+        $("#inputMeipai").attr({"disabled":"disabled"});
+        document.getElementById("inputMeipai").disabled=true;
+        $("#inputMeipaiEn").attr({"disabled":"disabled"});
+        document.getElementById("inputMeipaiEn").disabled=true;
+        var div = document.getElementById("saveButton");
+        div.parentNode.removeChild(div);
+    }
+	function testreg(str){
+		var arr = str.match(/.\b./g);
+		if(arr != null) return arr.length;
+		else return 0;
+	}
+	function countCharZh(textareaName,spanName){
+		if(document.getElementById(textareaName).value.length > 200){
+			document.getElementById(spanName).innerHTML = "您已经输入超过200个字了";
+			document.getElementById(textareaName).value = document.getElementById(textareaName).value.substring(0, 200);
+			$("#counterZh").css("color","#e9322d");
+			$("#inputMark").css("border-color","#e9322d");
+		}else{
+			document.getElementById(spanName).innerHTML = "您还可以输入" + (200 - document.getElementById(textareaName).value.length) + "字";
+			$("#counterZh").css("color","#000");
+			$("#inputMark").css("border-color","rgba(82, 168, 236, 0.8)");
+		}
+	}
+	function countCharEn(textareaName,spanName){
+		var str = document.getElementById(textareaName).value;
+		if(testreg(str) > 200){
+			document.getElementById(spanName).innerHTML = "您已经输入超过200个字了";
+			$("#counterEn").css("color","#e9322d");
+			$("#inputEMark").css("border-color","#e9322d");
+		}else{
+			document.getElementById(spanName).innerHTML = "您还可以输入" + (200 - testreg(str)) + "字";
+			$("#counterEn").css("color","#000");
+			$("#inputEMark").css("border-color","rgba(82, 168, 236, 0.8)");
+		}
+	}
+	selected = eval('${selected}');
+    function initShowSelectedCount() {
+        $("[name='selectedCount']").each(function () {
+            if (parseInt($(this).attr("count")) > 0) {
+                $(this).text(words.selected + parseInt($(this).attr("count")));
+                $(this).removeClass("hide");
+            } else {
+                $(this).addClass("hide");
+            }
+        });
+    }
+    $(document).ready(function () {
+        $("#leftExhibitor").addClass("lcurrent");
+        //init
+        $("a[sort='parent_0']").parent().addClass("active");
+        $("div[sort='child_0']").removeClass("hide");
+        //load exhibitor class info
+        $(selected).each(function () {
+            $("#parent_count_" + this.parentTypeId).attr("count", parseInt($("#parent_count_" + this.parentTypeId).attr("count")) + 1);
+            $($("#subTypeId_" + this.subTypeId).children()[0]).removeClass("hide")
+            if (this.isOther != null && this.isOther == 1) {
+                $("#child_other_" + this.parentTypeId).removeClass("hide");
+                $("#child_other_" + this.parentTypeId).text(this.otherDescription);
+            }
+        });
+        initShowSelectedCount();
+        //parent type click event handle
+        $("[role='parent']").click(function () {
+            $("[role='parent']").each(function () {
+                $(this).parent().removeClass("active");
+            });
+            $(this).parent().addClass("active");
+            $("[role='childContainer']").each(function () {
+                $(this).addClass("hide");
+            })
+            $("div[parentId='" + $(this).attr("id") + "']").removeClass("hide");
+        });
+
+        //children type click event handle
+        $("[role='child']").click(function () {
+            if ($(this).attr("other") == 1) {
+                if ($("#child_other_" + $(this).attr("parentId")).hasClass("hide")) {
+                    $("#child_other_" + $(this).attr("parentId")).removeClass("hide");
+                } else {
+                    $("#child_other_" + $(this).attr("parentId")).addClass("hide");
+                }
+            }
+            if ($($(this).children()[0]).hasClass("hide")) {
+                $($(this).children()[0]).removeClass("hide");
+                $("#parent_count_" + $(this).attr("parentId")).attr("count", parseInt($("#parent_count_" + $(this).attr("parentId")).attr("count")) + 1);
+            } else {
+                $($(this).children()[0]).addClass("hide");
+                $("#parent_count_" + $(this).attr("parentId")).attr("count", parseInt($("#parent_count_" + $(this).attr("parentId")).attr("count")) - 1);
+            }
+            initShowSelectedCount();
+        });
+        //save event
+        $("[name='saveButton']").click(function () {
+
+            nowSelected = new Array();
+            request = {"selected": nowSelected}
+            //find all selected
+            $("[role='child']").each(function () {
+                if (!$($(this).children()[0]).hasClass("hide")) {
+                    //no hide. selected
+                    selectItem = {};
+                    selectItem.parentTypeId = $(this).attr("parentid");
+                    selectItem.subTypeId = $(this).attr("subTypeId");
+                    selectItem.isOther = $(this).attr("other");
+                    if (selectItem.isOther == 1) {
+                        selectItem.otherDescription = $("#child_other_" + $(this).attr("parentid")).val();
+                        if(selectItem.otherDescription==''){
+                            alert("选择“其他”，描述不能为空")
+                            return;
+                        }
+                    }
+//                    console.log(selectItem);
+                    nowSelected.push(selectItem);
+                }
+            });
+//			console.log(nowSelected);
+			if(nowSelected.length == 0) {
+				alert("产品所属分类不能为空,请至少选择一项")
+				return;
+			}
+            $("#classjson").val($.toJSON(request));
+            function needValidate(o){
+                var catValidate = $("#infoform [name='"+o.name+"']").attr("catValidate");
+                return catValidate!=undefined&&catValidate.indexOf("required:true")!=-1;
+            }
+            var formData = $("#infoform").serializeArray();
+            for(var i=0;i<formData.length;i++){
+                if(formData[i].name=='email'){
+                    if(formData[i].value==''){
+                        alert(words.mailNotEmpty);
+                        return;
+                    }else if(!checkEmail(formData[i].value)){
+                        alert(words.mailNotRight);
+                        return;
+                    }
+                }
+//				if(formData[i].name=='mark'){
+//					if(formData[i].value==''){
+//						alert("公司简介不能为空");
+//						return;
+//					}else if(formData[i].value.length > 200){
+//						alert("公司中文简介不能超过200个字");
+//						return;
+//					}
+//				}
+//				if(formData[i].name=='emark'){
+//					if(formData[i].value==''){
+//						alert("公司简介不能为空");
+//						return;
+//					}else if(testreg(formData[i].value) > 200){
+//						alert("公司英文简介不能超过200个字");
+//						return;
+//					}
+//				}
+                if(formData[i].value==''&&needValidate(formData[i])){
+                    alert($("#infoform [name='"+formData[i].name+"']").attr("placeholder")+" 不能为空！");
+                    return;
+                }
+            }
+            var phone = $("[name='phoneCountryNumber']").val()+"-"+$("[name='areaNumber']").val()+"-"+$("[name='phoneNumber']").val();
+            var fax = $("[name='faxCountryNumber']").val()+"-"+$("[name='faxAreaNumber']").val()+"-"+$("[name='faxNumber']").val();
+            $("[name='phone']").val(phone);
+            $("[name='fax']").val(fax);
+            $("#infoform").submit();
+        });
+
+        $("[name='previewCatagory']").click(function(){
+            var selectMap = {};
+            $("[role='child']").each(function () {
+                if (!$($(this).children()[0]).hasClass("hide")) {
+                    if(selectMap['parentId'+$(this).attr("parentid")]==undefined){
+                        selectMap['parentId'+$(this).attr("parentid")] = {'parentName':$(this).attr("parentName"),'items':[]};
+                    }
+                    //no hide. selected
+                    selectItem = {};
+                    selectItem.parentTypeId = $(this).attr("parentid");
+                    selectItem.subTypeId = $(this).attr("subTypeId");
+                    selectItem.parentName = $(this).attr("parentName");
+                    selectItem.subName = $(this).attr("typeName");
+                    selectItem.isOther = $(this).attr("other");
+                    if (selectItem.isOther == 1) {
+                        selectItem.otherDescription = $("#child_other_" + $(this).attr("parentid")).val();
+                    }
+                    selectMap['parentId'+$(this).attr("parentid")].items.push(selectItem);
+                }
+            });
+            $("#preview .modal-body").html("");
+            for(var p in selectMap){
+                $("#preview .modal-body").append("<h4>"+selectMap[p].parentName+"</h4>");
+                var parent = $("<ul></ul>");
+                for(var i in selectMap[p].items){
+                    parent.append("<li>"+selectMap[p].items[i].subName+"</li>")
+                }
+                $("#preview .modal-body").append(parent);
+            }
+
+            $("#preview").modal();
+        })
+
+    });
+
+</script>
+<script src="${resource}/bootstrap/b2/js/bootstrap.js"></script>
+</body>
+</html>

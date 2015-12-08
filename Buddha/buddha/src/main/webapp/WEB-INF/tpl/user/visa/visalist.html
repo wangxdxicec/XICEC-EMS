@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <script src="${resource}/date/WdatePicker.js"></script>
+    <style type="text/css">
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<#include "/user/header.html" />
+<div class="container-fluid">
+    <div class="row-fluid" style="width:1000px;margin:0px auto">
+        <#include "/user/left.html" />
+        <div class="span9">
+            <!--<div class="alert alert-success">选择展商所属产品分类</div>-->
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><@spring.message "visa.title"/></h3>
+                </div>
+                <div class="panel-body" style="min-height: 400px">
+                    <div>
+                        <!--<button id="addJoiner" type="button" class="btn btn-success"><@spring.message "info.joiner.participants.add"/></button>-->
+                    </div>
+                    <hr>
+                    <table class="table table-striped" style="margin-top: 10px">
+                        <thead>
+                        <tr>
+                            <th style="width: 100px"><@spring.message "info.joiner.participants.table.name"/></th>
+                            <th><@spring.message "info.joiner.participants.table.phone"/></th>
+                            <th><@spring.message "info.joiner.participants.table.email"/></th>
+                            <th><@spring.message "info.joiner.participants.table.position"/></th>
+                            <th style="width: 150px"><@spring.message "info.joiner.participants.table.option"/></th>
+                        </tr>
+                        </thead>
+                        <tbody id="datas">
+
+                        </tbody>
+                    </table>
+                    <button id="addContact" type="button" class="btn btn-success hide"><@spring.message "visa.add"/></button>
+                </div>
+            </div>
+            <!--/row-->
+        </div>
+        <!--/span-->
+
+
+    </div>
+    <!--/row-->
+
+
+</div>
+<#include "/footer.html" />
+
+<div class="modal hide fade" id="joiner" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><@spring.message "visa.addDialog.title"/></h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" id="addJoinerForm" method="post" enctype="multipart/form-data" action="${base}/user/visa/saveVisa" target="postIframe">
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.passportName"/></label>
+                <div class="controls">
+                    <input type="text" name="passportName" placeholder='<@spring.message "visa.label.passportName"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.gender"/></label>
+                <div class="controls">
+                    <select name="gender">
+                        <option value="1"><@spring.message "gender.male"/></option>
+                        <option value="2"><@spring.message "gender.female"/></option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.nationality"/></label>
+                <div class="controls">
+                    <select name="nationality">
+                        <option value="">-- select one --</option>
+                        <option value="afghan">Afghan</option>
+                        <option value="albanian">Albanian</option>
+                        <option value="algerian">Algerian</option>
+                        <option value="american">American</option>
+                        <option value="andorran">Andorran</option>
+                        <option value="angolan">Angolan</option>
+                        <option value="antiguans">Antiguans</option>
+                        <option value="argentinean">Argentinean</option>
+                        <option value="armenian">Armenian</option>
+                        <option value="australian">Australian</option>
+                        <option value="austrian">Austrian</option>
+                        <option value="azerbaijani">Azerbaijani</option>
+                        <option value="bahamian">Bahamian</option>
+                        <option value="bahraini">Bahraini</option>
+                        <option value="bangladeshi">Bangladeshi</option>
+                        <option value="barbadian">Barbadian</option>
+                        <option value="barbudans">Barbudans</option>
+                        <option value="batswana">Batswana</option>
+                        <option value="belarusian">Belarusian</option>
+                        <option value="belgian">Belgian</option>
+                        <option value="belizean">Belizean</option>
+                        <option value="beninese">Beninese</option>
+                        <option value="bhutanese">Bhutanese</option>
+                        <option value="bolivian">Bolivian</option>
+                        <option value="bosnian">Bosnian</option>
+                        <option value="brazilian">Brazilian</option>
+                        <option value="british">British</option>
+                        <option value="bruneian">Bruneian</option>
+                        <option value="bulgarian">Bulgarian</option>
+                        <option value="burkinabe">Burkinabe</option>
+                        <option value="burmese">Burmese</option>
+                        <option value="burundian">Burundian</option>
+                        <option value="cambodian">Cambodian</option>
+                        <option value="cameroonian">Cameroonian</option>
+                        <option value="canadian">Canadian</option>
+                        <option value="cape verdean">Cape Verdean</option>
+                        <option value="central african">Central African</option>
+                        <option value="chadian">Chadian</option>
+                        <option value="chilean">Chilean</option>
+                        <option value="chinese">Chinese</option>
+                        <option value="colombian">Colombian</option>
+                        <option value="comoran">Comoran</option>
+                        <option value="congolese">Congolese</option>
+                        <option value="costa rican">Costa Rican</option>
+                        <option value="croatian">Croatian</option>
+                        <option value="cuban">Cuban</option>
+                        <option value="cypriot">Cypriot</option>
+                        <option value="czech">Czech</option>
+                        <option value="danish">Danish</option>
+                        <option value="djibouti">Djibouti</option>
+                        <option value="dominican">Dominican</option>
+                        <option value="dutch">Dutch</option>
+                        <option value="east timorese">East Timorese</option>
+                        <option value="ecuadorean">Ecuadorean</option>
+                        <option value="egyptian">Egyptian</option>
+                        <option value="emirian">Emirian</option>
+                        <option value="equatorial guinean">Equatorial Guinean</option>
+                        <option value="eritrean">Eritrean</option>
+                        <option value="estonian">Estonian</option>
+                        <option value="ethiopian">Ethiopian</option>
+                        <option value="fijian">Fijian</option>
+                        <option value="filipino">Filipino</option>
+                        <option value="finnish">Finnish</option>
+                        <option value="french">French</option>
+                        <option value="gabonese">Gabonese</option>
+                        <option value="gambian">Gambian</option>
+                        <option value="georgian">Georgian</option>
+                        <option value="german">German</option>
+                        <option value="ghanaian">Ghanaian</option>
+                        <option value="greek">Greek</option>
+                        <option value="grenadian">Grenadian</option>
+                        <option value="guatemalan">Guatemalan</option>
+                        <option value="guinea-bissauan">Guinea-Bissauan</option>
+                        <option value="guinean">Guinean</option>
+                        <option value="guyanese">Guyanese</option>
+                        <option value="haitian">Haitian</option>
+                        <option value="herzegovinian">Herzegovinian</option>
+                        <option value="honduran">Honduran</option>
+                        <option value="hungarian">Hungarian</option>
+                        <option value="icelander">Icelander</option>
+                        <option value="indian">Indian</option>
+                        <option value="indonesian">Indonesian</option>
+                        <option value="iranian">Iranian</option>
+                        <option value="iraqi">Iraqi</option>
+                        <option value="irish">Irish</option>
+                        <option value="israeli">Israeli</option>
+                        <option value="italian">Italian</option>
+                        <option value="ivorian">Ivorian</option>
+                        <option value="jamaican">Jamaican</option>
+                        <option value="japanese">Japanese</option>
+                        <option value="jordanian">Jordanian</option>
+                        <option value="kazakhstani">Kazakhstani</option>
+                        <option value="kenyan">Kenyan</option>
+                        <option value="kittian and nevisian">Kittian and Nevisian</option>
+                        <option value="kuwaiti">Kuwaiti</option>
+                        <option value="kyrgyz">Kyrgyz</option>
+                        <option value="laotian">Laotian</option>
+                        <option value="latvian">Latvian</option>
+                        <option value="lebanese">Lebanese</option>
+                        <option value="liberian">Liberian</option>
+                        <option value="libyan">Libyan</option>
+                        <option value="liechtensteiner">Liechtensteiner</option>
+                        <option value="lithuanian">Lithuanian</option>
+                        <option value="luxembourger">Luxembourger</option>
+                        <option value="macedonian">Macedonian</option>
+                        <option value="malagasy">Malagasy</option>
+                        <option value="malawian">Malawian</option>
+                        <option value="malaysian">Malaysian</option>
+                        <option value="maldivan">Maldivan</option>
+                        <option value="malian">Malian</option>
+                        <option value="maltese">Maltese</option>
+                        <option value="marshallese">Marshallese</option>
+                        <option value="mauritanian">Mauritanian</option>
+                        <option value="mauritian">Mauritian</option>
+                        <option value="mexican">Mexican</option>
+                        <option value="micronesian">Micronesian</option>
+                        <option value="moldovan">Moldovan</option>
+                        <option value="monacan">Monacan</option>
+                        <option value="mongolian">Mongolian</option>
+                        <option value="moroccan">Moroccan</option>
+                        <option value="mosotho">Mosotho</option>
+                        <option value="motswana">Motswana</option>
+                        <option value="mozambican">Mozambican</option>
+                        <option value="namibian">Namibian</option>
+                        <option value="nauruan">Nauruan</option>
+                        <option value="nepalese">Nepalese</option>
+                        <option value="new zealander">New Zealander</option>
+                        <option value="ni-vanuatu">Ni-Vanuatu</option>
+                        <option value="nicaraguan">Nicaraguan</option>
+                        <option value="nigerien">Nigerien</option>
+                        <option value="north korean">North Korean</option>
+                        <option value="northern irish">Northern Irish</option>
+                        <option value="norwegian">Norwegian</option>
+                        <option value="omani">Omani</option>
+                        <option value="pakistani">Pakistani</option>
+                        <option value="palauan">Palauan</option>
+                        <option value="panamanian">Panamanian</option>
+                        <option value="papua new guinean">Papua New Guinean</option>
+                        <option value="paraguayan">Paraguayan</option>
+                        <option value="peruvian">Peruvian</option>
+                        <option value="polish">Polish</option>
+                        <option value="portuguese">Portuguese</option>
+                        <option value="qatari">Qatari</option>
+                        <option value="romanian">Romanian</option>
+                        <option value="russian">Russian</option>
+                        <option value="rwandan">Rwandan</option>
+                        <option value="saint lucian">Saint Lucian</option>
+                        <option value="salvadoran">Salvadoran</option>
+                        <option value="samoan">Samoan</option>
+                        <option value="san marinese">San Marinese</option>
+                        <option value="sao tomean">Sao Tomean</option>
+                        <option value="saudi">Saudi</option>
+                        <option value="scottish">Scottish</option>
+                        <option value="senegalese">Senegalese</option>
+                        <option value="serbian">Serbian</option>
+                        <option value="seychellois">Seychellois</option>
+                        <option value="sierra leonean">Sierra Leonean</option>
+                        <option value="singaporean">Singaporean</option>
+                        <option value="slovakian">Slovakian</option>
+                        <option value="slovenian">Slovenian</option>
+                        <option value="solomon islander">Solomon Islander</option>
+                        <option value="somali">Somali</option>
+                        <option value="south african">South African</option>
+                        <option value="south korean">South Korean</option>
+                        <option value="spanish">Spanish</option>
+                        <option value="sri lankan">Sri Lankan</option>
+                        <option value="sudanese">Sudanese</option>
+                        <option value="surinamer">Surinamer</option>
+                        <option value="swazi">Swazi</option>
+                        <option value="swedish">Swedish</option>
+                        <option value="swiss">Swiss</option>
+                        <option value="syrian">Syrian</option>
+                        <option value="taiwanese">Taiwanese</option>
+                        <option value="tajik">Tajik</option>
+                        <option value="tanzanian">Tanzanian</option>
+                        <option value="thai">Thai</option>
+                        <option value="togolese">Togolese</option>
+                        <option value="tongan">Tongan</option>
+                        <option value="trinidadian or tobagonian">Trinidadian or Tobagonian</option>
+                        <option value="tunisian">Tunisian</option>
+                        <option value="turkish">Turkish</option>
+                        <option value="tuvaluan">Tuvaluan</option>
+                        <option value="ugandan">Ugandan</option>
+                        <option value="ukrainian">Ukrainian</option>
+                        <option value="uruguayan">Uruguayan</option>
+                        <option value="uzbekistani">Uzbekistani</option>
+                        <option value="venezuelan">Venezuelan</option>
+                        <option value="vietnamese">Vietnamese</option>
+                        <option value="welsh">Welsh</option>
+                        <option value="yemenite">Yemenite</option>
+                        <option value="zambian">Zambian</option>
+                        <option value="zimbabwean">Zimbabwean</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.jobTitle"/></label>
+                <div class="controls">
+                    <input type="text" name="jobTitle" placeholder='<@spring.message "visa.label.jobTitle"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.companyName"/></label>
+                <div class="controls">
+                    <input type="text" name="companyName" placeholder='<@spring.message "visa.label.companyName"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.boothNo"/></label>
+                <div class="controls">
+                    <input type="text" name="boothNo" placeholder='<@spring.message "visa.label.boothNo"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.detailedAddress"/></label>
+                <div class="controls">
+                    <input type="text" name="detailedAddress" placeholder='<@spring.message "visa.label.detailedAddress"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.tel"/></label>
+                <div class="controls">
+                    <input type="text" name="tel" placeholder='<@spring.message "visa.label.tel"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.fax"/></label>
+                <div class="controls">
+                    <input type="text" name="fax" placeholder='<@spring.message "visa.label.fax"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.email"/></label>
+                <div class="controls">
+                    <input type="text" name="email" placeholder='<@spring.message "visa.label.email"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.companyWebsite"/></label>
+                <div class="controls">
+                    <input type="text" name="companyWebsite" placeholder='<@spring.message "visa.label.companyWebsite"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.passportNo"/></label>
+                <div class="controls">
+                    <input type="text" name="passportNo" placeholder='<@spring.message "visa.label.passportNo"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.expDate"/></label>
+                <div class="controls">
+                    <input type="text" readonly="readonly" class="Wdate" onClick="WdatePicker()" name="expireDate" placeholder='<@spring.message "visa.label.expDate"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.birth"/></label>
+                <div class="controls">
+                    <input type="text" readonly="readonly" class="Wdate" onClick="WdatePicker()" name="birthDay" placeholder='<@spring.message "visa.label.birth"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.applyFor"/></label>
+                <div class="controls">
+                    <input type="text" name="applyFor" placeholder='<@spring.message "visa.label.applyFor"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.from"/></label>
+                <div class="controls">
+                    <input type="text" readonly="readonly" class="Wdate" onClick="WdatePicker()" name="fromDate" placeholder='<@spring.message "visa.label.from"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.to"/></label>
+                <div class="controls">
+                    <input type="text" readonly="readonly" class="Wdate" onClick="WdatePicker()" name="toDate" placeholder='<@spring.message "visa.label.to"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.passportPage"/></label>
+                <div class="controls">
+                    <input type="file" name="passportPageFile" placeholder='<@spring.message "visa.label.passportPage"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.businessLicense"/></label>
+                <div class="controls">
+                    <input type="file" name="license" placeholder='<@spring.message "visa.label.businessLicense"/>'>
+                </div>
+            </div>
+        <input type="hidden" name="contactId">
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><@spring.message "info.joiner.participants.add.close"/></button>
+        <button type="button" class="btn btn-primary" id="saveJoiner"><@spring.message "info.joiner.participants.add.save"/></button>
+    </div>
+</div>
+<div class="modal hide fade" id="modifyJoinerDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"><@spring.message "info.joiner.participants.edit.title"/></h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" role="form" id="modifyJoinerForm" target="postIframe" method="post" enctype="multipart/form-data" action="${base}/user/visa/saveVisa">
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.passportName"/></label>
+                <div class="controls">
+                    <input type="text" name="passportName" placeholder='<@spring.message "visa.label.passportName"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.gender"/></label>
+                <div class="controls">
+                    <select name="gender">
+                        <option value="1"><@spring.message "gender.male"/></option>
+                        <option value="2"><@spring.message "gender.female"/></option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.nationality"/></label>
+                <div class="controls">
+                    <select name="nationality">
+                        <option value="">-- select one --</option>
+                        <option value="afghan">Afghan</option>
+                        <option value="albanian">Albanian</option>
+                        <option value="algerian">Algerian</option>
+                        <option value="american">American</option>
+                        <option value="andorran">Andorran</option>
+                        <option value="angolan">Angolan</option>
+                        <option value="antiguans">Antiguans</option>
+                        <option value="argentinean">Argentinean</option>
+                        <option value="armenian">Armenian</option>
+                        <option value="australian">Australian</option>
+                        <option value="austrian">Austrian</option>
+                        <option value="azerbaijani">Azerbaijani</option>
+                        <option value="bahamian">Bahamian</option>
+                        <option value="bahraini">Bahraini</option>
+                        <option value="bangladeshi">Bangladeshi</option>
+                        <option value="barbadian">Barbadian</option>
+                        <option value="barbudans">Barbudans</option>
+                        <option value="batswana">Batswana</option>
+                        <option value="belarusian">Belarusian</option>
+                        <option value="belgian">Belgian</option>
+                        <option value="belizean">Belizean</option>
+                        <option value="beninese">Beninese</option>
+                        <option value="bhutanese">Bhutanese</option>
+                        <option value="bolivian">Bolivian</option>
+                        <option value="bosnian">Bosnian</option>
+                        <option value="brazilian">Brazilian</option>
+                        <option value="british">British</option>
+                        <option value="bruneian">Bruneian</option>
+                        <option value="bulgarian">Bulgarian</option>
+                        <option value="burkinabe">Burkinabe</option>
+                        <option value="burmese">Burmese</option>
+                        <option value="burundian">Burundian</option>
+                        <option value="cambodian">Cambodian</option>
+                        <option value="cameroonian">Cameroonian</option>
+                        <option value="canadian">Canadian</option>
+                        <option value="cape verdean">Cape Verdean</option>
+                        <option value="central african">Central African</option>
+                        <option value="chadian">Chadian</option>
+                        <option value="chilean">Chilean</option>
+                        <option value="chinese">Chinese</option>
+                        <option value="colombian">Colombian</option>
+                        <option value="comoran">Comoran</option>
+                        <option value="congolese">Congolese</option>
+                        <option value="costa rican">Costa Rican</option>
+                        <option value="croatian">Croatian</option>
+                        <option value="cuban">Cuban</option>
+                        <option value="cypriot">Cypriot</option>
+                        <option value="czech">Czech</option>
+                        <option value="danish">Danish</option>
+                        <option value="djibouti">Djibouti</option>
+                        <option value="dominican">Dominican</option>
+                        <option value="dutch">Dutch</option>
+                        <option value="east timorese">East Timorese</option>
+                        <option value="ecuadorean">Ecuadorean</option>
+                        <option value="egyptian">Egyptian</option>
+                        <option value="emirian">Emirian</option>
+                        <option value="equatorial guinean">Equatorial Guinean</option>
+                        <option value="eritrean">Eritrean</option>
+                        <option value="estonian">Estonian</option>
+                        <option value="ethiopian">Ethiopian</option>
+                        <option value="fijian">Fijian</option>
+                        <option value="filipino">Filipino</option>
+                        <option value="finnish">Finnish</option>
+                        <option value="french">French</option>
+                        <option value="gabonese">Gabonese</option>
+                        <option value="gambian">Gambian</option>
+                        <option value="georgian">Georgian</option>
+                        <option value="german">German</option>
+                        <option value="ghanaian">Ghanaian</option>
+                        <option value="greek">Greek</option>
+                        <option value="grenadian">Grenadian</option>
+                        <option value="guatemalan">Guatemalan</option>
+                        <option value="guinea-bissauan">Guinea-Bissauan</option>
+                        <option value="guinean">Guinean</option>
+                        <option value="guyanese">Guyanese</option>
+                        <option value="haitian">Haitian</option>
+                        <option value="herzegovinian">Herzegovinian</option>
+                        <option value="honduran">Honduran</option>
+                        <option value="hungarian">Hungarian</option>
+                        <option value="icelander">Icelander</option>
+                        <option value="indian">Indian</option>
+                        <option value="indonesian">Indonesian</option>
+                        <option value="iranian">Iranian</option>
+                        <option value="iraqi">Iraqi</option>
+                        <option value="irish">Irish</option>
+                        <option value="israeli">Israeli</option>
+                        <option value="italian">Italian</option>
+                        <option value="ivorian">Ivorian</option>
+                        <option value="jamaican">Jamaican</option>
+                        <option value="japanese">Japanese</option>
+                        <option value="jordanian">Jordanian</option>
+                        <option value="kazakhstani">Kazakhstani</option>
+                        <option value="kenyan">Kenyan</option>
+                        <option value="kittian and nevisian">Kittian and Nevisian</option>
+                        <option value="kuwaiti">Kuwaiti</option>
+                        <option value="kyrgyz">Kyrgyz</option>
+                        <option value="laotian">Laotian</option>
+                        <option value="latvian">Latvian</option>
+                        <option value="lebanese">Lebanese</option>
+                        <option value="liberian">Liberian</option>
+                        <option value="libyan">Libyan</option>
+                        <option value="liechtensteiner">Liechtensteiner</option>
+                        <option value="lithuanian">Lithuanian</option>
+                        <option value="luxembourger">Luxembourger</option>
+                        <option value="macedonian">Macedonian</option>
+                        <option value="malagasy">Malagasy</option>
+                        <option value="malawian">Malawian</option>
+                        <option value="malaysian">Malaysian</option>
+                        <option value="maldivan">Maldivan</option>
+                        <option value="malian">Malian</option>
+                        <option value="maltese">Maltese</option>
+                        <option value="marshallese">Marshallese</option>
+                        <option value="mauritanian">Mauritanian</option>
+                        <option value="mauritian">Mauritian</option>
+                        <option value="mexican">Mexican</option>
+                        <option value="micronesian">Micronesian</option>
+                        <option value="moldovan">Moldovan</option>
+                        <option value="monacan">Monacan</option>
+                        <option value="mongolian">Mongolian</option>
+                        <option value="moroccan">Moroccan</option>
+                        <option value="mosotho">Mosotho</option>
+                        <option value="motswana">Motswana</option>
+                        <option value="mozambican">Mozambican</option>
+                        <option value="namibian">Namibian</option>
+                        <option value="nauruan">Nauruan</option>
+                        <option value="nepalese">Nepalese</option>
+                        <option value="new zealander">New Zealander</option>
+                        <option value="ni-vanuatu">Ni-Vanuatu</option>
+                        <option value="nicaraguan">Nicaraguan</option>
+                        <option value="nigerien">Nigerien</option>
+                        <option value="north korean">North Korean</option>
+                        <option value="northern irish">Northern Irish</option>
+                        <option value="norwegian">Norwegian</option>
+                        <option value="omani">Omani</option>
+                        <option value="pakistani">Pakistani</option>
+                        <option value="palauan">Palauan</option>
+                        <option value="panamanian">Panamanian</option>
+                        <option value="papua new guinean">Papua New Guinean</option>
+                        <option value="paraguayan">Paraguayan</option>
+                        <option value="peruvian">Peruvian</option>
+                        <option value="polish">Polish</option>
+                        <option value="portuguese">Portuguese</option>
+                        <option value="qatari">Qatari</option>
+                        <option value="romanian">Romanian</option>
+                        <option value="russian">Russian</option>
+                        <option value="rwandan">Rwandan</option>
+                        <option value="saint lucian">Saint Lucian</option>
+                        <option value="salvadoran">Salvadoran</option>
+                        <option value="samoan">Samoan</option>
+                        <option value="san marinese">San Marinese</option>
+                        <option value="sao tomean">Sao Tomean</option>
+                        <option value="saudi">Saudi</option>
+                        <option value="scottish">Scottish</option>
+                        <option value="senegalese">Senegalese</option>
+                        <option value="serbian">Serbian</option>
+                        <option value="seychellois">Seychellois</option>
+                        <option value="sierra leonean">Sierra Leonean</option>
+                        <option value="singaporean">Singaporean</option>
+                        <option value="slovakian">Slovakian</option>
+                        <option value="slovenian">Slovenian</option>
+                        <option value="solomon islander">Solomon Islander</option>
+                        <option value="somali">Somali</option>
+                        <option value="south african">South African</option>
+                        <option value="south korean">South Korean</option>
+                        <option value="spanish">Spanish</option>
+                        <option value="sri lankan">Sri Lankan</option>
+                        <option value="sudanese">Sudanese</option>
+                        <option value="surinamer">Surinamer</option>
+                        <option value="swazi">Swazi</option>
+                        <option value="swedish">Swedish</option>
+                        <option value="swiss">Swiss</option>
+                        <option value="syrian">Syrian</option>
+                        <option value="taiwanese">Taiwanese</option>
+                        <option value="tajik">Tajik</option>
+                        <option value="tanzanian">Tanzanian</option>
+                        <option value="thai">Thai</option>
+                        <option value="togolese">Togolese</option>
+                        <option value="tongan">Tongan</option>
+                        <option value="trinidadian or tobagonian">Trinidadian or Tobagonian</option>
+                        <option value="tunisian">Tunisian</option>
+                        <option value="turkish">Turkish</option>
+                        <option value="tuvaluan">Tuvaluan</option>
+                        <option value="ugandan">Ugandan</option>
+                        <option value="ukrainian">Ukrainian</option>
+                        <option value="uruguayan">Uruguayan</option>
+                        <option value="uzbekistani">Uzbekistani</option>
+                        <option value="venezuelan">Venezuelan</option>
+                        <option value="vietnamese">Vietnamese</option>
+                        <option value="welsh">Welsh</option>
+                        <option value="yemenite">Yemenite</option>
+                        <option value="zambian">Zambian</option>
+                        <option value="zimbabwean">Zimbabwean</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.jobTitle"/></label>
+                <div class="controls">
+                    <input type="text" name="jobTitle" placeholder='<@spring.message "visa.label.jobTitle"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.companyName"/></label>
+                <div class="controls">
+                    <input type="text" name="companyName" placeholder='<@spring.message "visa.label.companyName"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.boothNo"/></label>
+                <div class="controls">
+                    <input type="text" name="boothNo" placeholder='<@spring.message "visa.label.boothNo"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.detailedAddress"/></label>
+                <div class="controls">
+                    <input type="text" name="detailedAddress" placeholder='<@spring.message "visa.label.detailedAddress"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.tel"/></label>
+                <div class="controls">
+                    <input type="text" name="tel" placeholder='<@spring.message "visa.label.tel"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.fax"/></label>
+                <div class="controls">
+                    <input type="text" name="fax" placeholder='<@spring.message "visa.label.fax"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.email"/></label>
+                <div class="controls">
+                    <input type="text" name="email" placeholder='<@spring.message "visa.label.email"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.companyWebsite"/></label>
+                <div class="controls">
+                    <input type="text" name="companyWebsite" placeholder='<@spring.message "visa.label.companyWebsite"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.passportNo"/></label>
+                <div class="controls">
+                    <input type="text" name="passportNo" placeholder='<@spring.message "visa.label.passportNo"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.expDate"/></label>
+                <div class="controls">
+                    <input type="text" readonly="readonly" class="Wdate" onClick="WdatePicker()" name="expireDate" placeholder='<@spring.message "visa.label.expDate"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.birth"/></label>
+                <div class="controls">
+                    <input type="text" readonly="readonly" class="Wdate" onClick="WdatePicker()" name="birthDay" placeholder='<@spring.message "visa.label.birth"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.applyFor"/></label>
+                <div class="controls">
+                    <input type="text" name="applyFor" placeholder='<@spring.message "visa.label.applyFor"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.from"/></label>
+                <div class="controls">
+                    <input type="text" readonly="readonly" class="Wdate" onClick="WdatePicker()" name="fromDate" placeholder='<@spring.message "visa.label.from"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.to"/></label>
+                <div class="controls">
+                    <input type="text" readonly="readonly" class="Wdate" onClick="WdatePicker()" name="toDate" placeholder='<@spring.message "visa.label.to"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.passportPage"/></label>
+                <div class="controls">
+                    <a id="viewPassportPage" target="_blank" href="">Click to view has been uploaded picture</a>
+                    <input type="file" name="passportPageFile" placeholder='<@spring.message "visa.label.passportPage"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><@spring.message "visa.label.businessLicense"/></label>
+                <div class="controls">
+                    <a id="viewLicense" target="_blank" href="">Click to view has been uploaded picture</a>
+                    <input type="file" name="license" placeholder='<@spring.message "visa.label.businessLicense"/>'>
+                </div>
+            </div>
+            <input type="hidden" name="id">
+            <input type="hidden" name="eid">
+            <input type="hidden" name="contactId">
+            <input type="hidden" name="businessLicense">
+            <input type="hidden" name="passportPage">
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><@spring.message "info.joiner.participants.edit.close"/></button>
+        <button type="button" class="btn btn-primary" id="modifyJoiner"><@spring.message "info.joiner.participants.edit.save"/></button>
+    </div>
+</div>
+<div class="modal hide fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">确认</h4>
+            </div>
+            <div class="modal-body">
+                <h5>确认删除该产品？删除之后无法恢复</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete">确认</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<iframe id="postIframe" name="postIframe" style="display: none"></iframe>
+<script>
+
+    function addSuccess(){
+        $("#addJoinerForm input").val("");
+        loadData();
+        $("#modifyJoinerDialog").modal("hide");
+        $("#joiner").modal("hide");
+        alert("save success");
+    }
+
+    function addFailure(){
+        alert("save failure。");
+    }
+
+    var joiners = null;
+    var joiner = null;
+    (function ($) {
+        $.fn.serializeJson = function () {
+            var serializeObj = {};
+            var array = this.serializeArray();
+            var str = this.serialize();
+            $(array).each(function () {
+                if (serializeObj[this.name]) {
+                    if ($.isArray(serializeObj[this.name])) {
+                        serializeObj[this.name].push(this.value);
+                    } else {
+                        serializeObj[this.name] = [serializeObj[this.name], this.value];
+                    }
+                } else {
+                    serializeObj[this.name] = this.value;
+                }
+            });
+            return serializeObj;
+        };
+    })(jQuery);
+    function loadData() {
+        $("#datas").html("")
+        $.ajax({
+            url: "${base}/user/visa/queryVisas",
+            type: "POST",
+            data: {},
+            dataType: "json",
+            success: function (data) {
+                if (data.resultCode == 0) {
+                    joiners = data.rows;
+                    for (var i in joiners) {
+                        var joiner = joiners[i].contact;
+                        var html = '<tr joiner="' + i + '"><td>' + joiner.name + '</td>'
+                                +'<td>' + joiner.phone + '</td>'
+                                +'<td>' + joiner.email + '</td>'
+                                +'<td>' + joiner.position + '</td>'
+                                if(joiners[i].visa==null){
+                                    html +='<td><button name="addJoiner" type="button" class="btn btn-success" style="margin-right: 10px">绑定Visa</button>'
+                                }else{
+                                    html +='<td><button name="viewJoiner" type="button" class="btn btn-success" style="margin-right: 10px"><@spring.message "info.joiner.participants.table.view"/></button>'
+                                }
+                                html+='</td>'+'</tr>';
+                        $("#datas").append(html);
+                    }
+                    if(joiners.length==0){
+                        $("#addContact").removeClass("hide");
+                    }
+                    $("[name='addJoiner']").click(function () {
+                        $("#addJoinerForm input").val("");
+                        var contact = joiners[parseInt($(this).parent().parent().attr("joiner"))].contact;
+                        $("[name='contactId']").val(contact.id)
+                        $("#joiner").modal();
+                    });
+                    $("[name='viewJoiner']").click(function () {
+                        joiner = joiners[parseInt($(this).parent().parent().attr("joiner"))].visa;
+                        $("#modifyJoinerForm input").val("");
+                        $("[name='id']").val(joiner.id);
+                        $("[name='eid']").val(joiner.eid);
+                        $("[name='passportName']").val(joiner.passportName);
+                        $("[name='gender']").val(joiner.gender);
+                        $("[name='nationality']").val(joiner.nationality);
+                        $("[name='jobTitle']").val(joiner.jobTitle);
+                        $("[name='companyName']").val(joiner.companyName);
+                        $("[name='boothNo']").val(joiner.boothNo);
+                        $("[name='detailedAddress']").val(joiner.detailedAddress);
+                        $("[name='tel']").val(joiner.tel);
+                        $("[name='fax']").val(joiner.fax);
+                        $("[name='email']").val(joiner.email);
+                        $("[name='companyWebsite']").val(joiner.companyWebsite);
+                        $("[name='passportNo']").val(joiner.passportNo);
+                        $("[name='expireDate']").val(joiner.expDate);
+                        $("[name='birthDay']").val(joiner.birth);
+                        $("[name='applyFor']").val(joiner.applyFor);
+                        $("[name='fromDate']").val(joiner.from);
+                        $("[name='toDate']").val(joiner.to);
+                        $("[name='businessLicense']").val(joiner.businessLicense);
+                        $("[name='passportPage']").val(joiner.passportPage);
+                        $("[name='contactId']").val(joiner.contactId);
+                        if(joiner.passportPage!=''){
+                            $("#viewPassportPage").attr("href","${base}/user/visa/visaZhengjian?type=1&vid="+joiner.id);
+                        }else{
+                            $("#viewPassportPage").attr("href","javascript:void(0)");
+                        }
+                        if(joiner.businessLicense!=''){
+                            $("#viewLicense").attr("href","${base}/user/visa/visaZhengjian?type=2&vid="+joiner.id);
+                        }else{
+                            $("#viewLicense").attr("href","javascript:void(0)");
+                        }
+                        $("#modifyJoinerDialog").modal();
+                    });
+
+                    $("[name='deleteJoiner']").click(function () {
+                        joiner = joiners[parseInt($(this).parent().parent().attr("joiner"))];
+                        $("#confirm").modal();
+                        $("#confirmDelete").click(function () {
+                            $.ajax({
+                                url: "${base}/user/visa/delete",
+                                type: "post",
+                                dataType: "json",
+                                data: {"vid": joiner.id},
+                                success: function (result) {
+                                    if (result.resultCode == 0) {
+                                        $("#confirm").modal('hide');
+                                        alert("删除成功");
+                                        loadData();
+                                    } else {
+                                        alert("删除失败");
+                                    }
+                                }
+                            });
+                        });
+                    });
+                } else {
+                    alert("加载数据失败。");
+                }
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("#addContact").click(function(){
+            window.location.href = "${base}/user/contact/index.html";
+        });
+        $("#nav_visa").addClass("active")
+        loadData();
+
+        $("#saveJoiner").click(function () {
+            var data = $("#addJoinerForm").serializeJson();
+            if(data.passportName==''){
+                alert("Passport Name can not be empty！");
+                return;
+            }
+            if(data.nationality==''){
+                alert("Nationality can not be empty！");
+                return;
+            }
+            if(data.jobTitle==''){
+                alert("Job title can not be empty！");
+                return;
+            }
+            if(data.companyName==''){
+                alert("company name can not be empty！");
+                return;
+            }
+            if(data.boothNo==''){
+                alert("Booth No. can not be empty！");
+                return;
+            }
+            if(data.detailedAddress==''){
+                alert("Address can not be empty！");
+                return;
+            }
+            if(data.tel==''){
+                alert("Tel can not be empty！");
+                return;
+            }
+            if(data.fax==''){
+                alert("Fax can not be empty！");
+                return;
+            }
+            if(data.email==''){
+                alert("Email can not be empty！");
+                return;
+            }
+            if(data.companyWebsite==''){
+                alert("Company website can not be empty！");
+                return;
+            }
+            if(data.passportNo==''){
+                alert("Password No. can not be empty！");
+                return;
+            }
+            if(data.expireDate==''){
+                alert("Expire date can not be empty！");
+                return;
+            }
+            if(data.birthDay==''){
+                alert("Birth day can not be empty！");
+                return;
+            }
+            if(data.applyFor==''){
+                alert("Chinese Embassy/Consulate of (City) can not be empty！");
+                return;
+            }
+            if(data.fromDate==''){
+                alert("Start date can not be empty！");
+                return;
+            }
+            if((new Date(data.expireDate) - new Date(data.fromDate))<86400000*60){
+                alert("Expire date must be greater than start date for 60 days ")
+                return;
+            }
+            if(data.toDate==''){
+                alert("End date can not be empty！");
+                return;
+            }
+            if($($("#addJoinerForm [name='passportPageFile']")[0]).val()==''){
+                alert("Please upload your Passport Page (JPEG)");
+                return;
+            }
+            if($($("#addJoinerForm [name='license']")[0]).val()==''){
+                alert("Please upload Business License (JPEG) ");
+                return;
+            }
+            $("#addJoinerForm").submit();
+        });
+
+        $("#modifyJoiner").click(function () {
+            var data = $("#modifyJoinerForm").serializeJson();
+            if(data.passportName==''){
+                alert("Passport Name can not be empty！");
+                return;
+            }
+            if(data.nationality==''){
+                alert("Nationality can not be empty！");
+                return;
+            }
+            if(data.jobTitle==''){
+                alert("Job title can not be empty！");
+                return;
+            }
+            if(data.companyName==''){
+                alert("company name can not be empty！");
+                return;
+            }
+            if(data.boothNo==''){
+                alert("Booth No. can not be empty！");
+                return;
+            }
+            if(data.detailedAddress==''){
+                alert("Address can not be empty！");
+                return;
+            }
+            if(data.tel==''){
+                alert("Tel can not be empty！");
+                return;
+            }
+            if(data.fax==''){
+                alert("Fax can not be empty！");
+                return;
+            }
+            if(data.email==''){
+                alert("Email can not be empty！");
+                return;
+            }
+            if(data.companyWebsite==''){
+                alert("Company website can not be empty！");
+                return;
+            }
+            if(data.passportNo==''){
+                alert("Password No. can not be empty！");
+                return;
+            }
+            if(data.expireDate==''){
+                alert("Expire date can not be empty！");
+                return;
+            }
+            if(data.birthDay==''){
+                alert("Birth day can not be empty！");
+                return;
+            }
+            if(data.applyFor==''){
+                alert("Chinese Embassy/Consulate of (City) can not be empty！");
+                return;
+            }
+            if(data.fromDate==''){
+                alert("Start date can not be empty！");
+                return;
+            }
+            if((new Date(data.expireDate) - new Date(data.fromDate))<86400000*60){
+                alert("Expire date must be greater than start date for 60 days ")
+                return;
+            }
+            if(data.toDate==''){
+                alert("End date can not be empty！");
+                return;
+            }
+            if(data.businessLicense==''&&$($("#modifyJoinerForm [name='passportPageFile']")[0]).val()==''){
+                alert("Please upload your Passport Page (JPEG)");
+                return;
+            }
+            if(data.passportPage==''&&$($("#modifyJoinerForm [name='license']")[0]).val()==''){
+                alert("Please upload Business License (JPEG) ");
+                return;
+            }
+            $("#modifyJoinerForm").submit();
+        });
+    });
+</script>
+<!--/.container-->
+<script src="${resource}/bootstrap/b2/js/bootstrap.js"></script>
+</body>
+</html>

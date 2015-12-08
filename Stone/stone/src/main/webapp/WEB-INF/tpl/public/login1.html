@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+    <!-- Bootstrap core CSS -->
+    <#include "../common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <script src="${resource}/js/jquery.watermark.min.js"></script>
+    <style>
+        body{
+            font-family: "黑体",Arial;
+        }
+        .watermark
+        {
+            color: Gray;
+        }
+        .loginInput {
+            background-image: url("${resource}/images/login_07.gif");
+            width: 329px;
+            height: 47px;
+            margin: 0px auto;
+            margin-top: 27px;
+            border: 0px;
+            margin-left: 64px;
+            font-size: 16px;
+            padding-left: 10px;
+            background-repeat: no-repeat;
+        }
+
+        .loginbutton {
+            position: absolute;
+            bottom: 134px;
+            right: 179px;
+            background-image: url("${resource}/images/login_11.gif");
+            width: 102px;
+            height: 40px;
+            border: 0px;
+            color: #ffffff;
+            font-size: 22px;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        .backhome a,.backhome a:visited{
+            color: #7a8698
+        }
+        .backhome a:hover{
+            color: #005bac;
+        }
+    </style>
+</head>
+
+<body>
+<div style="position: absolute;top: 10px;right: 100px">
+    <a href="${base}/?locale=lc">中文</a>|<a href="${base}/?locale=le">English</a>
+</div>
+<div style="width: 100%;height: 100%">
+    <form role="form" class="form-horizontal">
+        <div style="width: 188px;height: 82px;margin:0px auto;margin-top: 100px;background-image: url('${resource}/images/login_03.gif');">
+            <#if rc.locale=="zh_CN">
+                <a target="_blank" href="http://stonefair.org.cn/CHI/"><img style="border: 0" src="${resource}/images/login_03.gif" /></a>
+            <#else>
+                <a target="_blank" href="http://stonefair.org.cn/"><img style="border: 0" src="${resource}/images/login_03.gif" /></a>
+            </#if>
+        </div>
+        <div style="margin:0px auto;margin-top: 23px;width: 690px;height: 343px;position:relative;color: #7a8698">
+            <div style="height: 100%;width: 469px;background-image: url('${resource}/images/stonebk.gif');margin: 0px auto">
+                <div style="margin-left: 64px;padding-top: 37px;font-size: 22px;color: #005bac;font-weight: bold">
+                    <strong><@spring.message "project"/></strong>
+                </div>
+                <input type="text" id="username" class="loginInput">
+                <input type="password" id="password" class="loginInput">
+
+                <div style="margin-left: 64px;padding-top: 18px;font-size: 12px;color: #7a8698">
+                    <#if rc.locale=="zh_CN">
+                        <label for="rusername"><input id="rusername" type="checkbox"/><@spring.message "login.rememberAccount"/></label>
+                        <label for="rpassword" style="margin-left: 30px"><input id="rpassword" type="checkbox"/><@spring.message "login.rememberPassword"/></label>
+                        <label style="margin-left: 100px;cursor: pointer" id="findpassword"><@spring.message "login.forgotPassword"/></label>
+                    <#else>
+                        <label for="rusername"><input id="rusername" type="checkbox"/><@spring.message "login.rememberAccount"/></label>
+                        <label for="rpassword" style="margin-left: 30px"><input id="rpassword" type="checkbox"/><@spring.message "login.rememberPassword"/></label>
+                        <div class="backhome"  style="margin-left:210px;margin-top: 5px;cursor: pointer" id="findpassword"><a href="javascript:void(0)"><@spring.message "login.forgotPassword"/></a></div>
+                    </#if>
+                </div>
+                <div style="margin-left: 64px;padding-top: 27px;width: 339px;border-bottom: 1px #c9d6dd solid;"></div>
+                <#if rc.locale=="zh_CN">
+                    <div class="backhome" style="margin-left: 64px;padding-top: 15px;width: 339px;font-size: 12px;color: #7a8698">
+                        该平台仅对参展商开放，账号密码由组委会提供。<a href="http://stonefair.org.cn" target="_blank">返回官网</a>
+                    </div>
+                <#else>
+                    <div class="backhome" style="margin-left: 64px;padding-top: 15px;width: 339px;font-size: 12px;color: #7a8698">
+                        This area is exclusive for exhibitors.<a id="findpassword" href="javascript:void(0)"><@spring.message "login.forgotPassword"/></a>
+                    </div>
+                </#if>
+            </div>
+            <button id="loginButton" type="button" class="loginbutton"><@spring.message "login.login"/></button>
+            <div style="background-color: #005bac;height: 295px;width: 100%;top: 22px;position: absolute;z-index: -1"></div>
+        </div>
+        <div style="width: 690px;height: 90px;margin:0px auto;background-image: url('${resource}/images/login_19.gif');"></div>
+    </form>
+</div>
+<script>
+    var english = false;
+    $(document).ready(function () {
+        $("#findpassword").click(function(){
+            <#if rc.locale=="zh_CN">
+                location.href="${resource}/findPassword.html";
+            <#else>
+                location.href="${resource}/findPasswordEn.html";
+            </#if>
+        });
+        <#if rc.locale=="zh_CN">
+            $("#username").watermark({ watermarkText: "请输入用户名" });
+            $("#password").watermark({ watermarkText: "请输入密码" });
+        <#else>
+            $("#username").watermark({ watermarkText: "Please enter account" });
+            $("#password").watermark({ watermarkText: "Please enter password" });
+			$("#findpassword").hide();
+        </#if>
+        $("[name='language']").click(function () {
+            window.location.href = "${base}/?locale=" + $(this).attr("id");
+        });
+        if (window.location.href.indexOf("=le") != -1) {
+            english = true;
+        }
+        $("#loginButton").click(function () {
+            if ($("#username").val() == '' || $("#password").val() == '') {
+                alert("用户名或密码不能为空");
+                return;
+            }
+            var zone = 1;
+            $("[name='zone']").each(function () {
+                if (this.checked) {
+                    zone = $(this).val();
+                }
+            });
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: $.toJSON({"username": $("#username").val(), "password": $("#password").val(), "english": english, "area": zone}),
+                url: "${base}/login",
+                success: function (result) {
+                    $("#loginButton").removeClass("disabled")
+                    if (result.resultCode == 1) {
+                        alert("用户密码错误。")
+                    } else if (result.resultCode > 1) {
+                        alert("服务器错误")
+                    } else {
+                        window.location.href = "${base}/user/main.html"
+                    }
+                },
+                dataType: "json"
+            });
+        });
+    })
+</script>
+<script src="${resource}/bootstrap/b2/js/bootstrap.js"></script>
+</body>
+</html>

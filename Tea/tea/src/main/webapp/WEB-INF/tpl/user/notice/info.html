@@ -1,0 +1,68 @@
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style type="text/css">
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<#include "/user/header.html" />
+<div class="container-fluid">
+    <div class="row-fluid" style="width: 1000px;margin: 0px auto">
+        <#include "/user/left.html" />
+        <div class="span9" style="font-size: 12px;">
+            <h3>
+                <#if Session.zone == 1>
+                    ${article.title}
+                </#if>
+                <#if Session.zone == 2>
+                    ${article.titleEn}
+                </#if>
+            </h3>
+            <#if Session.zone == 1>
+                ${article.content}
+            </#if>
+            <#if Session.zone == 2>
+                ${article.contentEn}
+            </#if>
+        </div>
+    </div>
+</div>
+<#include "/footer.html" />
+
+</body>
+</html>

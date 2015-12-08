@@ -1,0 +1,4 @@
+.leftMenu .hover{ background-color:#e27b58; padding:0; text-align:center; font-size:14px; line-height:40px; height:40px;}
+.leftMenu .menuItem{ background:url(../Images/leftMenu_line.png) center bottom no-repeat;}
+.leftMenu .menuItem a{ padding-left:0; text-align:center; line-height:40px;}
+.leftMenu .menuItem a:hover{ color:#e17c57; background:url(../Images/leftMenu_mainOn.jpg) center no-repeat;}

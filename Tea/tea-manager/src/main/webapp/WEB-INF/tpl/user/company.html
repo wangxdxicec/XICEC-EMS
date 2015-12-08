@@ -1,0 +1,1905 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>金泓信展商管理后台</title>
+    <link rel="stylesheet" type="text/css" href="${base}/resource/easyui/themes/metro-blue/easyui.css">
+    <link rel="stylesheet" type="text/css" href="${base}/resource/easyui/themes/icon.css">
+    <script type="text/javascript" src="${base}/resource/jquery.min.js"></script>
+    <script type="text/javascript" src="${base}/resource/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${base}/resource/ajaxfileupload.js"></script>
+    <script type="text/javascript" src="${base}/resource/common.js"></script>
+    <script type="text/javascript" src="${base}/resource/easyui/easyui-validate.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        input {
+            width: 200px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+<!-- 账号信息 -->
+<div style="height: auto;" class="easyui-panel" title="账号信息">
+	<!-- 账号信息按钮:修改账号信息  激活当前展会  绑定展区展位号 -->
+    <table class="exhibitorinfo" style="width: 90%;margin-left: 10px;margin-top: 5px">
+        <tr style="height: 30px;">
+            <td style="width: 300px" colspan="2">
+                <a id="modifyBaseInfo" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改账号信息</a>
+                <a id="activeExhibitor" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" style="margin-left: 10px">激活当前展会</a>
+                <a id="bindBooth" href="#" class="easyui-linkbutton" style="margin-left: 10px" data-options="iconCls:'icon-save'">绑定展位号</a>
+            	<a id="sendMsg" href="#" class="easyui-linkbutton" style="margin-left: 10px" data-options="iconCls:'icon-redo'">发送私信</a>
+            </td>
+            <td style="width: 200px"></td>
+            <td style="width: 100px"></td>
+            <td style="width: 200px"></td>
+        </tr>
+    </table>
+    <!-- 账号信息内容 -->
+    <table  id="accountInfoTable"  name="accountInfoTable" style="width: 90%;margin-left: 10px;margin-top: 5px;margin-bottom: 10px">
+        <tr style="height: 30px">
+            <td style="width: 80px;text-align: right">公司名称：</td>
+            <td style="width: 200px"><#if exhibitor.company?exists>${exhibitor.company}</#if></td>
+            <td style="width: 90px;text-align: right">公司英文名：</td>
+            <td style="width: 200px"><#if exhibitor.companye?exists>${exhibitor.companye}</#if></td>
+            <td style="width: 80px;text-align: right">用户名：</td>
+            <td style="width: 200px"><#if exhibitor.username?exists>${exhibitor.username}</#if></td>
+            <td style="width: 80px;text-align: right">密码：</td>
+            <td style="width: 200px"><#if exhibitor.password?exists>${exhibitor.password}</#if></td>
+            <td></td>
+        </tr>
+        <tr style="height: 30px">
+            <td style="width: 80px;text-align: right">绑定展会：</td>
+            <td style="width: 200px">
+                <#if term?exists>${term.joinTerm}
+                    <#else>未激活展会
+                </#if>
+            </td>
+            <#if booth?exists>
+                <td style="width: 80px;text-align: right">展区：</td>
+                <td style="width: 200px"><#if booth.exhibitionArea?exists>${booth.exhibitionArea}</#if></td>
+                <td style="width: 80px;text-align: right">展位：</td>
+                <td style="width: 200px"><#if booth.boothNumber?exists>${booth.boothNumber}</#if></td>
+                <#else>
+                    <td style="width: 80px;text-align: right">展区：</td>
+                    <td style="width: 200px">未绑定展区</td>
+                    <td style="width: 80px;text-align: right">展位：</td>
+                    <td style="width: 200px">未绑定展位</td>
+            </#if>
+            <td style="width: 80px;text-align: right"></td>
+            <td style="width: 200px"></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+<!-- 展商基本信息 -->
+<div style="height: auto;" class="easyui-panel" title="展商基本信息">
+	<!-- 展商基本信息按钮:管理展商基本信息 -->
+    <table class="exhibitorinfo" border="0" style="width: 90%;margin-left: 10px;margin-top: 5px">
+        <tr style="height: 30px;">
+            <td style="width: 300px" colspan="2">
+                <a id="manageExhibitorInfo" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">管理展商基本信息</a>
+            </td>
+        </tr>
+    </table>
+    <!-- 展商基本信息内容 -->
+    <#if exhibitorInfo?exists>
+        <table id="exhibitorInfoTable" name="exhibitorInfoTable" class="exhibitorinfo" border="0" style="width: 100%;table-layout：fixed">
+            <tr style="height: 30px">
+                <td style="width: 8%;text-align: right">电话：</td>
+                <td style="width: 13.4%;"><#if exhibitorInfo.phone?exists>${exhibitorInfo.phone}</#if></td>
+                <td style="width: 7%;text-align: right">传真：</td>
+                <td style="width: 13.4%;"><#if exhibitorInfo.fax?exists>${exhibitorInfo.fax}</#if></td>
+                <td style="width: 10%;text-align: right">邮箱：</td>
+                <td style="width: 12.5%;"><a href="mailto:<#if exhibitorInfo.email?exists>${exhibitorInfo.email}</#if>"><#if exhibitorInfo.email?exists>${exhibitorInfo.email}</#if></a></td>
+                <td style="width: 10%;text-align: right">网址：</td>
+                <td style="width: 10%;"><a href="<#if exhibitorInfo.website?exists>${exhibitorInfo.website}</#if>"><#if exhibitorInfo.website?exists>${exhibitorInfo.website}</#if></a></td>
+                <td style="width: 6.5%;text-align: right">发票抬头：</td>
+                <td style="width: 9.2%;"><#if invoice?exists><#if invoice.title?exists>${invoice.title}</#if></#if></td>
+            </tr>
+            <tr style="height: 30px">
+                <td style="width: 8%;text-align: right">地址：</td>
+                <td style="width: 13.4%;"><#if exhibitorInfo.address?exists>${exhibitorInfo.address}</#if></td>
+                <td style="width: 7%;text-align: right">地址(英文)：</td>
+                <td style="width: 13.4%;"><#if exhibitorInfo.addressEn?exists>${exhibitorInfo.addressEn}</#if></td>
+                <td style="width: 10%;text-align: right">企业楣牌：</td>
+                <td style="width: 12.5%;"><#if exhibitorMeipai?exists><#if exhibitorMeipai.meipai?exists>${exhibitorMeipai.meipai}</#if></#if></td>
+            	<td style="width: 10%;text-align: right">企业楣牌(英文)：</td>
+                <td style="width: 10%;"><#if exhibitorMeipai?exists><#if exhibitorMeipai.meipaiEn?exists>${exhibitorMeipai.meipaiEn}</#if></#if></td>
+                <td style="width: 6.5%;text-align: right">地税税号：</td>
+                <td style="width: 9.7%;"><#if invoice?exists><#if invoice.invoiceNo?exists>${invoice.invoiceNo}</#if></#if></td>
+            </tr>
+            <tr style="height: 30px">
+            	<td style="width: 8%;text-align: right">产品分类：</td>
+            	<td style="width: 13.4%;"><select id="queryProductType" class="easyui-combotree" multiple style="width:200px;"></select></td>
+                <td style="width: 7%;text-align: right">主营产品：</td>
+                <td style="width: 13.4%;"><#if exhibitorInfo.mainProduct?exists>${exhibitorInfo.mainProduct}</#if></td>
+                <td style="width: 10%;text-align: right">主营产品(英文)：</td>
+                <td style="width: 12.5%;"><#if exhibitorInfo.mainProductEn?exists>${exhibitorInfo.mainProductEn}</#if></td>
+                <td style="width: 10%;text-align: right">展位面积：</td>
+                <td style="width: 12.5%;"><#if exhibitor.exhibitionArea?exists>${exhibitor.exhibitionArea}</#if>平方米</td>
+            </tr>
+            <tr style="height: 30px">
+            	<td style="width: 8%;text-align: right">公司简介：</td>
+                <td colspan="9" style="width: 92%;text-align: left;word-break:break-all"><#if exhibitorInfo.mark?exists>${exhibitorInfo.mark}</#if></td>
+            </tr>
+            <tr style="height: 30px">
+            	<td style="width: 8%;text-align: right">公司Logo：</td>
+				<td colspan="9" style="width: 92%;text-align: left;word-break:break-all">
+                	<#if exhibitorInfo.logo?exists && exhibitorInfo.logo!=''>
+						<img src="${base}/user/showLogo?eid=${eid}&page=0" id="logoImg" name="logoImg" class="img-rounded" width="300px" height="300px" />
+					<#else>
+						<img src="" id="logoImg" name="logoImg" class="img-rounded" width="300px" height="0px;" />
+					</#if>
+                    <#if exhibitorInfo.logo?exists && exhibitorInfo.logo!=''>
+                        <img src="${base}/user/showLogo?eid=${eid}&page=1" id="logoImg" name="logoImg" class="img-rounded" width="300px" height="300px" />
+                        <#else>
+                            <img src="" id="logoImg" name="logoImg" class="img-rounded" width="300px" height="0px;" />
+                    </#if>
+                </td>
+            </tr>
+        </table>
+	<#else>
+		<div style="margin:10px 10px">该展商未完善展商信息。</div>
+    </#if>
+</div>
+<!-- 产品列表 -->
+<div style="height: 400px;" class="easyui-panel" title="产品列表">
+    <table id="products${eid}" data-options="url:'${base}/user/queryProducts',
+            								 loadMsg: '数据加载中......',
+									         singleSelect:false,	//只能单行选择：关闭
+									         fit:true,
+									         fitColumns:true,
+									         idField:'id',
+											 toolbar:'#productToolbar',
+											 queryParams: {eid:${eid}},
+									         rownumbers: true,
+									         pagination:'true',
+									         pageSize:'20'">
+		<thead>
+			<tr>
+				<th data-options="field:'ck',checkbox:true"></th>
+				<th data-options="field: 'productName', title: '产品名', width: $(this).width() * 0.25"></th>
+				<th data-options="field: 'productModel', title: '产品型号', width: $(this).width() * 0.25"></th>
+				<th data-options="field: 'origin', title: '产品原产地', width: $(this).width() * 0.25"></th>
+				<th data-options="field: 'productBrand', title: '产品品牌', width: $(this).width() * 0.25"></th>
+			</tr>
+		</thead>
+    </table>
+</div>
+<!-- 联系人列表/参展人员列表 -->
+<div style="width:100%;  margin-left: auto;margin-right: auto;" align="center">
+	<!-- 联系人列表 -->
+    <div style="float: left;width: 49%;">
+        <div style="height: 400px;float: left" class="easyui-panel" title="联系人列表">
+            <table id="contacts${eid}" data-options="url: '${base}/user/queryContacts',
+            									 	 loadMsg: '数据加载中......',
+									             	 singleSelect:false,	//只能单行选择：关闭
+									             	 fit:true,
+									             	 fitColumns:true,
+									             	 idField:'id',
+												 	 toolbar:'#contactToolbar',
+												 	 queryParams: {eid:${eid}},
+									             	 pagination:'true',
+									             	 pageSize:'20'">
+				<thead>
+					<tr>
+						<th data-options="field:'ck',checkbox:true"></th>
+						<th data-options="field: 'name', title: '姓名', width: $(this).width() * 0.1"></th>
+						<th data-options="field: 'position', title: '职位', width: $(this).width() * 0.1"></th>
+						<th data-options="field: 'phone', title: '联系电话', width: $(this).width() * 0.2"></th>
+						<th data-options="field: 'email', title: '电子邮箱', width: $(this).width() * 0.2"></th>
+						<th data-options="field: 'address', title: '地址', width: $(this).width() * 0.2"></th>
+						<th data-options="field: 'expressNumber', title: '快递单号', width: $(this).width() * 0.2"></th>
+					</tr>
+				</thead>
+            </table>
+        </div>
+    </div>
+    <!-- 参展人员列表 -->
+    <div style="float: right;width: 49%;">
+        <div style="height: 400px;" class="easyui-panel" title="参展人员列表">
+            <table id="joiners${eid}" data-options="url: '${base}/user/queryJoiners',
+            									 	loadMsg: '数据加载中......',
+									             	singleSelect:false,	//只能单行选择：关闭
+									             	fit:true,
+									             	fitColumns:true,
+									             	idField:'id',
+												 	toolbar:'#joinerToolbar',
+												 	queryParams: {eid:${eid}},
+									             	pagination:'true',
+									             	pageSize:'20'">
+				<thead>
+					<tr>
+						<th data-options="field:'ck',checkbox:true"></th>
+						<th data-options="field: 'name', title: '姓名', width: $(this).width() * 0.25"></th>
+						<th data-options="field: 'position', title: '职位', width: $(this).width() * 0.25"></th>
+						<th data-options="field: 'telphone', title: '手机', width: $(this).width() * 0.25"></th>
+						<th data-options="field: 'email', title: '邮件', width: $(this).width() * 0.25"></th>
+					</tr>
+				</thead>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- 修改账号信息表单 -->
+<div id="accountInfoManageDlg" data-options="iconCls:'icon-edit',modal:true">
+    <form id="accountInfoManageForm"  name="accountInfoManageForm">
+        <table style="width: 320px;margin: 20px auto">
+            <tr>
+                <td style="width: 90px;text-align: right">展商中文名称：</td>
+                <td><input class="easyui-validatebox" type="text" value="${(exhibitor.company)!''}" name="companyName"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">展商英文名称：</td>
+                <td><input class="easyui-validatebox" type="text" value="${(exhibitor.companye)!''}" name="companyNameE"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">用户名：</td>
+                <td><input class="easyui-validatebox" type="text" value="${(exhibitor.username)!''}" name="username"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">密码：</td>
+                <td><input class="easyui-validatebox" type="password" value="${(exhibitor.password)!''}" name="password"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">国家：</td>
+                <td>
+					<select id="country" name="country" style="width:204px;" onchange="country_change(this.options[this.options.selectedIndex].value)">
+					</select>
+				</td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">省份：</td>
+                <td>
+					<select id="province" name="province" style="width:204px;">
+					</select>
+				</td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">所属人：</td>
+                <td>
+					<select id="tag" name="tag" style="width:204px;">
+					</select>
+				</td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">展区：</td>
+                <td>
+					<select id="area" name="area" style="width:204px;">
+					</select>
+				</td>
+            </tr>
+            <input type="hidden" value="${eid}" name="eid">
+        </table>
+    </form>
+</div>
+<!-- 激活当前展会表单 -->
+<div id="activeExhibitorDlg" data-options="iconCls:'icon-ok',modal:true">
+    <form id="activeExhibitorForm">
+        <table style="width: 320px;margin: 20px auto">
+            <tr>
+                <td style="width: 90px;text-align: right">展会：</td>
+                <td><input class="easyui-validatebox" type="text" name="term" value="${currentTerm}" data-options="required:true"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">展位号：</td>
+                <td><input class="easyui-validatebox" type="text" value="${(term.boothNumber)!''}" name="boothNumber" data-options="required:true"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">备注：</td>
+                <td><input class="easyui-validatebox" type="text" value="${(term.mark)!''}" name="mark"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right"></td>
+                <td><input type="hidden" name="eid" value="${eid}"></td>
+            </tr>
+            <#if term?exists>
+                <input type="hidden" value="${term.id}" name="id"/>
+                <#else>
+                    <input type="hidden" value="" name="id"/>
+            </#if>
+        </table>
+    </form>
+</div>
+<!-- 绑定展区展位号表单  -->
+<div id="bindBoothDlg" data-options="iconCls:'icon-save',modal:true">
+    <form id="bindBoothForm">
+        <table style="width: 320px;margin: 20px auto">
+            <tr>
+                <td style="width: 90px;text-align: right">展区名称：</td>
+                <td><input class="easyui-validatebox" type="text" value="${(booth.exhibitionArea)!''}" name="exhibitionArea"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">展位名称：</td>
+                <td><input class="easyui-validatebox" type="text" name="boothNumber" value="${(booth.boothNumber)!''}" data-options="required:true"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">备注：</td>
+                <td><input class="easyui-validatebox" type="text" name="mark" value="${(booth.mark)!''}"></td>
+            </tr>
+        </table>
+		<input type="hidden" value="${eid}" name="eid" />
+		<input type="hidden" value="${(booth.id)!''}" name="id" />
+    </form>
+</div>
+<!-- 发送私信  -->
+<div id="sendMsgDlg" data-options="iconCls:'icon-redo',modal:true">
+    <form id="sendMsgForm">
+        <table>
+            <tr>
+                <td style="width: 90px;text-align: right">私信标题：</td>
+                <td><input class="easyui-validatebox" type="text" name="title" style="width:250px;" required="true" missingMessage="私信标题不能为空"></td>
+            </tr>
+            <tr>
+				<td style="width: 90px;text-align: right">私信内容：</td>
+				<td><textarea class="easyui-validatebox" type="text" name="content" style="width:250px;height:100px;" required="true" missingMessage="私信内容不能为空"></textarea></td>
+			</tr>
+        </table>
+		<input type="hidden" value="${eid}" name="eid" />
+    </form>
+</div>
+<!-- 管理展商基本信息表单 -->
+<div id="baseExhibitorInfoDlg" data-options="iconCls:'icon-edit',modal:true">
+    <form id="baseExhibitorInfoForm" name="baseExhibitorInfoForm">
+        <table>
+            <tr>
+                <td style="width: 90px;text-align: right">电话：</td>
+                <td><input class="easyui-validatebox" type="text" name="phone" value="${(exhibitorInfo.phone)!''}" style="width:250px;"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">传真：</td>
+                <td><input class="easyui-validatebox" type="text" name="fax" value="${(exhibitorInfo.fax)!''}" style="width:250px;"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">邮箱：</td>
+                <td><input class="easyui-validatebox" type="text" name="email" value="${(exhibitorInfo.email)!''}" style="width:250px;"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">网址：</td>
+                <td><input class="easyui-validatebox" type="text" name="website" value="${(exhibitorInfo.website)!''}" style="width:250px;"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">地址(中文)：</td>
+                <td><input class="easyui-validatebox" type="text" name="address" value="${(exhibitorInfo.address)!''}" style="width:250px;"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">地址(英文)：</td>
+                <td><input class="easyui-validatebox" type="text" name="addressEn" value="${(exhibitorInfo.addressEn)!''}" style="width:250px;"></td>
+            </tr>
+            <tr>
+				<td style="width: 90px;text-align: right">邮编：</td>
+				<td><input class="easyui-validatebox" type="text" name="zipcode" value="${(exhibitorInfo.zipcode)!''}" style="width:250px;"></td>
+			</tr>
+			<tr>
+				<td style="width: 90px;text-align: right">产品分类：</td>
+				<td><select id="modifyProductType" class="easyui-combotree" multiple style="width:254px;"></select></td>
+			</tr>
+			<tr>
+				<td style="width: 90px;text-align: right">主营产品(中文)：</td>
+				<td><input class="easyui-validatebox" type="text" name="mainProduct" value="${(exhibitorInfo.mainProduct)!''}" style="width:250px;"></td>
+			</tr>
+			<tr>
+				<td style="width: 90px;text-align: right">主营产品(英文)：</td>
+				<td><input class="easyui-validatebox" type="text" name="mainProductEn" value="${(exhibitorInfo.mainProductEn)!''}" style="width:250px;"></td>
+			</tr>
+			<tr>
+				<td style="width: 90px;text-align: right">企业楣牌：</td>
+				<td><input class="easyui-validatebox" type="text" name="meipai" value="${(exhibitorMeipai.meipai)!''}" style="width:250px;"></td>
+			</tr>
+			<tr>
+				<td style="width: 90px;text-align: right">企业楣牌(英文)：</td>
+				<td><input class="easyui-validatebox" type="text" name="meipaiEn" value="${(exhibitorMeipai.meipaiEn)!''}" style="width:250px;"></td>
+			</tr>
+			<tr>
+				<td style="width: 90px;text-align: right">发票抬头：</td>
+				<td><input class="easyui-validatebox" type="text" name="invoiceTitle" value="${(invoice.title)!''}" style="width:250px;"></td>
+			</tr>
+			<tr>
+				<td style="width: 90px;text-align: right">地税税号：</td>
+				<td><input class="easyui-validatebox" type="text" name="invoiceNo" value="${(invoice.invoiceNo)!''}" style="width:250px;"></td>
+			</tr>
+			<tr>
+				<td style="width: 90px;text-align: right">公司简介：</td>
+				<td><textarea class="easyui-validatebox" type="text" name="mark" style="width:248px;height:100px;">${(exhibitorInfo.mark)!''}</textarea></td>
+			</tr>
+			<tr>
+				<td style="width: 90px;text-align: right">公司Logo：</td>
+				<td><input type="file" name="logoFile" id="logoFile" style="width:254px;" onchange="change()"/></td>
+			</tr>
+			<tr>
+				<td style="width: 90px;text-align: right">Logo预览：</td>
+				<td>
+					<#if exhibitorInfo?exists>
+						<#if exhibitorInfo.logo?exists && exhibitorInfo.logo!=''>
+							<img src="${base}/user/showLogo?eid=${eid}" id="preview" name="preview" class="img-rounded" width="254px" height="100%" />
+						<#else>
+							<img src="" id="preview" name="preview" class="img-rounded" width="254px" height="100%" />
+						</#if>
+					<#else>
+						<img src="" id="preview" name="preview" class="img-rounded" width="254px" height="100%" />
+					</#if>
+				</td>
+			</tr>
+            <!--<tr>-->
+                <!--<td style="width: 90px;text-align: right">展位面积：</td>-->
+                <!--<td><input class="easyui-validatebox" type="text" name="exhibitionArea" value="${(exhibitorInfo.exhibitionArea)!''}" style="width:250px;"></td>-->
+            <!--</tr>-->
+        </table>
+		<input type="hidden" value="${(eid)!''}" name="eid" />
+		<input type="hidden" value="" name="logo" />
+		<input type="hidden" value="" name="productType" id="productType"/>
+		<#if exhibitorInfo?exists>
+			<input type="hidden" value="${exhibitorInfo.einfoid}" name="einfoid" />
+		</#if>
+    </form>
+</div>
+<!-- 添加产品表单  -->
+<div id="addProductDlg" data-options="iconCls:'icon-add',modal:true">
+    <form id="addProductForm">
+        <table style="width: 320px;margin: 20px auto">
+            <tr>
+                <td style="width: 90px;text-align: right">产品名称：</td>
+                <td><input class="easyui-validatebox" type="text" name="productName" required="true" missingMessage="产品名称不能为空"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">产品型号：</td>
+                <td><input class="easyui-validatebox" type="text" name="productModel"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">产品源产地：</td>
+                <td><input class="easyui-validatebox" type="text" name="origin"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">产品关键词：</td>
+                <td><input class="easyui-validatebox" type="text" name="keyWords"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">产品描述：</td>
+                <td><input class="easyui-validatebox" type="text" name="description"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">产品品牌：</td>
+                <td><input class="easyui-validatebox" type="text" name="productBrand"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">产品容量：</td>
+                <td><input class="easyui-validatebox" type="text" name="productSpec"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">产品数量：</td>
+                <td><input class="easyui-validatebox" type="text" name="productCount"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">包装描述：</td>
+                <td><input class="easyui-validatebox" type="text" name="packageDescription"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">价格描述：</td>
+                <td><input class="easyui-validatebox" type="text" name="priceDescription"></td>
+            </tr>
+        </table>
+		<#if exhibitorInfo?exists>
+			<input type="hidden" value="${exhibitorInfo.einfoid}" name="einfoId" />
+		</#if>
+    </form>
+</div>
+<!-- 修改产品表单  -->
+<div id="modifyProductDlg" data-options="iconCls:'icon-edit',modal:true">
+    <form id="modifyProductForm" name="modifyProductForm">
+        <table style="width: 320px;margin: 20px auto">
+            <tr>
+                <td style="width: 90px;text-align: right">产品名称：</td>
+                <td><input class="easyui-validatebox" type="text" name="productName" required="true" missingMessage="产品名称不能为空"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">产品型号：</td>
+                <td><input class="easyui-validatebox" type="text" name="productModel"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">产品源产地：</td>
+                <td><input class="easyui-validatebox" type="text" name="origin"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">产品关键词：</td>
+                <td><input class="easyui-validatebox" type="text" name="keyWords"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">产品描述：</td>
+                <td><input class="easyui-validatebox" type="text" name="description"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">产品品牌：</td>
+                <td><input class="easyui-validatebox" type="text" name="productBrand"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">产品容量：</td>
+                <td><input class="easyui-validatebox" type="text" name="productSpec"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">产品数量：</td>
+                <td><input class="easyui-validatebox" type="text" name="productCount"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">包装描述：</td>
+                <td><input class="easyui-validatebox" type="text" name="packageDescription"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">价格描述：</td>
+                <td><input class="easyui-validatebox" type="text" name="priceDescription"></td>
+            </tr>
+        </table>
+		<#if exhibitorInfo?exists>
+			<input type="hidden" value="${exhibitorInfo.einfoid}" name="einfoId" />
+			<input type="hidden" value="" name="id" />
+		</#if>
+    </form>
+</div>
+<!-- 添加联系人  -->
+<div id="addContactDlg" data-options="iconCls:'icon-add',modal:true">
+    <form id="addContactForm">
+        <table style="width: 320px;margin: 20px auto">
+            <tr>
+                <td style="width: 90px;text-align: right">联系人姓名：</td>
+                <td><input class="easyui-validatebox" type="text" name="name" required="true" missingMessage="联系人姓名不能为空"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">联系人职称：</td>
+                <td><input class="easyui-validatebox" type="text" name="position"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">联系人电话：</td>
+                <td><input class="easyui-validatebox" type="text" name="phone" validType="mobileAndTel"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">联系人邮箱：</td>
+                <td><input class="easyui-validatebox" type="text" name="email" validType="email" invalidMessage="邮箱格式错误"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">联系人地址：</td>
+                <td><input class="easyui-validatebox" type="text" name="address"></td>
+            </tr>
+        </table>
+		<input type="hidden" value="${eid}" name="eid" />
+    </form>
+</div>
+<!-- 添加快递单号  -->
+<div id="addExpressNumberDlg" data-options="iconCls:'icon-add',modal:true">
+    <form id="addExpressNumberForm" name="addExpressNumberForm">
+        <table style="width: 320px;margin: 20px auto">
+            <tr>
+                <td style="width: 90px;text-align: right">快递单号：</td>
+                <td><input class="easyui-validatebox" type="text" name="expressNumber" required="true" missingMessage="快递单号不能为空"></td>
+            </tr>
+        </table>
+		<input type="hidden" value="${eid}" name="eid" />
+		<input type="hidden" value="" name="id" />
+    </form>
+</div>
+<!-- 修改联系人  -->
+<div id="modifyContactDlg" data-options="iconCls:'icon-edit',modal:true">
+    <form id="modifyContactForm" name="modifyContactForm">
+        <table style="width: 320px;margin: 20px auto">
+            <tr>
+                <td style="width: 90px;text-align: right">联系人姓名：</td>
+                <td><input class="easyui-validatebox" type="text" name="name" required="true" missingMessage="联系人姓名不能为空"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">联系人职称：</td>
+                <td><input class="easyui-validatebox" type="text" name="position"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">联系人电话：</td>
+                <td><input class="easyui-validatebox" type="text" name="phone" validType="mobileAndTel"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">联系人邮箱：</td>
+                <td><input class="easyui-validatebox" type="text" name="email" validType="email" invalidMessage="邮箱格式错误"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">联系人地址：</td>
+                <td><input class="easyui-validatebox" type="text" name="address"></td>
+            </tr>
+        </table>
+		<input type="hidden" value="${eid}" name="eid" />
+		<input type="hidden" value="" name="id" />
+    </form>
+</div>
+<!-- 添加参展人员  -->
+<div id="addExhibitorJoinerDlg" data-options="iconCls:'icon-add',modal:true">
+    <form id="addExhibitorJoinerForm">
+        <table style="width: 320px;margin: 20px auto">
+            <tr>
+                <td style="width: 90px;text-align: right">参展人员姓名：</td>
+                <td><input class="easyui-validatebox" type="text" name="name" required="true" missingMessage="参展人员姓名不能为空"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">参展人员职称：</td>
+                <td><input class="easyui-validatebox" type="text" name="position"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">参展人员电话：</td>
+                <td><input class="easyui-validatebox" type="text" name="telphone" validType="mobileAndTel"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">参展人员邮箱：</td>
+                <td><input class="easyui-validatebox" type="text" name="email" validType="email" invalidMessage="邮箱格式错误"></td>
+            </tr>
+        </table>
+		<input type="hidden" value="${eid}" name="eid" />
+    </form>
+</div>
+<!-- 修改参展人员  -->
+<div id="modifyExhibitorJoinerDlg" data-options="iconCls:'icon-edit',modal:true">
+    <form id="modifyExhibitorJoinerForm" name="modifyExhibitorJoinerForm">
+        <table style="width: 320px;margin: 20px auto">
+            <tr>
+                <td style="width: 90px;text-align: right">参展人员姓名：</td>
+                <td><input class="easyui-validatebox" type="text" name="name" required="true" missingMessage="参展人员姓名不能为空"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">参展人员职称：</td>
+                <td><input class="easyui-validatebox" type="text" name="position"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">参展人员电话：</td>
+                <td><input class="easyui-validatebox" type="text" name="telphone" validType="mobileAndTel"></td>
+            </tr>
+            <tr>
+                <td style="width: 90px;text-align: right">参展人员邮箱：</td>
+                <td><input class="easyui-validatebox" type="text" name="email" validType="email" invalidMessage="邮箱格式错误"></td>
+            </tr>
+        </table>
+		<input type="hidden" value="${eid}" name="eid" />
+		<input type="hidden" value="" name="id" />
+    </form>
+</div>
+<!-- 产品列表工具栏 -->
+<div id="productToolbar">
+    <div>
+        <div id="addProductBtn" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加产品</div>
+        <div id="deleteProductBtn" class="easyui-linkbutton" iconCls="icon-add" plain="true">删除产品</div>
+    </div>
+</div>
+<!-- 联系人列表工具栏 -->
+<div id="contactToolbar">
+    <div>
+        <div id="addContactBtn" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加联系人</div>
+        <div id="addExpressNumberBtn" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加快递单号</div>
+        <div id="addToJoinersBtn" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加到参展人员</div>
+<!--         <div id="removeContactBtn" class="easyui-linkbutton" iconCls="icon-remove" plain="true">注销联系人</div> 此功能暂时不用-->
+    </div>
+</div>
+<!-- 参展人员列表工具栏 -->
+<div id="joinerToolbar">
+    <div>
+        <div id="addJoinerBtn" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加参展人员</div>
+        <div id="removeJoinerBtn" class="easyui-linkbutton" iconCls="icon-remove" plain="true">注销参展人员</div>
+    </div>
+</div>
+
+<script>
+var country = [];
+var province = [];
+var checkedProducts = [];
+var checkedJoiners = [];
+var checkedContacts = [];
+
+/********************************************************产品列表工具栏函数开始***********************************************************/
+//添加产品
+$('#addProductBtn').click(function(){
+	<#if exhibitorInfo?exists>
+		document.getElementById("addProductForm").reset();
+	    $("#addProductDlg").dialog("open");
+	<#else>
+		$.messager.alert('提示', '请先添加展商基本信息');
+	</#if>
+});
+//删除产品
+$('#deleteProductBtn').click(function(){
+	if(checkedProducts.length > 0){
+		$.messager.confirm('确认删除','你确定要删除产品吗?',function(r){
+		    if (r){
+        		$.ajax({
+                    url: "${base}/user/removeProducts",
+                    type: "post",
+                    dataType: "json",
+                    data: {"pids": checkedProducts},
+                    traditional: true,
+                    success: function (data) {
+                        if (data.resultCode == 0) {
+                        	$("#products${eid}").datagrid("reload");
+                        	checkedProducts = [];
+                            $.messager.show({
+                                title: '成功',
+                                msg: '删除成功',
+                                timeout: 5000,
+                                showType: 'slide'
+                            });
+                        } else {
+                            $.messager.alert('错误', '系统错误');
+                        }
+                    }
+                });
+            	$.messager.alert('提示', '删除产品成功');
+		    }
+		});
+	}else{
+		$.messager.alert('提示', '请至少选择一项产品再删除');
+	}
+});
+/********************************************************产品列表工具栏函数结束***********************************************************/
+/********************************************************联系人列表工具栏函数开始**********************************************************/
+//添加联系人
+$('#addContactBtn').click(function(){
+	var data=$('#contacts${eid}').datagrid('getData');
+	if(data.total > 0){
+		$.messager.alert('错误', '只允许添加一个联系人');
+	}else{
+		document.getElementById("addContactForm").reset();
+        $("#addContactDlg").dialog("open");
+	}
+});
+//添加快递单号
+$('#addExpressNumberBtn').click(function(){
+	var expressNumber=$('#contacts${eid}').datagrid('getData').rows[0].expressNumber;
+	if(expressNumber == null || expressNumber == "") {
+		document.addExpressNumberForm.id.value = $('#contacts${eid}').datagrid('getData').rows[0].id;
+		document.getElementById("addExpressNumberForm").reset();
+        $("#addExpressNumberDlg").dialog("open");
+	}else{
+		$.messager.alert('错误', '只允许添加一次快递单号');
+	}
+});
+//添加到参展人员
+$('#addToJoinersBtn').click(function(){
+	if(checkedContacts.length > 0){
+		$.ajax({
+            url: "${base}/user/addToJoiners",
+            type: "post",
+            dataType: "json",
+            data: {"cids": checkedContacts},
+            traditional: true,
+            success: function (data) {
+                if (data.resultCode == 0) {
+                    $.messager.show({
+                        title: '成功',
+                        msg: '添加成功',
+                        timeout: 5000,
+                        showType: 'slide'
+                    });
+                    checkedContacts = {};
+                } else {
+                    $.messager.alert('错误', '系统错误');
+                }
+            }
+        });
+    	$.messager.alert('提示', '添加到参展人员成功');
+	}else{
+		$.messager.alert('提示', '请至少选择一项联系人再删除');
+	}
+});
+/*
+//注销联系人暂时不用
+$('#removeContactBtn').click(function(){
+	if(checkedContacts.length > 0){
+		$.messager.confirm('确认删除','你确定要删除联系人吗?',function(r){
+		    if (r){
+        		$.ajax({
+                    url: "${base}/user/removeContacts",
+                    type: "post",
+                    dataType: "json",
+                    data: {"cids": checkedContacts},
+                    traditional: true,
+                    success: function (data) {
+                        if (data.resultCode == 0) {
+                        	$("#contacts${eid}").datagrid("reload");
+                        	checkedJoiners = [];
+                            $.messager.show({
+                                title: '成功',
+                                msg: '删除成功',
+                                timeout: 5000,
+                                showType: 'slide'
+                            });
+                            checkedContacts = {};
+                        } else {
+                            $.messager.alert('错误', '系统错误');
+                        }
+                    }
+                });
+            	$.messager.alert('提示', '删除联系人成功');
+		    }
+		});
+	}else{
+		$.messager.alert('提示', '请至少选择一项联系人再删除');
+	}
+});*/
+/********************************************************联系人列表工具栏函数结束**********************************************************/
+/********************************************************参展人员列表工具栏函数开始********************************************************/
+//添加参展人员
+$('#addJoinerBtn').click(function(){
+	<#if exhibitorInfo?exists>
+		document.getElementById("addExhibitorJoinerForm").reset();
+	    $("#addExhibitorJoinerDlg").dialog("open");
+	<#else>
+		$.messager.alert('提示', '请先添加展商基本信息');
+	</#if>
+});
+//注销参展人员
+$('#removeJoinerBtn').click(function(){
+	if(checkedJoiners.length > 0){
+		$.messager.confirm('确认删除','你确定要删除参展人员吗?',function(r){
+		    if (r){
+        		$.ajax({
+                    url: "${base}/user/removeJoiners",
+                    type: "post",
+                    dataType: "json",
+                    data: {"jids": checkedJoiners},
+                    traditional: true,
+                    success: function (data) {
+                        if (data.resultCode == 0) {
+                        	$("#joiners${eid}").datagrid("reload");
+                        	checkedContacts = [];
+                            $.messager.show({
+                                title: '成功',
+                                msg: '删除成功',
+                                timeout: 5000,
+                                showType: 'slide'
+                            });
+                            checkedJoiners = {};
+                        } else {
+                            $.messager.alert('错误', '系统错误');
+                        }
+                    }
+                });
+            	$.messager.alert('提示', '删除参展人员成功');
+		    }
+		});
+	}else{
+		$.messager.alert('提示', '请至少选择一项参展人员再删除');
+	}
+});
+/********************************************************参展人员列表工具栏函数结束********************************************************/
+/********************************************************自定义函数开始****************************************************************/
+function country_change(countryId){
+	$.ajax({
+		type:"POST",
+		dataType:"json",
+		url:"${base}/user/queryProvinceByCountryId",
+		data:{ 'countryId': countryId },
+		success : function(result) {
+			if(result){
+				$("#province").html('');
+				document.getElementById('province').disabled=false;
+   		 		$("#province").append('<option value="">请选择</option>');
+   		 		for(var i=0,a;a=province[i++];){
+//	   		 		    console.log(a);
+   		 			$("#province").append('<option value="'+a.id+'">'+a.chineseName+'</option>');
+   		 		}
+			}
+		},
+		error : function(result) {
+			$("#province").html('');
+			document.getElementById('province').disabled=true;
+		}
+	});
+}
+
+function refreshAccountInfo(){
+	var tabRow = accountInfoTable.rows;
+	var tabCell0 = tabRow[0].cells;
+	tabCell0[1].innerText = document.accountInfoManageForm.companyName.value;
+	tabCell0[3].innerText = document.accountInfoManageForm.companyNameE.value;
+	tabCell0[5].innerText = document.accountInfoManageForm.username.value;
+	tabCell0[7].innerText = document.accountInfoManageForm.password.value;
+}
+
+function refreshExhibitorInfo(){
+	var tabRow = exhibitorInfoTable.rows;
+	var tabCell0 = tabRow[0].cells;
+	/* 电话     */tabCell0[1].innerText = document.baseExhibitorInfoForm.phone.value;
+	/* 传真     */tabCell0[3].innerText = document.baseExhibitorInfoForm.fax.value;
+	/* 邮箱     */tabCell0[5].innerHTML = "<a href='mailto:"+document.baseExhibitorInfoForm.email.value+"' >"+document.baseExhibitorInfoForm.email.value+"</a>";
+	/* 网址     */tabCell0[7].innerHTML = "<a href='"+document.baseExhibitorInfoForm.website.value+"' >"+document.baseExhibitorInfoForm.website.value+"</a>";
+	/*发票抬头*/tabCell0[9].innerText = document.baseExhibitorInfoForm.invoiceTitle.value;
+	var tabCell1 = tabRow[1].cells;
+	/*中文地址*/tabCell1[1].innerText = document.baseExhibitorInfoForm.address.value;
+	/*英文地址*/tabCell1[3].innerText = document.baseExhibitorInfoForm.addressEn.value;
+	/*中文楣牌*/tabCell1[5].innerText = document.baseExhibitorInfoForm.meipai.value
+	/*英文楣牌*/tabCell1[7].innerText = document.baseExhibitorInfoForm.meipaiEn.value;
+	/*地税税号*/tabCell1[9].innerText = document.baseExhibitorInfoForm.invoiceNo.value;
+	var tabCell2 = tabRow[2].cells;
+	/*产品分类*/$('#queryProductType').combotree('reload');
+	/*中文产品*/tabCell2[3].innerText = document.baseExhibitorInfoForm.mainProduct.value;
+	/*英文产品*/tabCell2[5].innerText = document.baseExhibitorInfoForm.mainProductEn.value;
+//    /*展位面积*/tabCell2[7].innerText = document.baseExhibitorInfoForm.exhibitionArea.value;
+	var tabCell3 = tabRow[3].cells;
+	/*公司简介*/tabCell3[1].innerText = document.baseExhibitorInfoForm.mark.value;
+	/*Logo预览*/document.logoImg.src="${base}/user/showLogo?eid=${eid}";
+}
+
+function change() {
+    var pic = document.getElementById("preview");
+    var file = document.getElementById("logoFile");
+    var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
+    // gif在IE浏览器暂时无法显示
+    if(ext!='png' && ext!='jpg' && ext!='jpeg' && ext!='gif'){
+        alert("文件必须为图片！"); return;
+    }
+    // IE浏览器
+    if(document.all){
+        file.select();
+        var reallocalpath = document.selection.createRange().text;
+        var ie6 = /msie 6/i.test(navigator.userAgent);
+        // IE6浏览器设置img的src为本地路径可以直接显示图片
+        if(ie6){
+        	pic.src = reallocalpath;
+        }else{
+            // 非IE6版本的IE由于安全问题直接设置img的src无法显示本地图片，但是可以通过滤镜来实现
+            pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',src=\"" + reallocalpath + "\")";
+            // 设置img的src为base64编码的透明图片 取消显示浏览器默认图片
+            pic.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+        }
+    }else{
+        html5Reader(file);
+    }
+}
+
+function html5Reader(file){
+    var file = file.files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function(e){
+        var pic = document.getElementById("preview");
+        pic.src=this.result;
+    }
+}
+
+function exhibitorInfo(parm){
+	var file = document.getElementById("logoFile").value;
+    if(file == null || file == ""){
+		//logo为空
+    	if ($("#baseExhibitorInfoForm").form("validate")) {
+			$.ajax({
+				url: "${base}/user/modifyExhibitorInfo",
+	            type: "post",
+	            dataType: "json",
+	            data: $("#baseExhibitorInfoForm").serializeJson(),
+	            success: function (data) {
+	                if (data.resultCode == 0) {
+	                    $("#baseExhibitorInfoDlg").dialog("close");
+	                    if(parm == "modify") refreshExhibitorInfo();
+	                    else if(parm == "add") window.location.reload();
+	                    $.messager.show({
+	                        title: '成功',
+	                        msg: '展商基本信息修改成功',
+	                        timeout: 5000,
+	                        showType: 'slide'
+	                    });
+	                } else {
+	                    $.messager.alert('错误', '系统错误');
+	                }
+				}
+			});
+		}
+	} else {
+		//logo不为空
+		var index = file.lastIndexOf(".");
+    	if(file.lastIndexOf(".") < 0) {
+    		$.messager.alert('提示', '上传的文件格式不正确，请选择png,jpg,jpeg,gif格式文件！');
+    	} else {
+    		var ext = file.substring(index + 1, file.length);
+    		if(ext!='png' && ext!='jpg' && ext!='jpeg' && ext!='gif'){
+    			$.messager.alert('提示', '上传的文件格式不正确，请选择png,jpg,jpeg,gif格式文件！');
+            } else{
+            	// 开始上传
+            	$.ajaxFileUpload({
+					url:'upload/modifyInfo',
+					dataType: 'text/html',
+					data:$("#baseExhibitorInfoForm").serializeJson(),
+					fileElementId:'logoFile',
+					success: function (data){
+						$("#baseExhibitorInfoDlg").dialog("close");
+	                    window.location.reload();
+	                    $.messager.show({
+	                        title: '成功',
+	                        msg: '展商基本信息修改成功',
+	                        timeout: 5000,
+	                        showType: 'slide'
+	                    });
+					},
+					error: function (data){
+						$.messager.alert('错误', data);
+    		        }
+        		});
+            }
+    	}
+	}
+}
+/********************************************************自定义函数结束****************************************************************/
+$(document).ready(function () {
+	//加载国家列表
+	$.ajax({
+		type:"POST",
+		dataType:"json",
+		url:"${base}/user/queryAllCountry",
+		success : function(result) {
+			if(result){
+				country = result;
+			}
+		}
+	});
+	//加载省份列表
+	$.ajax({
+		type:"POST",
+		dataType:"json",
+		url:"${base}/user/queryAllProvince",
+		success : function(result) {
+			if(result){
+				province = result;
+			}
+		}
+	});
+	
+	<#if exhibitorInfo?exists>
+		$('#queryProductType').combotree({
+			lines:true,
+		    url: '${base}/user/queryProductTypeByEid?einfoid=' + ${exhibitorInfo.einfoid},
+		    onCheck: function(node) {
+				console.log(node);
+				if(node.text == "其他"){
+					alert("check" + node.text);
+				}
+            }
+		});
+	</#if>
+	<#if exhibitorInfo?exists>
+		$('#modifyProductType').combotree({
+			lines:true,
+		    url: '${base}/user/queryProductTypeByEid?einfoid=' + ${exhibitorInfo.einfoid},    
+		    onChange: function (n,o) {
+		    	var checkedProductType = $('#modifyProductType').combotree('getValues');
+// 				alert(checkedProductType);
+		    	document.baseExhibitorInfoForm.productType.value = checkedProductType;
+		    },
+		    onCheck: function(node) {
+				console.log(node);
+				if(node.text == "其他"){
+					alert("check" + node.text);
+				}
+            }
+		});
+	</#if>
+	
+    // 产品列表渲染
+    $("#products${eid}").datagrid({
+        onSelect:function (rowIndex, rowData){
+        	var row = $('#products${eid}').datagrid('getSelections');
+			for (var i = 0; i < row.length; i++) {
+				if (findCheckedProduct(row[i].id) == -1) {
+					checkedProducts.push(row[i].id);
+				}
+			}
+// 				alert(checkedProducts);
+        },
+        onUnselect:function (rowIndex, rowData){
+			var k = findCheckedProduct(rowData.id);
+			if (k != -1) {
+				checkedProducts.splice(k, 1);
+			}
+// 				alert(checkedProducts);
+        },
+        onSelectAll:function (rows){
+        	for (var i = 0; i < rows.length; i++) {
+        		var k = findCheckedProduct(rows[i].id);
+				if (k == -1) {
+					checkedProducts.push(rows[i].id);
+				}
+			}
+// 				alert(checkedProducts);
+        },
+        onUnselectAll:function (rows){
+        	for (var i = 0; i < rows.length; i++) {
+				var k = findCheckedProduct(rows[i].id);
+				if (k != -1) {
+					checkedProducts.splice(k, 1);
+				}
+			}
+// 				alert(checkedProducts);
+        },
+        onLoadSuccess:function(data){
+			if(data.rows.length==0){
+				var body = $(this).data().datagrid.dc.body2;
+				body.find('table tbody').append('<tr><td width="'+body.width()+'" style="height: 25px; text-align: center;" colspan="4">没有数据</td></tr>');
+			}
+		},
+        onDblClickRow: function (index, field, value) {
+        	document.modifyProductForm.id.value = field.id;
+        	document.modifyProductForm.productName.value = field.productName;
+        	document.modifyProductForm.productModel.value = field.productModel;
+        	document.modifyProductForm.origin.value = field.origin;
+        	document.modifyProductForm.keyWords.value = field.keyWords;
+        	document.modifyProductForm.description.value = field.description;
+        	document.modifyProductForm.productBrand.value = field.productBrand;
+        	document.modifyProductForm.productSpec.value = field.productSpec;
+        	document.modifyProductForm.productCount.value = field.productCount;
+        	document.modifyProductForm.packageDescription.value = field.packageDescription;
+        	document.modifyProductForm.priceDescription.value = field.priceDescription;
+        	$("#modifyProductDlg").dialog("open");
+        }
+    }).datagrid('getPager').pagination({  
+        pageSize: 20,//每页显示的记录条数，默认为10  
+        pageList: [10,20,30,40,50],//可以设置每页记录条数的列表  
+        beforePageText: '第',//页数文本框前显示的汉字  
+        afterPageText: '页    共 {pages} 页',  
+        displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
+    });
+    function findCheckedProduct(id) {
+		for (var i = 0; i < checkedProducts.length; i++) {
+			if (checkedProducts[i] == id) return i;
+		}
+		return -1;
+	}
+    
+	// 联系人列表渲染
+    $("#contacts${eid}").datagrid({
+        onSelect:function (rowIndex, rowData){
+        	var row = $('#contacts${eid}').datagrid('getSelections');
+			for (var i = 0; i < row.length; i++) {
+				if (findCheckedContacts(row[i].id) == -1) {
+					checkedContacts.push(row[i].id);
+				}
+			}
+// 				alert(checkedContacts);
+        },
+        onUnselect:function (rowIndex, rowData){
+			var k = findCheckedContacts(rowData.id);
+			if (k != -1) {
+				checkedContacts.splice(k, 1);
+			}
+// 				alert(checkedContacts);
+        },
+        onSelectAll:function (rows){
+        	for (var i = 0; i < rows.length; i++) {
+        		var k = findCheckedContacts(rows[i].id);
+				if (k == -1) {
+					checkedContacts.push(rows[i].id);
+				}
+			}
+// 				alert(checkedJoiners);
+        },
+        onUnselectAll:function (rows){
+        	for (var i = 0; i < rows.length; i++) {
+				var k = findCheckedContacts(rows[i].id);
+				if (k != -1) {
+					checkedContacts.splice(k, 1);
+				}
+			}
+// 				alert(checkedJoiners);
+        },
+        onLoadSuccess:function(data){
+			if(data.rows.length==0){
+				var body = $(this).data().datagrid.dc.body2;
+				body.find('table tbody').append('<tr><td width="'+body.width()+'" style="height: 25px; text-align: center;" colspan="4">没有数据</td></tr>');
+			}
+		},
+        onDblClickRow: function (index, field, value) {
+        	document.modifyContactForm.id.value = field.id;
+        	document.modifyContactForm.name.value = field.name;
+        	document.modifyContactForm.position.value = field.position;
+        	document.modifyContactForm.phone.value = field.phone;
+        	document.modifyContactForm.email.value = field.email;
+        	$("#modifyContactDlg").dialog("open");
+        }
+    }).datagrid('getPager').pagination({  
+        pageSize: 20,//每页显示的记录条数，默认为10  
+        pageList: [10,20,30,40,50],//可以设置每页记录条数的列表  
+        beforePageText: '第',//页数文本框前显示的汉字  
+        afterPageText: '页    共 {pages} 页',  
+        displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
+    });
+    function findCheckedContacts(id) {
+		for (var i = 0; i < checkedContacts.length; i++) {
+			if (checkedContacts[i] == id) return i;
+		}
+		return -1;
+	}
+    
+	// 参展人员列表渲染
+    $("#joiners${eid}").datagrid({
+        onSelect:function (rowIndex, rowData){
+        	var row = $('#joiners${eid}').datagrid('getSelections');
+			for (var i = 0; i < row.length; i++) {
+				if (findCheckedJoiners(row[i].id) == -1) {
+					checkedJoiners.push(row[i].id);
+				}
+			}
+// 				alert(checkedJoiners);
+        },
+        onUnselect:function (rowIndex, rowData){
+			var k = findCheckedJoiners(rowData.id);
+			if (k != -1) {
+				checkedJoiners.splice(k, 1);
+			}
+// 				alert(checkedJoiners);
+        },
+        onSelectAll:function (rows){
+        	for (var i = 0; i < rows.length; i++) {
+        		var k = findCheckedJoiners(rows[i].id);
+				if (k == -1) {
+					checkedJoiners.push(rows[i].id);
+				}
+			}
+// 				alert(checkedJoiners);
+        },
+        onUnselectAll:function (rows){
+        	for (var i = 0; i < rows.length; i++) {
+				var k = findCheckedJoiners(rows[i].id);
+				if (k != -1) {
+					checkedJoiners.splice(k, 1);
+				}
+			}
+// 				alert(checkedJoiners);
+        },
+        onLoadSuccess:function(data){
+			if(data.rows.length==0){
+				var body = $(this).data().datagrid.dc.body2;
+				body.find('table tbody').append('<tr><td width="'+body.width()+'" style="height: 25px; text-align: center;" colspan="4">没有数据</td></tr>');
+			}
+		},
+        onDblClickRow: function (index, field, value) {
+        	document.modifyExhibitorJoinerForm.id.value = field.id;
+        	document.modifyExhibitorJoinerForm.name.value = field.name;
+        	document.modifyExhibitorJoinerForm.position.value = field.position;
+        	document.modifyExhibitorJoinerForm.telphone.value = field.telphone;
+        	document.modifyExhibitorJoinerForm.email.value = field.email;
+        	$("#modifyExhibitorJoinerDlg").dialog("open");
+        }
+    }).datagrid('getPager').pagination({  
+        pageSize: 20,//每页显示的记录条数，默认为10  
+        pageList: [10,20,30,40,50],//可以设置每页记录条数的列表  
+        beforePageText: '第',//页数文本框前显示的汉字  
+        afterPageText: '页    共 {pages} 页',  
+        displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
+    });
+    function findCheckedJoiners(id) {
+		for (var i = 0; i < checkedJoiners.length; i++) {
+			if (checkedJoiners[i] == id) return i;
+		}
+		return -1;
+	}
+	// 管理展商账号信息弹出框
+    $('#accountInfoManageDlg').dialog({
+        title: '管理展商账号信息',
+        width: 350,
+        height: 330,
+        closed: true,
+        cache: false,
+        modal: true,
+        buttons: [
+            {
+                text: '确认修改',
+                handler: function () {
+                    if ($("#accountInfoManageForm").form("validate")) {
+                        $.ajax({
+							url: "${base}/user/modifyExhibitor",
+                            type: "post",
+                            dataType: "json",
+                            data: $("#accountInfoManageForm").serializeJson(),
+                            success: function (data) {
+                                if (data.resultCode == 0) {
+                                    $("#accountInfoManageDlg").dialog("close");
+                                    refreshAccountInfo();
+                                    $.messager.show({
+                                        title: '成功',
+                                        msg: '展商账号修改成功',
+                                        timeout: 5000,
+                                        showType: 'slide'
+                                    });
+                                } else if (data.resultCode == 2) {
+                                    $.messager.alert('错误', data.description);
+                                } else {
+                                    $.messager.alert('错误', '系统错误');
+                                }
+                            }
+                        });
+                    }
+                }
+            },
+            {
+                text: '取消',
+                handler: function () {
+                    $("#accountInfoManageDlg").dialog("close")
+                }
+            }
+        ]
+    });
+    $('#activeExhibitorDlg').dialog({
+        title: '展会激活信息',
+        width: 350,
+        height: 240,
+        closed: true,
+        cache: false,
+        modal: true,
+        buttons: [
+            {
+                text: '确认修改',
+                handler: function () {
+                    if ($("#activeExhibitorForm").form("validate")) {
+                        $.ajax({
+                            url: "${base}/user/activeExhibitor",
+                            type: "post",
+                            dataType: "json",
+                            data: $("#activeExhibitorForm").serializeJson(),
+                            success: function (data) {
+                                if (data.resultCode == 0) {
+                                    $("#activeExhibitorDlg").dialog("close");
+                                    $.messager.show({
+                                        title: '成功',
+                                        msg: '展商绑定展会成功',
+                                        timeout: 5000,
+                                        showType: 'slide'
+                                    });
+                                } else {
+                                    $.messager.alert('错误', '展商绑定展会错误');
+                                }
+                            }
+                        });
+                    }
+                }
+            },
+            {
+                text: '取消',
+                handler: function () {
+                    $("#activeExhibitorDlg").dialog("close")
+                }
+            }
+        ]
+    });
+    $('#bindBoothDlg').dialog({
+        title: '展商展区展位管理',
+        width: 350,
+        height: 240,
+        closed: true,
+        cache: false,
+        modal: true,
+        buttons: [
+            {
+                text: '确认修改',
+                handler: function () {
+                    if ($("#bindBoothForm").form("validate")) {
+                        $.ajax({
+                            url: "${base}/user/bindBooth",
+                            type: "post",
+                            dataType: "json",
+                            data: $("#bindBoothForm").serializeJson(),
+                            success: function (data) {
+                                if (data.resultCode == 0) {
+                                    $("#bindBoothDlg").dialog("close");
+                                    $.messager.show({
+                                        title: '成功',
+                                        msg: '展商展区展位修改成功',
+                                        timeout: 5000,
+                                        showType: 'slide'
+                                    });
+                                } else {
+                                    $.messager.alert('错误', '系统错误');
+                                }
+                            }
+                        });
+                    }
+                }
+            },
+            {
+                text: '取消',
+                handler: function () {
+                    $("#bindBoothDlg").dialog("close")
+                }
+            }
+        ]
+    });
+    $('#sendMsgDlg').dialog({
+        title: '发送私信',
+        width: 350,
+        height: 240,
+        closed: true,
+        cache: false,
+        modal: true,
+        buttons: [
+            {
+                text: '确认发送',
+                handler: function () {
+                    if ($("#sendMsgForm").form("validate")) {
+                        $.ajax({
+                            url: "${base}/user/sendMsg",
+                            type: "post",
+                            dataType: "json",
+                            data: $("#sendMsgForm").serializeJson(),
+                            success: function (data) {
+                                if (data.resultCode == 0) {
+                                    $("#sendMsgDlg").dialog("close");
+                                    $.messager.show({
+                                        title: '成功',
+                                        msg: '私信发送成功',
+                                        timeout: 5000,
+                                        showType: 'slide'
+                                    });
+                                } else {
+                                    $.messager.alert('错误', '系统错误');
+                                }
+                            }
+                        });
+                    }
+                }
+            },
+            {
+                text: '取消发送',
+                handler: function () {
+                    $("#sendMsgDlg").dialog("close")
+                }
+            }
+        ]
+    });
+    $('#baseExhibitorInfoDlg').dialog({
+        title: '管理展商基本信息',
+        width: 400,
+        height: 500,
+        closed: true,
+        cache: false,
+        modal: true,
+        buttons: [
+            {
+            	<#if exhibitorInfo?exists>
+	            	text: '确认修改',
+	                handler: function () {
+	                	exhibitorInfo("modify");
+	                }
+                <#else>
+	            	text: '确认添加',
+	                handler: function () {
+	                	exhibitorInfo("add");
+	                }
+	            </#if>
+            },
+            {
+                text: '取消',
+                handler: function () {
+                    $("#baseExhibitorInfoDlg").dialog("close");
+                }
+            }
+        ]
+    });
+    $('#addProductDlg').dialog({
+        title: '添加产品',
+        width: 360,
+        height: 420,
+        closed: true,
+        cache: false,
+        modal: true,
+        buttons: [
+            {
+                text: '确认添加',
+                handler: function () {
+                	if ($("#addProductForm").form("validate")) {
+                        $.ajax({
+                            url: "${base}/user/addProduct",
+                            type: "post",
+                            dataType: "json",
+                            data: $("#addProductForm").serializeJson(),
+                            success: function (data) {
+                                if (data.resultCode == 0) {
+                                    $("#addProductDlg").dialog("close");
+                                    $.messager.show({
+                                        title: '成功',
+                                        msg: '添加产品成功',
+                                        timeout: 5000,
+                                        showType: 'slide'
+                                    });
+                                    $("#products${eid}").datagrid("reload");
+                                } else {
+                                    $.messager.alert('错误', '系统错误');
+                                }
+                            }
+                        });
+                    }
+                }
+            },
+            {
+                text: '取消',
+                handler: function () {
+                	document.getElementById("addProductForm").reset();
+                	$("#addProductDlg").dialog("close");
+                }
+            }
+        ]
+    });
+    $('#modifyProductDlg').dialog({
+        title: '修改产品',
+        width: 360,
+        height: 420,
+        closed: true,
+        cache: false,
+        modal: true,
+        buttons: [
+            {
+                text: '确认修改',
+                handler: function () {
+                	if ($("#modifyProductForm").form("validate")) {
+                        $.ajax({
+                            url: "${base}/user/modifyProduct",
+                            type: "post",
+                            dataType: "json",
+                            data: $("#modifyProductForm").serializeJson(),
+                            success: function (data) {
+                                if (data.resultCode == 0) {
+                                    $("#modifyProductDlg").dialog("close");
+                                    $("#products${eid}").datagrid("reload");
+                                    $.messager.show({
+                                        title: '成功',
+                                        msg: '修改产品成功',
+                                        timeout: 5000,
+                                        showType: 'slide'
+                                    });
+                                } else {
+                                    $.messager.alert('错误', '系统错误');
+                                }
+                            }
+                        });
+                    }
+                }
+            },
+            {
+                text: '取消',
+                handler: function () {
+                	document.getElementById("modifyProductForm").reset();
+                	$("#modifyProductDlg").dialog("close");
+                }
+            }
+        ]
+    });
+    $('#addContactDlg').dialog({
+        title: '添加联系人',
+        left: 375,
+        top: 675,
+        width: 350,
+        height: 280,
+        closed: true,
+        cache: false,
+        modal: true,
+        buttons: [
+            {
+                text: '确认添加',
+                handler: function () {
+                	if ($("#addContactForm").form("validate")) {
+                        $.ajax({
+                            url: "${base}/user/addContact",
+                            type: "post",
+                            dataType: "json",
+                            data: $("#addContactForm").serializeJson(),
+                            success: function (data) {
+                                if (data.resultCode == 0) {
+                                    $("#addContactDlg").dialog("close");
+                                    $.messager.show({
+                                        title: '成功',
+                                        msg: '添加联系人成功',
+                                        timeout: 5000,
+                                        showType: 'slide'
+                                    });
+                                    $("#contacts${eid}").datagrid("reload");
+                                } else {
+                                    $.messager.alert('错误', '系统错误');
+                                }
+                            }
+                        });
+                    }
+                }
+            },
+            {
+                text: '取消',
+                handler: function () {
+                	document.getElementById("addContactForm").reset();
+                	$("#addContactDlg").dialog("close");
+                }
+            }
+        ]
+    });
+    $('#addExpressNumberDlg').dialog({
+        title: '添加快递单号',
+        left: 375,
+        top: 675,
+        width: 350,
+        height: 150,
+        closed: true,
+        cache: false,
+        modal: true,
+        buttons: [
+            {
+                text: '确认添加',
+                handler: function () {
+                	if ($("#addExpressNumberForm").form("validate")) {
+                        $.ajax({
+                            url: "${base}/user/addExpressNumber",
+                            type: "post",
+                            dataType: "json",
+                            data: $("#addExpressNumberForm").serializeJson(),
+                            success: function (data) {
+                                if (data.resultCode == 0) {
+                                    $("#addExpressNumberDlg").dialog("close");
+                                    $.messager.show({
+                                        title: '成功',
+                                        msg: '添加快递单号成功',
+                                        timeout: 5000,
+                                        showType: 'slide'
+                                    });
+                                    $("#contacts${eid}").datagrid("reload");
+                                } else {
+                                    $.messager.alert('错误', '系统错误');
+                                }
+                            }
+                        });
+                    }
+                }
+            },
+            {
+                text: '取消',
+                handler: function () {
+                	document.getElementById("addExpressNumberForm").reset();
+                	$("#addExpressNumberDlg").dialog("close");
+                }
+            }
+        ]
+    });
+    $('#modifyContactDlg').dialog({
+        title: '修改联系人',
+        left: 375,
+        top: 675,
+        width: 350,
+        height: 280,
+        closed: true,
+        cache: false,
+        modal: true,
+        buttons: [
+            {
+                text: '确认修改',
+                handler: function () {
+                	if ($("#modifyContactForm").form("validate")) {
+                        $.ajax({
+                            url: "${base}/user/modifyContact",
+                            type: "post",
+                            dataType: "json",
+                            data: $("#modifyContactForm").serializeJson(),
+                            success: function (data) {
+                                if (data.resultCode == 0) {
+                                    $("#modifyContactDlg").dialog("close");
+                                    $.messager.show({
+                                        title: '成功',
+                                        msg: '修改联系人成功',
+                                        timeout: 5000,
+                                        showType: 'slide'
+                                    });
+                                    $("#contacts${eid}").datagrid("reload");
+                                } else {
+                                    $.messager.alert('错误', '系统错误');
+                                }
+                            }
+                        });
+                    }
+                }
+            },
+            {
+                text: '取消',
+                handler: function () {
+                	document.getElementById("modifyContactForm").reset();
+                	$("#modifyContactDlg").dialog("close");
+                }
+            }
+        ]
+    });
+    $('#addExhibitorJoinerDlg').dialog({
+        title: '添加参展人员',
+        left: 375,
+        top: 675,
+        width: 350,
+        height: 240,
+        closed: true,
+        cache: false,
+        modal: true,
+        buttons: [
+            {
+                text: '确认添加',
+                handler: function () {
+                	if ($("#addExhibitorJoinerForm").form("validate")) {
+                        $.ajax({
+                            url: "${base}/user/addExhibitorJoiner",
+                            type: "post",
+                            dataType: "json",
+                            data: $("#addExhibitorJoinerForm").serializeJson(),
+                            success: function (data) {
+                                if (data.resultCode == 0) {
+                                    $("#addExhibitorJoinerDlg").dialog("close");
+                                    $.messager.show({
+                                        title: '成功',
+                                        msg: '添加参展人员成功',
+                                        timeout: 5000,
+                                        showType: 'slide'
+                                    });
+                                    $("#joiners${eid}").datagrid("reload");
+                                } else {
+                                    $.messager.alert('错误', '系统错误');
+                                }
+                            }
+                        });
+                    }
+                }
+            },
+            {
+                text: '取消',
+                handler: function () {
+                	document.getElementById("addExhibitorJoinerForm").reset();
+                	$("#addExhibitorJoinerDlg").dialog("close");
+                }
+            }
+        ]
+    });
+    $('#modifyExhibitorJoinerDlg').dialog({
+        title: '修改参展人员',
+        left: 375,
+        top: 675,
+        width: 350,
+        height: 240,
+        closed: true,
+        cache: false,
+        modal: true,
+        buttons: [
+            {
+                text: '确认修改',
+                handler: function () {
+                	if ($("#modifyExhibitorJoinerForm").form("validate")) {
+                        $.ajax({
+                            url: "${base}/user/modifyExhibitorJoiner",
+                            type: "post",
+                            dataType: "json",
+                            data: $("#modifyExhibitorJoinerForm").serializeJson(),
+                            success: function (data) {
+                                if (data.resultCode == 0) {
+                                    $("#modifyExhibitorJoinerDlg").dialog("close");
+                                    $.messager.show({
+                                        title: '成功',
+                                        msg: '修改参展人员成功',
+                                        timeout: 5000,
+                                        showType: 'slide'
+                                    });
+                                    $("#joiners${eid}").datagrid("reload");
+                                } else {
+                                    $.messager.alert('错误', '系统错误');
+                                }
+                            }
+                        });
+                    }
+                }
+            },
+            {
+                text: '取消',
+                handler: function () {
+                	document.getElementById("modifyExhibitorJoinerForm").reset();
+                	$("#modifyExhibitorJoinerDlg").dialog("close");
+                }
+            }
+        ]
+    });
+    // 修改账号信息  按钮事件
+    $("#modifyBaseInfo").click(function () {
+    	<#if exhibitor.country?exists>
+	    	$("#country").html('');
+			$("#country").append('<option value="">请选择</option>');
+			for(var i=0,a;a=country[i++];){
+				if(${exhibitor.country} == a.id){
+					$("#country").append('<option value="'+a.id+'" selected="selected">'+a.countryValue+a.chineseName+'</option>');
+				}else{
+					$("#country").append('<option value="'+a.id+'">'+a.countryValue+a.chineseName+'</option>');
+				}
+				
+			}
+		<#else>
+	    	$("#country").html('');
+			$("#country").append('<option value="">请选择</option>');
+			for(var i=0,a;a=country[i++];){
+				$("#country").append('<option value="'+a.id+'">'+a.countryValue+a.chineseName+'</option>');
+			}
+		</#if>
+		<#if exhibitor.province?exists>
+	    	$("#province").html('');
+			$("#province").append('<option value="">请选择</option>');
+			for(var i=0,a;a=province[i++];){
+				if(${exhibitor.province} == a.id){
+					$("#province").append('<option value="'+a.id+'" selected="selected">'+a.chineseName+'</option>');
+				}else{
+					$("#province").append('<option value="'+a.id+'">'+a.chineseName+'</option>');
+				}
+			}
+		<#else>
+			$("#province").html('');
+			document.getElementById('province').disabled=true;
+		</#if>
+		<#if exhibitor.tag?exists>
+			$.ajax({
+	    		type:"POST",
+	    		dataType:"json",
+	    		url:"${base}/user/queryTags",
+	    		success : function(result) {
+	    			if(result){
+	    				$("#tag").html('');
+	    				$("#tag").append('<option value="">请选择</option>');
+	    				for(var i=0,a;a=result.rows[i++];){
+							if(${exhibitor.tag} == a.id){
+								$("#tag").append('<option value="'+a.id+'" selected="selected">'+a.name+'</option>');
+							}else{
+								$("#tag").append('<option value="'+a.id+'">'+a.name+'</option>');
+							}
+	    					
+	    				}
+	    			}
+	    		}
+	    	});
+		<#else>
+			$.ajax({
+	    		type:"POST",
+	    		dataType:"json",
+	    		url:"${base}/user/queryTags",
+	    		success : function(result) {
+	    			if(result){
+	    				$("#tag").html('');
+	    				$("#tag").append('<option value="">请选择</option>');
+	    				for(var i=0,a;a=result.rows[i++];){
+	    					$("#tag").append('<option value="'+a.id+'">'+a.name+'</option>');
+	    				}
+	    			}
+	    		}
+	    	});
+		</#if>
+		<#if exhibitor?exists>
+			$.ajax({
+	    		type:"POST",
+	    		dataType:"json",
+	    		url:"${base}/user/queryExhibitorByEid",
+	    		data: {"eid":${eid}},
+	    		success : function(result) {
+	    			if(result){
+	    				$("#area").html('');
+	    				if(result.area == 2){
+	    					$("#area").append('<option value="1">国内</option>');
+	    					$("#area").append('<option value="2" selected>国外</option>');
+	    				}else{
+	    					$("#area").append('<option value="1" selected>国内</option>');
+	    					$("#area").append('<option value="2">国外</option>');
+	    				}
+	    			}
+	    		}
+	    	});
+		<#else>
+			$("#area").append('<option value="1" selected>国内</option>');
+			$("#area").append('<option value="2">国外</option>');
+		</#if>
+        $("#accountInfoManageDlg").dialog("open")
+    });
+    $("#activeExhibitor").click(function () {
+        $("#activeExhibitorDlg").dialog("open")
+    });
+    $("#bindBooth").click(function () {
+        $("#bindBoothDlg").dialog("open")
+    });
+    $("#sendMsg").click(function () {
+        $("#sendMsgDlg").dialog("open")
+    });
+    $("#manageExhibitorInfo").click(function(){
+        $("#baseExhibitorInfoDlg").dialog("open");
+    });
+});
+</script>
+</body>
+</html>

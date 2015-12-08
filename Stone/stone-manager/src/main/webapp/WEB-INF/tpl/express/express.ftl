@@ -1,0 +1,1 @@
+﻿<p>组委会已将贵公司的《展位确认函》及《参展手册》通过EMS快递寄出，快递单号为<span style="color:rgb(255, 0, 0)"><strong>${expressNumber}</strong></span>，请注意查收！</p>

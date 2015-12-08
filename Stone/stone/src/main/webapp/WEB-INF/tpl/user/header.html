@@ -1,0 +1,257 @@
+<style>
+    article,aside,dialog,footer,header,section,footer,nav,figure,menu{display:block}
+    body{
+        font-family:Arial,'黑体';
+        background-color: #eeeeee;
+    }
+    .button{
+        text-align: center;
+        height: 39px;
+        float: left;
+    }
+    .buttonOn .button_left{
+        height: 100%;
+        width: 12px;
+        background-image: url("${resource}/images/index_09.gif");
+        float: left;
+    }
+    .buttonOn .button_right{
+        height: 100%;
+        width: 11px;
+        background-image: url("${resource}/images/index_11.gif");
+        float: left;
+    }
+    .buttonOn .button_center{
+        height: 100%;
+        background-color: #ffffff;
+        float: left;
+        color: #f1b426;
+        font-size: 16px;
+        line-height: 39px;
+        padding: 0px 20px;
+    }
+    .buttonOn .button_center a,.buttonOn .button_center a:hover{
+        color: #f1b426;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .buttonOff .button_left{
+        height: 100%;
+        width: 12px;
+        float: left;
+    }
+    .buttonOff .button_right{
+        height: 100%;
+        width: 11px;
+        float: left;
+    }
+    .buttonOff .button_center{
+        height: 100%;
+        float: left;
+        color: #005bac;
+        font-size: 16px;
+        line-height: 39px;
+        padding: 0px 20px;
+    }
+    .buttonOff .button_center a,.buttonOff .button_center a:hover{
+        color: #005bac;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .sns{
+        float: left;
+    }
+    .language{
+        position: absolute;top: 10px;right: 0px;color: #ffffff
+    }
+    .language a,.language a:visited,.language a:hover{
+        color: #ffffff;
+    }
+
+    .b{
+        cursor: pointer;
+    }
+
+    .companyInfo{
+        float: right;height: 39px;line-height: 39px;max-width: 280px;overflow: hidden
+    }
+</style>
+
+<div style="background-color: #005bac;width: 100%;height: 199px;">
+    <div style="width: 973px;margin: 0px auto;height: 199px;position: relative">
+        <div class="language">
+            <#if rc.locale=="zh_CN"><a name="db" href="javascript:void(0)">下载APP</a><#else><a name="db" href="javascript:void(0)">Download APP</a></#if> | <a href="${base}/changeLanguage?locale=cn">中文</a> | <a href="${base}/changeLanguage?locale=us">English</a>
+        </div>
+        <div style="background-image:url('${resource}/images/index_02.gif');height: 199px;width: 292px;margin-left:18px;">
+            <a href="http://stonefair.org.cn" target="_blank"><img src="${resource}/images/index_02.gif" style="border: 0px"></a>
+        </div>
+        <div style="color: #ffffff;font-size: 22px;left: 315px;top: 55px;position: absolute">
+            <@spring.message "banner.one"/>
+        </div>
+        <div style="color: #c9c9c9;font-size: 18px;left: 315px;top: 95px;position: absolute">
+            <@spring.message "banner.two"/>
+        </div>
+        <div style="color: #ffffff;font-size: 32px;left: 315px;bottom: 30px;position: absolute">
+            <@spring.message "banner.three"/>
+        </div>
+        <div style="position: absolute;right: 38px;bottom: 6px;background-image:url('${resource}/images/time.jpg') ;width: 65px;height: 31px"></div>
+        <#if rc.locale=="zh_CN">
+            <font style="color:#ffffff;position: absolute;right: 23px;bottom: 10px;"><@spring.message "banner.time"/></font>
+            <#else>
+                <font style="color:#ffffff;position: absolute;right: -1px;bottom: 10px;"><@spring.message "banner.time"/></font>
+        </#if>
+        <font id="baiwei" style="color:#666666;position: absolute;right: 90px;bottom: 10px;">0</font>
+        <font id="shiwei" style="color:#666666;position: absolute;right: 67px;bottom: 10px;">0</font>
+        <font id="gewei" style="color:#666666;position: absolute;right: 45px;bottom: 10px;">0</font>
+    </div>
+</div>
+<div style="width: 100%;background-color: #d3d3d3;height: 39px;margin-bottom: 40px; ">
+    <div style="width: 973px;margin: 0px auto;height: 39px;padding-left: 11px;">
+        <div class="button buttonOn">
+            <div class="button_left"></div>
+            <div class="button_center" style="width: 222px;padding: 0px">
+                <div class="sns" style="margin-left: 27px;">
+                    <a href="mailto:info@stonefair.org.cn"><img style="width: 30px" src="${resource}/images/sns_26.gif"></a>
+                </div>
+                <div class="sns">
+                    <a href="http://www.facebook.com/pages/China-Xiamen-International-Stone-Fair/123187371126049" target="_blank"><img src="${resource}/images/sns_27.gif"></a>
+                </div>
+                <div class="sns">
+                    <a href="https://twitter.com/#!/XiamenStoneFair" target="_blank"><img src="${resource}/images/sns_28.gif" ></a>
+                </div>
+                <div class="sns" name="weixin">
+                    <img src="${resource}/images/sns_29.gif">
+                </div>
+                <div class="sns">
+                    <a href="http://weibo.com/stonefair" target="_blank"><img src="${resource}/images/sns_30.gif"></a>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+            <div class="button_right"></div>
+            <div style="clear: both"></div>
+        </div>
+        <#if rc.locale=="zh_CN">
+            <div id="index" class="b button buttonOff">
+                <div class="button_left"></div>
+                <div class="button_center"><a href="/user/main.html"><@spring.message "newnav.home"/></a></div>
+                <div class="button_right"></div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="b button buttonOff">
+                <div class="button_left"></div>
+                <div class="button_center"><a href="http://stonefair.org.cn/CHI/" target="_blank"><@spring.message "newnav.guanwang"/></a></div>
+                <div class="button_right"></div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="b button buttonOff">
+                <div class="button_left"></div>
+                <div class="button_center"><a href="/contact" target="_blank"><@spring.message "newnav.contactus"/></a></div>
+                <div class="button_right"></div>
+                <div style="clear: both"></div>
+            </div>
+        <#else>
+            <div class="b button buttonOn">
+                <div class="button_left"></div>
+                <div class="button_center"><a href="/user/main.html"><@spring.message "newnav.home"/></a></div>
+                <div class="button_right"></div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="b button buttonOff">
+                <div class="button_left"></div>
+                <div class="button_center"><a href="http://stonefair.org.cn/" target="_blank"><@spring.message "newnav.guanwang"/></a></div>
+                <div class="button_right"></div>
+                <div style="clear: both"></div>
+            </div>
+            <div class="b button buttonOff">
+                <div class="button_left"></div>
+                <div class="button_center"><a href="/contact" target="_blank"><@spring.message "newnav.contactus"/></a></div>
+                <div class="button_right"></div>
+                <div style="clear: both"></div>
+            </div>
+        </#if>
+        <#if rc.locale=="zh_CN">
+            <#if boothInfo?exists>
+                <div class="companyInfo">${PRINCIPLE_SESSION_ATTRIBUTE.exhibitor.company!""} (${boothInfo.boothNumber!""} ${boothInfo.exhibitorArea!""})</div>
+            <#else>
+                <div class="companyInfo">${PRINCIPLE_SESSION_ATTRIBUTE.exhibitor.company!""}</div>
+            </#if>
+        <#else>
+            <#if boothInfo?exists>
+                <div class="companyInfo">${PRINCIPLE_SESSION_ATTRIBUTE.exhibitor.companye!""} (${boothInfo.boothNumber!""} ${boothInfo.exhibitorArea!""})</div>
+            <#else>
+                <div class="companyInfo">${PRINCIPLE_SESSION_ATTRIBUTE.exhibitor.companye!""}</div>
+            </#if>
+        </#if>
+        <div style="clear: both"></div>
+    </div>
+</div>
+<div id="weixin" style="width: 100%;height: 286px;position: absolute;top: 100px;display: none">
+    <div style="margin:138px 195px;width: 200px;height: 200px;background-image: url('${resource}/images/wechat.jpg');"></div>
+    <div style="margin:-130px 195px;width: 200px;height: 30px;">
+        <p align="center" style="line-height: 13px;">扫一扫</p>
+        <p align="center" style="font-size: 10px;line-height: 13px;">加入石材人的朋友圈</p>
+    </div>
+</div>
+<div id="download" style="width: 100%;height: 256px;position: absolute;top: 100px;display: none">
+    <div style="margin:0px auto;width: 256px;height: 256px;background-image: url('${resource}/images/stone.png');">
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $("#download").hide();
+
+        $("[name='db']").mouseover(function(){
+            $("#download").show();
+        });
+        $("[name='db']").mouseout(function(){
+            $("#download").hide();
+        });
+
+        $("[name='weixin']").mouseover(function(){
+            $("#weixin").show();
+        });
+
+        $("[name='weixin']").mouseout(function(){
+            $("#weixin").hide();
+        });
+
+        $(".b").mouseover(function(){
+            $(".b").removeClass("buttonOn").addClass("buttonOff");
+            $(this).removeClass("buttonOff").addClass("buttonOn");
+        });
+        $(".b").mouseout(function(){
+            $(".b").removeClass("buttonOn").addClass("buttonOff");
+        });
+        $(".b").click(function(){
+            $(this).find("a").click();
+        })
+        var kaishi = new Date();
+        kaishi.setYear(2016);
+        kaishi.setMonth(2);
+        kaishi.setDate(6);
+        var now = new Date();
+        var day = ((kaishi.getTime()-now.getTime())/1000/60/60/24);
+        var dayString = Math.ceil(day)+"";
+        var p = 0;
+        if(dayString.length>2){
+            $("#baiwei").text(dayString.charAt(p++))
+        }
+        if(dayString.length>1){
+            $("#shiwei").text(dayString.charAt(p++))
+        }
+        if(dayString.length>0){
+            $("#gewei").text(dayString.charAt(p++))
+        }
+
+        $(".new_nav td").mouseover(function(){
+            $(".new_nav td").each(function(){
+                $(this).removeClass("current");
+            })
+            $(this).addClass("current");
+        })
+    });
+
+
+</script>

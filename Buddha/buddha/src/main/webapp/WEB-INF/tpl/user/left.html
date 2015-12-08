@@ -1,0 +1,138 @@
+<style>
+    .nav-list > .active > a:hover, .nav-list > .active > a:focus {
+        color: #000000;
+        text-shadow: 0 -1px 0 #ffffff;
+        background-color: #efd169;
+    }
+    .nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
+        color: #000000;
+        text-shadow: 0 -1px 0 #ffffff;
+        background-color: #efd169;
+    }
+    #nav .bt {
+        border-bottom: solid 1px #f3e8d8;
+        height: 35px;
+        color: #4a1f07;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    #nav .list {
+        display: none;
+    }
+
+    .list table td {
+        padding-left: 20px;
+        height: 35px;
+        font-size: 14px;
+    }
+
+    #nav a{
+        color: #4a1f07;
+        font-size: 14px;
+    }
+
+    #nav a:hover{
+        color: #4a1f07;
+        font-size: 14px;
+    }
+</style>
+<div class="span2" style="margin-left: 0px;width: 200px">
+    <!--/.well -->
+    <div style="width: 100%;min-height: 350px;border-right: solid 1px #f3e8d8;background-color: #ffffeb;border-left: 2px #efd169 solid">
+        <table id="nav" style="width: 100%;margin: 0px auto;background-color: #ffffeb">
+            <tbody><tr style="background-image: url(/resource/images/l1.gif);height: 35px;">
+                <td style="padding-left: 20px"><a href="${base}/user/main.html"><@spring.message "index"/></a></td>
+                <td style="width: 35px"></td>
+            </tr>
+            </tbody>
+        </table>
+        <table id="nav" style="width: 100%;margin: 0px auto;background-color: #ffffeb">
+            <tr class="bt" style="background-image: url(/resource/images/l1.gif);">
+                <td style="padding-left: 20px">
+                    <@spring.message "left.exhibitor"/>
+                </td>
+                <td style="width: 35px">
+                    <img src="${resource}/images/plus.jpg">
+                </td>
+            </tr>
+            <tr class="list">
+                <td colspan="2">
+                    <table style="width: 100%">
+                        <tr id="leftInfo">
+                            <td><a href="${base}/user/info"><@spring.message "left.exhibitor.info"/></a></td>
+                        </tr>
+                        <tr id="leftJoiner">
+                            <td><a href="${base}/user/queryJoiners.html" class=""><@spring.message
+                                "left.exhibitor.joiners"/></a></td>
+                        </tr>
+                        <tr id="leftContact">
+                            <td><a href="${base}/user/contact/index.html" class=""><@spring.message
+                                "left.exhibitor.contacts"/></a></td>
+                        </tr>
+                        <tr id="leftInvoice">
+                            <td><a href="${base}/user/invoice/index.html" class=""><@spring.message "module.invoice"/></a></td>
+                        </tr>
+                        <!--<tr>-->
+                            <!--<td><a href="${base}/user/visa/index.html" class=""><@spring.message "left.visa"/></a></td>-->
+                        <!--</tr>-->
+                        <tr id="leftMeipai">
+                            <td><a href="${base}/user/addMeipai" class=""><@spring.message "module.meipai"/></a></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="bt" style="background-image: url(/resource/images/l2.gif);">
+                <td style="padding-left: 20px">
+                    <@spring.message "left.products"/>
+                </td>
+                <td style="width: 35px">
+                    <img src="${resource}/images/plus.jpg">
+                </td>
+            </tr>
+            <tr class="list">
+                <td colspan="2">
+                    <table style="width: 100%">
+                        <tr id="leftAddProduct">
+                            <td><a href="${base}/user/addProduct" class=""><@spring.message "left.products.add"/></a></td>
+                        </tr>
+                        <tr id="leftProducts">
+                            <td><a href="${base}/user/products" class=""><@spring.message "left.products.maintain"/></a></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="bt" style="background-image: url(/resource/images/l3.gif);">
+                <td style="padding-left: 20px">
+                    <@spring.message "left.account"/>
+                </td>
+                <td style="width: 35px">
+                    <img src="${resource}/images/plus.jpg">
+                </td>
+            </tr>
+            <tr class="list">
+                <td colspan="2">
+                    <table style="width: 100%">
+                        <tr id="leftModifyPassword">
+                            <td><a href="${base}/user/password" class=""><@spring.message "left.account.modifyPassword"/></a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="${base}/logout.html" class=""><@spring.message "left.account.quit"/></a></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    <img src="${resource}/images/b1.jpg" />
+</div>
+<script>
+    $(document).ready(function () {
+        $("#index").addClass("active");
+        $(".bt").click(function () {
+            $(".list").hide();
+            $(this).next().show();
+        })
+    })
+</script>

@@ -1,0 +1,166 @@
+<!doctype html>
+<#import "/common/spring.ftl" as spring />
+<html>
+<head>
+
+    <style>
+        /*reset*/
+        *{padding:0;margin:0;font-size:12px;font-family:"宋体";}
+        img{display:block;border:0;}
+        input{border:0;}
+        .whbox{margin-top:10%;overflow:hidden;position:relative;}
+        .header{width:960px;margin:0 auto;overflow:hidden;}
+        .header .logobox{float:left;}
+        .lah{float:right;margin-top:50px;}
+        .lah a{float:left;color:#999;padding:2px 16px;border-right:1px solid #CCC;text-decoration:none;}
+
+        .mainbox{width:960px;height:400px;margin:0 auto;position:relative;overflow:hidden;}
+        .white{height:240px;background:#dcdad4;position:absolute;top:180px;width:100%;filter:alpha(opacity=60);opacity:0.6;-moz-opacity:0.6;z-index:-1;}
+        .intro{height:240px;position:absolute;left:0;top:80px;width:960px;z-index:5;background:white;filter:alpha(opacity=80);opacity:0.8;-moz-opacity:0.8;}
+        .inbox{width:450px;padding:20px 30px;box-sizing:border-box;}
+        .inbox h1{margin-bottom:10px;font-size:16px;color:#a83700;}
+        .inbox p{line-height:20px;color:#a83700;}
+        .loginbox{color:red;position:absolute;right:60px;top:30px;width:340px;height:340px;z-index:10;background:white;}
+        .form{margin-top:40px;margin-left:20px;}
+        #username{height:38px;width:300px;background:url(${resource}/images/login/act.png); background-repeat:no-repeat;border:1px solid #bdbdbd;margin-bottom:20px;font-size:14px;font-family:arial;padding-left:44px;box-sizing:border-box;color:#666666;}
+        #password{height:38px;width:300px;background:url(${resource}/images/login/psw.png); background-repeat:no-repeat;border:1px solid #bdbdbd;font-size:14px;font-family:arial;padding-left:44px;box-sizing:border-box;margin-bottom:30px;colo:#666666;}
+        .expt{margin-left:20px;}
+        #rp{margin-left:20px;height:14px;width:14px;margin-right:4px;float:left; }
+        #ra{height:14px;width:14px;margin-right:4px;float:left;}
+        .chek{float:left;}
+        .fgt{float:right;margin-right:10px;text-decoration:none;color:#bdbdbd;}
+        .dec{color:#999999;}
+        .sbm{height:35px;width:300px;background:url(${resource}/images/login/login.png);background-repeat:no-repeat;margin-top:50px;margin-left:20px;cursor:pointer;}
+        .loginbox>p{color:#999999;margin-left:14px;margin-top:44px;}
+        .loginbox p a{color:red;text-decoration:none;}
+    </style>
+    <script src="${resource}/js/jquery.js"></script>
+    <script>
+        $(function(){if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE6.0")
+        {
+            $("#username").css("width","260px");
+            $("#password").css("width","260px");
+        }
+        else if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE7.0")
+        {
+            $("#username").css("width","260px");
+            $("#password").css("width","260px");
+        }
+        else if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE8.0")
+        {
+
+        }
+        else if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE9.0")
+        {
+            $("#username").css("width","260px");
+            $("#password").css("width","260px");
+        }
+        })
+    </script>
+
+    <meta charset="utf-8">
+    <title>login</title>
+    <#include "../common/common-js.html" />
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+</head>
+
+<body>
+<div class="whbox">
+    <div class="header">
+        <div class="logobox"><img src="${resource}/images/login/logo.png"></div>
+        <div class="lah">
+            <a href="http://www.teafair.com.cn/">展会官网</a>
+            <a href="#" id="lc" name="language" >中文</a>
+            <a href="#" id="le" name="language" >English</a>
+            <a href="" style="border:0;"> 帮助</a>
+        </div>
+    </div>
+    <div class="mainbox">
+        <div class="mbg"><img src="${resource}/images/login/mbg.png"></div>
+        <div class="intro" style="z-index:5;">
+            <div class="inbox">
+                <h1><@spring.message "login.message.title"/></h1>
+                <p>1、<@spring.message "login.message.one"/></p>
+                <p>2、<@spring.message "login.message.two"/></p>
+                <p>3、<@spring.message "login.message.three"/></p>
+            </div>
+        </div>
+
+        <div class="loginbox" style="zindex:10;">
+            <p><@spring.message "login.official.website"/></p>
+            <form>
+                <div class="form">
+                    <input type="text" id="username" placeholder="请输入用户名"><br>
+                    <input type="text" id="password" placeholder="请输入密码">
+                </div>
+                <div class="expt">
+                    <div class="chek">
+                        <input value="1" checked="checked" name="zone" type="checkbox" id="ra"><span class="dec"><@spring.message "login.remember.account"/></span>
+                    </div>
+                    <div class="chek">
+                        <input value="2" type="checkbox" name="zone" id="rp"><span class="dec"><@spring.message "login.remember.password"/></span>
+                    </div>
+                    <a href="" class="fgt"><@spring.message "login.forgot.password"/></a>
+                </div>
+                <button type="button" id="loginButton" class="sbm"></button>
+            </form>
+        </div>
+    </div>
+    <div class="white" style="z-index:-1">
+
+    </div>
+    <!--[if lt IE 8]>
+    <div style="margin: 0px auto;margin-top: 10px;width: 400px">
+        <@spring.message "login.browser"/>
+    </div>
+    <![endif]-->
+</div>
+
+<script>
+    isChinese = true;
+    $(document).ready(function () {
+        $("[name='language']").click(function () {
+            window.location.href = "${base}/?locale=" + $(this).attr("id");
+        });
+        if (window.location.href.indexOf("=le") != -1) {
+            isChinese = false;
+        } else {
+            isChinese = true;
+        }
+        $("#loginButton").click(function () {
+            if ($("#username").val() == '' || $("#password").val() == '') {
+                alert(words.loginRequired);
+                return;
+            }
+            var zone = 1;
+            $("[name='zone']").each(function () {
+                if (this.checked) {
+                    zone = $(this).val();
+                }
+            });
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: $.toJSON({
+                    "username": $("#username").val(),
+                    "password": $("#password").val(),
+                    "english": true,
+                    "area": zone
+                }),
+                url: "${base}/login",
+                success: function (result) {
+                    if (result.resultCode == 1) {
+                        alert(words.loginFailure)
+                    } else if (result.resultCode > 1) {
+                        alert(words.loginServerError)
+                    } else {
+                        window.location.href = "${base}/user/main.html"
+                    }
+                },
+                dataType: "json"
+            });
+        });
+    })
+</script>
+</body>
+</html>

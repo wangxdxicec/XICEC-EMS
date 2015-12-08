@@ -1,0 +1,295 @@
+<!doctype html>
+<html>
+<head>
+    <style>
+        /*reset*/
+        * {
+            padding: 0;
+            margin: 0;
+            font-size: 12px;
+            font-family: "宋体";
+        }
+
+        img {
+            display: block;
+            border: 0;
+        }
+
+        input {
+            border: 0;
+        }
+
+        .whbox {
+            margin-top: 10%;
+        }
+
+        .header {
+            width: 960px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .header .logobox {
+            float: left;
+        }
+
+        .lah {
+            float: right;
+            margin-top: 50px;
+        }
+
+        .lah a {
+            float: left;
+            color: #999;
+            padding: 2px 16px;
+            border-right: 1px solid #CCC;
+            text-decoration: none;
+        }
+
+        .lah a:hover {
+            color: #e4743e;
+        }
+
+        .mainbox {
+            width: 960px;
+            height: 400px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro {
+            height: 240px;
+            position: absolute;
+            background: white;
+            opacity: 0.7;
+            left: 0;
+            top: 80px;
+            width: 960px;
+            z-index: 5;
+        }
+
+        .inbox {
+            width: 480px;
+            padding: 20px 0px 20px 30px;
+            box-sizing: border-box;
+        }
+
+        .inbox h1 {
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #a83700;
+        }
+
+        .inbox p {
+            line-height: 24px;
+            color: #a83700;
+        }
+
+        .loginbox {
+            color: red;
+            position: absolute;
+            right: 60px;
+            top: 30px;
+            width: 340px;
+            height: 340px;
+            z-index: 10;
+            background: white;
+        }
+
+        .form {
+            margin-top: 40px;
+            margin-left: 20px;
+        }
+
+        #username {
+            height: 38px;
+            width: 300px;
+            background: url(${resource}/images/login/act.png);
+            background-repeat: no-repeat;
+            border: 1px solid #bdbdbd;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-family: arial;
+            padding-left: 44px;
+            box-sizing: border-box;
+            color: #666666;
+        }
+
+        #password {
+            height: 38px;
+            width: 300px;
+            background: url(${resource}/images/login/psw.png);
+            background-repeat: no-repeat;
+            border: 1px solid #bdbdbd;
+            font-size: 14px;
+            font-family: arial;
+            padding-left: 44px;
+            box-sizing: border-box;
+            margin-bottom: 30px;
+            colo: #666666;
+        }
+
+        .expt {
+            margin-left: 20px;
+        }
+
+        #rp {
+            margin-left: 20px;
+            height: 14px;
+            width: 14px;
+            margin-right: 4px;
+            float: left;
+        }
+
+        #ra {
+            height: 14px;
+            width: 14px;
+            margin-right: 4px;
+            float: left;
+        }
+
+        .chek {
+            float: left;
+        }
+
+        .fgt {
+            float: right;
+            margin-right: 10px;
+            text-decoration: none;
+            color: #bdbdbd;
+        }
+
+        .dec {
+            color: #999999;
+        }
+
+        .sbm {
+            height: 35px;
+            width: 300px;
+            background: url(${resource}/images/login/loginUncolored.png);
+            background-repeat: no-repeat;
+            margin-top: 50px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        .loginbox > p {
+            color: #999999;
+            margin-left: 14px;
+            margin-top: 44px;
+        }
+
+        .loginbox p a {
+            color: red;
+            text-decoration: none;
+        }
+
+        .sbm:hover {
+            background: url(${resource}/images/login/login.png);
+        }
+    </style>
+
+    <meta charset="utf-8">
+    <title>login</title>
+    <#include "../common/common-js.html" />
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+</head>
+
+<body>
+<div class="whbox">
+    <div class="header">
+        <div class="logobox"><img src="${resource}/images/login/logo.png"></div>
+        <div class="lah">
+            <a href="">展会官网</a>
+            <a href="#" id="lc" name="language">中文</a>
+            <a href="#" id="le" name="language">English</a>
+            <a href="" style="border:0;"> 帮助</a>
+        </div>
+    </div>
+    <div class="mainbox">
+        <div class="mbg"><img src="${resource}/images/login/mbg.png"></div>
+        <div class="intro">
+            <div class="inbox">
+                <h1>欢迎您登录展商管理平台</h1>
+
+                <p>1、《展商管理平台》为中国厦门国际茶产业博览会特意为参展商准备的官方在线展商管理系统，内容包括组委会重要通知及参展商须填写的重要表格等，参展商提交信息将同步刊登在官方会刊及APP系统。</p>
+
+                <p>2、《展商管理平台》上有您需要处理的各项事项的截止日期。尽管有很多表格，但请您全部浏览一遍，并且在截止日期之前递交相关表格，以确保您的相关需求可以有效并且及时地执行。</p>
+
+                <p>3、如您有任何疑问或建议需要任何帮助，请联系组委会，我们将竭诚为您服务。</p>
+            </div>
+        </div>
+
+        <div class="loginbox">
+            <p>该平台仅对参展商开放，账号密码由组委会提供。<a href="">返回官网</a></p>
+
+            <form>
+                <div class="form">
+                    <input type="text" id="username" placeholder="请输入用户名"><br>
+                    <input type="text" id="password" placeholder="请输入密码">
+                </div>
+                <div class="expt">
+                    <div class="chek">
+                        <input value="1" checked="checked" name="zone" type="checkbox" id="ra"><span
+                            class="dec">记住用户名</span>
+                    </div>
+                    <div class="chek">
+                        <input value="2" type="checkbox" name="zone" id="rp"><span class="dec">记住密码</span>
+                    </div>
+                    <a href="" class="fgt">忘记密码？</a>
+                </div>
+                <button type="button" id="loginButton" class="sbm"></button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    isChinese = true;
+    $(document).ready(function () {
+        $("[name='language']").click(function () {
+            window.location.href = "${base}/?locale=" + $(this).attr("id");
+        });
+        if (window.location.href.indexOf("=le") != -1) {
+            isChinese = false;
+        } else {
+            isChinese = true;
+        }
+        $("#loginButton").click(function () {
+            if ($("#username").val() == '' || $("#password").val() == '') {
+                alert(words.loginRequired);
+                return;
+            }
+            var zone = 1;
+            $("[name='zone']").each(function () {
+                if (this.checked) {
+                    zone = $(this).val();
+                }
+            });
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: $.toJSON({
+                    "username": $("#username").val(),
+                    "password": $("#password").val(),
+                    "english": true,
+                    "area": zone
+                }),
+                url: "${base}/login",
+                success: function (result) {
+                    if (result.resultCode == 1) {
+                        alert(words.loginFailure)
+                    } else if (result.resultCode > 1) {
+                        alert(words.loginServerError)
+                    } else {
+                        window.location.href = "${base}/user/main.html"
+                    }
+                },
+                dataType: "json"
+            });
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style type="text/css">
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+
+        body {
+
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+        .banners img{
+            margin-top: 20px;
+            border: 0px;
+        }
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<#include "/user/header.html" />
+<div style="width: 100%">
+    <div class="row-fluid" style="width: 962px;margin: 0px auto;">
+        <#include "/user/left.html" />
+        <form class="form-horizontal">
+            <div class="banners" style="width: 639px;float: left;margin-left: 31px;background-color: #ffffff;padding: 20px;">
+                <div style="color: #f1b426;font-size: 16px;line-height: 32px;font-weight: bolder"><@spring.message "module.invoice"/></div>
+                <div class="alert alert-block">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <div class="control-group">
+                        <label class="control-label" for="companyName"><@spring.message "mail.inviteCompany"/>：</label>
+                        <div class="controls">
+                            <input type="text" name="company" id="companyName" data-required="true" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="address"><@spring.message "mail.address"/>：</label>
+                        <div class="controls">
+                            <input type="text" name="address" id="address" data-required="true" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="gender"><@spring.message "mail.language"/>：</label>
+                        <div class="controls">
+                            <select id="gender" name="gender">
+                                <#if rc.locale=="zh_CN">
+                                    <option value="1">男</option><option value="2">女</option>
+                                <#else>
+                                    <option value="1">Male</option><option value="2">Female</option>
+                                </#if>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="type"><@spring.message "mail.language"/>：</label>
+                        <div class="controls">
+                            <select id="type" name="flag"><option value="1">中文</option><option value="2">English</option></select>
+                        </div>
+                    </div>
+                </div>
+                <button id="add" type="button" class="btn btn-warning"><@spring.message "mail.addAddress"/></button><button type="button" style="margin-left: 20px" id="send" class="btn btn-warning"><@spring.message "mail.send"/></button>
+            </div>
+        </form>
+        <!--/span-->
+    </div>
+    <!--/row-->
+    <hr>
+    <#include "/footer.html" />
+</div>
+<!--/.container-->
+<script src="${resource}/bootstrap/b2/js/bootstrap.js"></script>
+<script src="${resource}/js/json2.js"></script>
+<script>
+    var template = '<div class="alert alert-block">'+
+            '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+            '<div class="control-group">'+
+            '<label class="control-label" for="companyName"><@spring.message "mail.inviteCompany"/>：</label>'+
+            '<div class="controls">'+
+            '<input type="text" name="company" id="companyName" data-required="true" />'+
+            '</div>'+
+            '</div>'+
+            '<div class="control-group">'+
+            '<label class="control-label" for="address"><@spring.message "mail.address"/>：</label>'+
+            '<div class="controls">'+
+            '<input type="text" name="address" id="address" data-required="true" />'+
+            '</div>'+
+            '</div>'+
+            '<div class="control-group">'+
+            '<label class="control-label" for="type"><@spring.message "mail.language"/>：</label>'+
+            '<div class="controls">'+
+            '<select id="type" name="flag"><option value="1">中文</option><option value="2">English</option></select>'+
+            '</div>'+
+            '</div>'+
+            '</div>';
+    $(document).ready(function(){
+        $("#leftEmail").addClass("lcurrent");
+        $("#add").click(function(){
+            $("#add").before(template);
+        });
+        $("#send").click(function(){
+            var array = new Array();
+            var mails = $(".alert");
+            for(var i=0;i<mails.length;i++){
+                var email ={};
+                email.receivers = $(mails[i]).find("[name='address']").val();
+                var addresses = email.receivers.split(";");
+                for(var j=0;j<addresses.length;j++){
+                    if(!checkEmail(addresses[j])){
+                        alert("邮箱地址错误!")
+                        return;
+                    }
+                }
+                if(email.receivers==''){
+                    canSend = false;
+                    alert("邮箱地址不能为空");
+                    return;
+                }
+                email.name = $(mails[i]).find("[name='company']").val();
+                if(email.name==''){
+                    canSend = false;
+                    alert("公司名称不能为空");
+                    return;
+                }
+                array.push(email);
+            }
+            var jsonString = JSON.stringify(array);
+            $.ajax({
+                url:"${base}/user/sendMail",
+                method:"POST",
+                data:{"context":jsonString},
+                success:function(data){
+                    if(data.resultCode==0){
+                        $(".alert").remove();
+                        $("#add").before(template);
+                        alert("发送成功[Send Success]");
+                    }else{
+                        alert("发送失败[Send failure]");
+                    }
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>

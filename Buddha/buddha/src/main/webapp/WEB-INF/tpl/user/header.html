@@ -1,0 +1,72 @@
+<style>
+    #dLabel a {
+        color: #ffffff;
+    }
+
+    body {
+        padding-top: 0px;
+        background-image: url('${resource}/images/body_back.jpg');
+        background-repeat: repeat-x;
+    }
+    .header_link a{
+        margin-right: 20px;
+        color: #61590e;
+    }
+    .header_link a:link{
+        color: #61590e;
+    }
+</style>
+<div style="height: 217px;width: 100%;background-image: url('${resource}/images/banner_back.jpg');background-repeat: repeat-x">
+    <div style="margin: 0px auto;width: 982px;position: relative">
+        <div class="header_link" style="color:#61590e;position: absolute;right: 0px;top: 5px;">
+            <!--<a href="${base}/user/main.html"><@spring.message "index"/></a>-->
+            <a href="http://www.buddhafair.com/" target="view_window"><@spring.message "guanwang"/></a>
+            <!--<a href="http://xm.buddhafair.com/about.asp?ID=23" target="view_window">金泓信</a>-->
+        </div>
+        <img src="${resource}/images/banner.jpg">
+        <div style="position: absolute;top: 80px;left: 300px;color: #61590e">
+            <p style="font-size: 24px;font-weight: bold"><@spring.message "site"/></p>
+            <p style="font-size: 14px"><@spring.message "site.desc"/></p>
+        </div>
+        <font style="color:#b94a48;position: absolute;right: 3px;bottom: 10px;"><@spring.message "banner.time"/></font>
+        <font id="baiwei" style="color:#b94a48;position: absolute;right: 70px;bottom: 10px;">0</font>
+        <font id="shiwei" style="color:#b94a48;position: absolute;right: 47px;bottom: 10px;">0</font>
+        <font id="gewei" style="color:#b94a48;position: absolute;right: 25px;bottom: 10px;">0</font>
+    </div>
+    <!--<div style="width: 973px;margin: 0px auto;height: 39px;padding-left: 11px;" align="right">-->
+        <!--<#if rc.locale=="zh_CN">-->
+            <!--<#if boothInfo?exists>-->
+                <!--<div class="companyInfo">公司名:${PRINCIPLE_SESSION_ATTRIBUTE.exhibitor.company!""} 展位号:${boothInfo.boothNumber!""}</div>-->
+            <!--<#else>-->
+                <!--<div class="companyInfo">公司名:${PRINCIPLE_SESSION_ATTRIBUTE.exhibitor.company!""}</div>-->
+            <!--</#if>-->
+        <!--<#else>-->
+            <!--<#if boothInfo?exists>-->
+                <!--<div class="companyInfo">公司名:${PRINCIPLE_SESSION_ATTRIBUTE.exhibitor.companye!""} 展位号:${boothInfo.boothNumber!""}</div>-->
+            <!--<#else>-->
+                <!--<div class="companyInfo">公司名:${PRINCIPLE_SESSION_ATTRIBUTE.exhibitor.companye!""}</div>-->
+            <!--</#if>-->
+        <!--</#if>-->
+        <!--<div style="clear: both"></div>-->
+    <!--</div>-->
+</div>
+<div class="navbar navbar-inverse navbar-fixed-top" style="position: inherit;margin-bottom: 20px">
+</div>
+<script>
+    $(document).ready(function(){
+        var kaishi = new Date("2015-10-15");
+        var now = new Date();
+        var day = ((kaishi.getTime()-now.getTime())/1000/60/60/24);
+        var dayString = Math.ceil(day)+"";
+        var p = 0;
+        if(dayString.length>2){
+            $("#baiwei").text(dayString.charAt(p++))
+        }
+        if(dayString.length>1){
+            $("#shiwei").text(dayString.charAt(p++))
+        }
+        if(dayString.length>0){
+            $("#gewei").text(dayString.charAt(p++))
+        }
+    })
+</script>

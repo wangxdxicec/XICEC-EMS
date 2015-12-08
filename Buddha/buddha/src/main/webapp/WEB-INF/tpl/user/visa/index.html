@@ -1,0 +1,75 @@
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style type="text/css">
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<#include "/user/header.html" />
+<div class="container-fluid">
+    <div class="row-fluid" style="width:1000px;margin:0px auto">
+        <#include "/user/left.html" />
+        <div class="span9">
+            <p style="text-align:center;font-size:14px;font-weight:bold;">VISA INFORMATION</p>
+            <p style="font-size:14px;font-weight:bold;"><b>VISA APPLICATION TO CHINA</b></p>
+            <p>• All foreigners MUST obtain an Entry Visa before proceeding to China. Exhibitors are strongly recommended to process the application two months before departure from the country of origin.</p>
+            <p>• The Organizing Committee of Xiamen Buddha Fair provides the <strong>Official Invitation Letter</strong> free of charge to assist exhibitors and trade visitors in Visa procedure. We will coordinate and forward the information of the application to the Chinese authorities for issuing the Invitation Letter, which will be ready within 5 working days and presented to your company by Fax or E-mail.</p>
+            <p>&nbsp; </p>
+            <p style="font-size:14px;font-weight:bold;"><b>ATTENTION!</b></p>
+            <p style="color:#ff0000;">• The Official Invitation Letter we provide is NOT a Visa, but ONLY AN INVITATION that helps you gain a Visa from Chinese Embassy/Consulate in your country;</p>
+            <p>• Only the Visa Invitations during the fair period can be provided;</p>
+            <p>• Passports must be valid for at least SIX MONTHS beyond the intended date of entry into China;</p>
+            <p>• The first page (the page with your photo) of your passport is necessary, please upload together with the invitation application form;</p>
+            <p>• Attendees from IRAN, PAKISTAN,&nbsp;EGYPT, SAUDI ARABIA,&nbsp;BANGLADESH, SRI LANKA, etc., should also provide the Business License of your company;</p>
+            <p>• Official letters of invitation can be provided until <font style="color: red;font-weight: bold"> October 10,2014</font> and will be sent only by fax or Email. Express deliveries by DHL, TNT, FEDEX, UPS or other forwarding agent can be granted only to recipients who will pay all shipment charges. </p>
+            <p>• Normal invitation will be ready within 5 working days. In case of errors (Passport Name, Passport No., etc), it will take 10 more days to correct.</p>
+            <p>• Thank you for your cooperation!</p>
+            <div style="margin-top: 20px">
+                <button id="sub_visa" class="btn btn-large btn-warning" type="button"><@spring.message "visa.addvisa"/></button>
+            </div>
+    </div>
+</div>
+<#include "/footer.html" />
+<script>
+    $("#sub_visa").click(function(){
+        window.location.href = "${base}/user/visa/list.html";
+    });
+    $("#nav_visa").addClass("active")
+</script>
+</body>
+</html>

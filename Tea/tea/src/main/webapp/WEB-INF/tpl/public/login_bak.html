@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <#include "../common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+    <div style="margin: 0px auto;margin-top: 50px;width: 400px">
+        <form role="form" class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label" for="username"><@spring.message "login.language"/></label>
+
+                <div class="controls">
+                    <label class="radio"><input id="lc" name="language" type="radio">中文</label>
+                    <label class="radio"><input id="le" name="language" type="radio">English</label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="username"><@spring.message "login.zone"/></label>
+
+                <div class="controls">
+                    <label class="radio"><input value="1" checked="checked" name="zone" type="radio"><@spring.message "login.zone.guonei"/></label>
+                    <label class="radio"><input value="2" name="zone" type="radio"><@spring.message "login.zone.guowai"/></label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="username"><@spring.message "login.username"/></label>
+
+                <div class="controls">
+                    <input type="text" class="form-control" id="username" placeholder='<@spring.message "login.username"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="password"><@spring.message "login.password"/></label>
+
+                <div class="controls">
+                    <input type="password" class="form-control" id="password" placeholder='<@spring.message "login.password"/>'>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="button" id="loginButton" class="btn btn-lg btn-danger"><@spring.message "login.login"/></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--[if lt IE 8]>
+    <div style="margin: 0px auto;margin-top: 10px;width: 400px">
+        <@spring.message "login.browser"/>
+    </div>
+    <![endif]-->
+</div>
+
+<#include "/footer.html" />
+
+<script>
+    $(document).ready(function () {
+        $("[name='language']").click(function(){
+             window.location.href = "${base}/?locale="+$(this).attr("id");
+        });
+        if(window.location.href.indexOf("=le")!=-1){
+            $("#le").attr("checked","checked");
+        }else{
+            $("#lc").attr("checked","checked");
+        }
+        $("#loginButton").click(function () {
+            if($("#username").val()==''||$("#password").val()==''){
+                alert(words.loginRequired);
+                return;
+            }
+            $(this).addClass("disabled");
+            var zone = 1;
+            $("[name='zone']").each(function(){
+                if(this.checked){
+                    zone = $(this).val();
+                }
+            });
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: $.toJSON({"username": $("#username").val(), "password": $("#password").val(),"english":$("[name='language']")[0].checked,"area":zone}),
+                url: "${base}/login",
+                success: function (result) {
+                    $("#loginButton").removeClass("disabled");
+                    if (result.resultCode == 1) {
+                        alert(words.loginFailure)
+                    } else if (result.resultCode > 1) {
+                        alert(words.loginServerError)
+                    } else {
+                        window.location.href = "${base}/user/main.html"
+                    }
+                    $(this).removeClass("disabled");
+                },
+                dataType: "json"
+            });
+        });
+    })
+</script>
+<script src="${resource}/bootstrap/b2/js/bootstrap.js"></script>
+</body>
+</html>

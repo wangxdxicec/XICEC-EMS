@@ -1,0 +1,147 @@
+<style>
+    body {
+        margin: 0px auto;
+        padding-top: 0px;
+        background-color: #eeeeee;
+    }
+
+    .new_header td {
+        padding: 0px 0px;
+        color: #ffffff;
+    }
+
+    .new_nav td {
+        min-width: 103px;
+        padding: 0px 10px;
+        text-align: center;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    .new_nav a {
+        color: #ffffff;
+        text-decoration: none
+    }
+
+    .current {
+        color: #9e6100;
+        background-color: #68c734;
+    }
+
+    .current a {
+        color: #9e6100;
+        text-decoration: none
+    }
+
+    .language{
+        position: absolute;top: 10px;right: 0px;color: #000000
+    }
+
+    .language a,.language a:visited,.language a:hover{
+        color: #000000;
+    }
+</style>
+<div style="width:100%;margin-top: 0px;background-color: #ffffff">
+    <div style="width:962px;height:178px; margin:0px auto; background-image:url(${resource}/images/header.jpg);position: relative">
+        <div class="language">
+            <#if rc.locale=="zh_CN">
+                <a name="db" href="javascript:void(0)">下载APP</a>
+            <#else>
+                <a name="db" href="javascript:void(0)">Download APP</a>
+            </#if>
+                | <a href="${base}/changeLanguage?locale=cn">中文</a>
+                | <a href="${base}/changeLanguage?locale=us">English</a>
+        </div>
+        <div style="margin-left: 223px;position: absolute">
+            <#if rc.locale=="zh_CN">
+                <#--<div style="font-size: 32px;line-height: 50px;margin-top: 40px;color: #4a7716;font-weight: bold"><@spring.message "banner.one"/></div>-->
+                <#--<div style="font-size: 28px;line-height: 35px;color: #bf8108;letter-spacing: 2px;font-weight: bold"><@spring.message "banner.two"/></div>-->
+                <#--<div style="font-size: 18px;line-height: 30px;color: #666666;margin-top: 10px;margin-left: 40px;"><@spring.message "banner.three"/></div>-->
+                <img src="${resource}/images/tittle_cn.jpg">
+            <#else>
+                <div style="font-size: 24px;line-height: 50px;margin-top: 40px;color: #4a7716;font-weight: bold"><@spring.message "banner.one"/></div>
+                <div style="font-size: 20px;line-height: 35px;color: #bf8108;;font-weight: bold"><@spring.message "banner.two"/></div>
+                <div style="font-size: 14px;line-height: 30px;color: #666666;margin-top: 0px;margin-left: 40px;"><@spring.message "banner.three"/></div>
+            </#if>
+        </div>
+        <#if rc.locale=="zh_CN">
+            <font style="color:#666666;position: absolute;right: 3px;bottom: 10px;"><@spring.message "banner.time"/></font>
+        <#else>
+            <font style="color:#666666;position: absolute;right: -20px;bottom: 10px;"><@spring.message "banner.time"/></font>
+        </#if>
+        <font id="baiwei" style="color:#666666;position: absolute;right: 70px;bottom: 10px;">0</font>
+        <font id="shiwei" style="color:#666666;position: absolute;right: 47px;bottom: 10px;">0</font>
+        <font id="gewei" style="color:#666666;position: absolute;right: 25px;bottom: 10px;">0</font>
+    </div>
+</div>
+<div class="new_header"
+     style="height:39px; background-image:url(${resource}/images/tea_index_11.gif); background-repeat:repeat-x;position: relative">
+    <div style="width:962px; height:100%; margin:0px auto;">
+        <table style="height:100%; border-width:0px; margin-left:43px; border-spacing:0px" border="0">
+            <tr style=" border-width:0px">
+                <td ><a target="_blank" href="mailto:info@teafair.com.cn" style="border: 0px"><img style="" src="${resource}/images/sns_03.gif"/></a></td>
+                <td ><a target="_blank" href="http://www.facebook.com/pages/China-Xiamen-International-Tea-Fair/212699918747514?ref=ts" style="border: 0px"><img style="" src="${resource}/images/sns_04.gif"/></a></td>
+                <td ><a target="_blank" href="https://twitter.com/XiamenTeaFair" style="border: 0px"><img style="" src="${resource}/images/sns_05.gif"/></a></td>
+                <td ><a target="_blank" href="http://www.teafair.com.cn/PublicityCenter/news.asp?id=618" style="border: 0px"><img style="" src="${resource}/images/sns_06.gif"/></a></td>
+                <td ><a target="_blank" href="http://weibo.com/teafair" style="border: 0px"><img style="" src="${resource}/images/sns_07.gif"/></a></td>
+                <td>
+                    <table class="new_nav"
+                           style="height: 100%; border-width: 0px; margin-left: 55px; border-spacing: 0px; margin-right: 0px;"
+                           border="0">
+                        <tr style=" border-width:0px;">
+                            <td class="current"><a href="/user/main.html"><@spring.message "newnav.home"/></a></td>
+                            <#if rc.locale=="zh_CN">
+                                <td><a target="_blank" href="http://www.teafair.com.cn/"><@spring.message "newnav.guanwang"/></a></td>
+                                <td><a target="_blank" href="http://www.teafair.com.cn/about.asp?ID=167"><@spring.message "newnav.contactus"/></a></td>
+                            <#else>
+                                <td><a target="_blank" href="http://www.teafair.com.cn/en"><@spring.message "newnav.guanwang"/></a></td>
+                                <td><a target="_blank" href="http://www.teafair.com.cn/En/about.asp?ID=46"><@spring.message "newnav.contactus"/></a></td>
+                            </#if>
+                        </tr>
+                    </table>
+                </td>
+                <td style="position: absolute;top: 10px;right: 300px;color: #000000;">
+                    <#if rc.locale=="zh_CN">
+                        <#if boothInfo?exists>
+                            <div class="companyInfo">${PRINCIPLE_SESSION_ATTRIBUTE.exhibitor.company!""} (${boothInfo.boothNumber!""} ${boothInfo.exhibitorArea!""})</div>
+                        <#else>
+                            <div class="companyInfo">${PRINCIPLE_SESSION_ATTRIBUTE.exhibitor.company!""}</div>
+                        </#if>
+                    <#else>
+                        <#if boothInfo?exists>
+                            <div class="companyInfo">${PRINCIPLE_SESSION_ATTRIBUTE.exhibitor.companye!""} (${boothInfo.boothNumber!""} ${boothInfo.exhibitorArea!""})</div>
+                        <#else>
+                            <div class="companyInfo">${PRINCIPLE_SESSION_ATTRIBUTE.exhibitor.companye!""}</div>
+                        </#if>
+                    </#if>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div style="height: 40px;width: 100%;background-color: #eeeeee;"></div>
+<script>
+    $(document).ready(function(){
+        var kaishi = new Date("2015-10-15");
+        var now = new Date();
+        var day = ((kaishi.getTime()-now.getTime())/1000/60/60/24);
+        var dayString = Math.ceil(day)+"";
+        var p = 0;
+        if(dayString.length>2){
+            $("#baiwei").text(dayString.charAt(p++))
+        }
+        if(dayString.length>1){
+            $("#shiwei").text(dayString.charAt(p++))
+        }
+        if(dayString.length>0){
+            $("#gewei").text(dayString.charAt(p++))
+        }
+
+        $(".new_nav td").mouseover(function(){
+            $(".new_nav td").each(function(){
+                $(this).removeClass("current");
+            })
+            $(this).addClass("current");
+        })
+    })
+</script>

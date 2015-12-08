@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style type="text/css">
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+
+        body {
+
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+        .banners img{
+            margin-top: 20px;
+            border: 0px;
+        }
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<#include "/user/header.html" />
+<div style="width: 100%">
+    <div class="row-fluid" style="width: 962px;margin: 0px auto;">
+        <#include "/user/left.html" />
+        <div class="banners" style="width: 639px;float: left;margin-left: 31px;background-color: #ffffff;padding: 20px;">
+            <div style="color: #f1b426;font-size: 16px;line-height: 32px;font-weight: bolder"><@spring.message "module.banner"/></div>
+            <#if rc.locale=="zh_CN">
+                <div class="alert alert-block">
+                    将图片右键另存，添加到贵司网站或电子邮件中，让更多人知道您参加了厦门石材展。
+                </div>
+                <#else>
+                    <div class="alert alert-block">
+                        To declare you’re exhibiting on your website or email.
+                    </div>
+            </#if>
+            <a href="${base}/banner?eid=${eid}&num=1" target="_blank"><img src="${base}/banner?eid=${eid}&num=1" /></a>
+            <a href="${base}/banner?eid=${eid}&num=2" target="_blank"><img src="${base}/banner?eid=${eid}&num=2" /></a>
+            <a href="${base}/banner?eid=${eid}&num=3" target="_blank"><img src="${base}/banner?eid=${eid}&num=3" /></a>
+            <a href="${base}/banner?eid=${eid}&num=4" target="_blank"><img src="${base}/banner?eid=${eid}&num=4" /></a>
+        </div>
+        <!--/span-->
+    </div>
+    <!--/row-->
+    <hr>
+    <#include "/footer.html" />
+</div>
+<!--/.container-->
+<script src="${resource}/bootstrap/b2/js/bootstrap.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#leftBanner").addClass("lcurrent");
+    })
+</script>
+</body>
+</html>

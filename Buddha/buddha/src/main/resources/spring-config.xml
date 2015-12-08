@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!-- 扫描注解Bean -->
+    <context:component-scan base-package="com.zhenhappy">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <bean
+            class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <value>classpath:c3p0.properties</value>
+        </property>
+    </bean>
+
+    <bean id="dataSource" destroy-method="close"
+          class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driverClass}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="minPoolSize" value="${jdbc.miniPoolSize}"/>
+        <property name="maxPoolSize" value="${jdbc.maxPoolSize}"/>
+        <property name="initialPoolSize" value="${jdbc.initialPoolSize}"/>
+        <property name="maxIdleTime" value="${jdbc.maxIdleTime}"/>
+        <property name="acquireIncrement" value="${jdbc.acquireIncrement}"/>
+
+        <property name="acquireRetryAttempts" value="${jdbc.acquireRetryAttempts}"/>
+        <property name="acquireRetryDelay" value="${jdbc.acquireRetryDelay}"/>
+        <property name="testConnectionOnCheckin" value="${jdbc.testConnectionOnCheckin}"/>
+        <property name="automaticTestTable" value="${jdbc.automaticTestTable}"/>
+        <property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}"/>
+        <property name="checkoutTimeout" value="${jdbc.checkoutTimeout}"/>
+
+    </bean>
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan">
+            <list>
+                <value>com.zhenhappy.ems.entity</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.SQLServerDialect
+                </prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.format_sql">false</prop>
+                <prop key="hibernate.connection.autocommit">false</prop>
+                <prop key="hibernate.connection.url">jdbc:jtds:sqlserver://192.168.1.211:1433</prop>
+                <prop key="hibernate.connection.driver_class">net.sourceforge.jtds.jdbc.Driver</prop>
+                <prop key="hibernate.connection.username">sa</prop>
+                <prop key="hibernate.connection.password">30553859</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 开启注解事务 只对当前配置文件有效 -->
+    <tx:annotation-driven transaction-manager="txManager"/>
+
+    <bean id="txManager"
+          class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.zhenhappy.system.SystemConfig">
+        <property name="configs">
+            <map>
+                <entry key="short_msg_url"
+                       value="http://42.120.5.61/api/http_api.php"/>
+                <entry key="appendix_directory"
+                       value="${appendix}"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="emailSenderPool" name="emailSenderPool"
+          class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="10"/>
+        <property name="maxPoolSize" value="30"/>
+        <property name="queueCapacity" value="30"/>
+    </bean>
+    <!-- spring线程池结束 -->
+
+    <!-- 邮箱发送配置 -->
+    <bean id="mailSender" name="mailSender"
+          class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host">
+            <value>smtp.stonefair.org.cn</value>
+        </property>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.timeout">25000</prop>
+            </props>
+        </property>
+        <property name="username">
+            <value>service@stonefair.org.cn</value>
+        </property>
+        <property name="password">
+            <value>Sczsz.0209</value>
+        </property>
+    </bean>
+</beans>

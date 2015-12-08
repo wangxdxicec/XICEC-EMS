@@ -1,0 +1,34 @@
+<#import "/common/spring.ftl" as spring />
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title><@spring.message "site"/></title>
+
+
+    <#include "/common/common-js.html" />
+    <!-- Custom styles for this template -->
+    <link href="${resource}/bootstrap/b2/css/bootstrap.css" rel="stylesheet">
+    <script src="${resource}/js/jquery.json-2.4.js"></script>
+    <style type="text/css">
+    </style>
+</head>
+<!-- Bootstrap core CSS -->
+
+<body>
+<#include "/user/header.html" />
+<div class="container-fluid">
+    <div class="row-fluid" style="width:1000px;margin:0px auto">
+        <#include "/user/left.html" />
+        <div class="span9">
+            <img src="http://117.28.237.21:29956/qrcode/qrcode?content=http://www.teafair.com.cn/Exhibitor/sharepage.asp?id=${PRINCIPLE_SESSION_ATTRIBUTE.exhibitor.eid!''}&size=300" alt=""/>
+        </div>
+
+    </div>
+</div>
+<#include "/footer.html" />
+</body>
+</html>
