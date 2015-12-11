@@ -52,7 +52,7 @@ XICEC-EMS
 │　　　　　　 └─main  
 │　　　　　 　　　├─java(后端源代码)   
 │　　　　　 　　　├─resources(配置文件)   
-│　　　　　　　   │　　　└─language(国际化文件)   
+│　　　　　 　　　│　　　└─language(国际化文件)   
 │　　　　　 　　　└─webapp(前端界面代码)   
 │　　　　　　　　　　　├─resource(静态资源文件)    
 │　　　　　　　　　　　└─WEB-INF   
