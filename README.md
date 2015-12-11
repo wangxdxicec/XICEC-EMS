@@ -60,7 +60,7 @@ XICEC-EMS
 　　│　　　├─resources  
 　　│　　　└─webapp  
 　　│　　　　　├─resource  
-　　│　　　　　└─WEB-INF 
+　　│　　　　　└─WEB-INF   
 　　│　　　　　　　└─tpl  
 　　├─tea-app ----------------> 茶博会APP后端  
 　　└─tea-manager ---------> 茶博会管理后台  
