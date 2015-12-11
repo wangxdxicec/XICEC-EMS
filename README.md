@@ -4,7 +4,7 @@
 
 XICEC-EMS  
 ├─Buddha ----------------------> 佛事展模块  
-│　　├─buddha --------------> 佛事展后台([m.buddhafair.com]{http://m.buddhafair.com})  
+│　　├─buddha --------------> 佛事展后台([m.buddhafair.com](http://m.buddhafair.com))  
 │　　│　　└─src  
 │　　│　　　 └─main  
 │　　│　　　 　　├─java(后端源代码)   
