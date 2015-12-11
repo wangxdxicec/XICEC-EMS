@@ -58,7 +58,7 @@ XICEC-EMS
 │　　　　　　　　　　　└─WEB-INF   
 │　　　　　　　　　　　　　　└─tpl(Freemarker模版)  
 └─Tea ----------------------------> 茶博会模块  
-　　├─tea ----------------------> 茶博会后台  
+　　├─tea ----------------------> 茶博会后台([m.teafair.com.cn](http://m.teafair.com.cn))   
 　　│　└─src  
 　　│　　└─main  
 　　│　　　　├─java(后端源代码)   
@@ -69,7 +69,7 @@ XICEC-EMS
 　　│　　　　　　　└─WEB-INF   
 　　│　　　　　　　　　　└─tpl(Freemarker模版)  
 　　├─tea-app ----------------> 茶博会APP后端  
-　　└─tea-manager ---------> 茶博会管理后台  
+　　└─tea-manager ---------> 茶博会管理后台([m.teafair.com.cn/manager/login.html](http://m.teafair.com.cn/manager/login.html))     
 　　　 　 └─src  
 　　　　　　　└─main  
 　　　　　　　　　├─java(后端源代码)   
