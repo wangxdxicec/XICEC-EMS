@@ -6,7 +6,7 @@ XICEC-EMS
 ├─Buddha ----------------------> 佛事展模块  
 │　　├─buddha --------------> 佛事展后台  
 │　　│　　└─src  
-│　　│　　　 ├─main  
+│　　│　　　 └─main  
 │　　│　　　 　　　├─java  
 │　　│　　　 　　　├─resources  
 │　　│　　　 　　　└─webapp  
