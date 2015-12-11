@@ -7,12 +7,12 @@ XICEC-EMS
 │　　├─buddha --------------> 佛事展后台  
 │　　│　　└─src  
 │　　│　　　 └─main  
-│　　│　　　 　　　├─java  
-│　　│　　　 　　　├─resources  
-│　　│　　　 　　　└─webapp  
-│　　│　　　　　　　　　├─resource  
-│　　│　　　　　　　　　└─WEB-INF  
-│　　│　　　　　　　　　　　　└─tpl  
+│　　│　　　 　　├─java  
+│　　│　　　 　　├─resources  
+│　　│　　　 　　└─webapp  
+│　　│　　　　　　　　├─resource  
+│　　│　　　　　　　　└─WEB-INF  
+│　　│　　　　　　　　　　　└─tpl  
 │　　├─buddha-app --------> 佛事展APP后端  
 │　　└─buddha-manager -> 佛事展管理后台  
 ├─Common ---------------------> 公共模块  
