@@ -40,8 +40,8 @@ XICEC-EMS
 │　　│　　　 　　├─resources  
 │　　│　　　 　　└─webapp  
 │　　│　　　　　　　　├─resource  
-│　　│　　　　　　　　└─WEB-INF  
-│　　│　　　　　　　　　　　└─tpl  
+│　　│　　　　　　　　└─WEB-INF   
+│　　│　　　　　　　　　　　└─tpl   
 │　　├─stone-app -----------> 石材展APP后端  
 │　　└─stone-manager ----> 石材展管理后台  
 │　　　　└─src  
@@ -50,8 +50,8 @@ XICEC-EMS
 │　　　　　 　　├─resources  
 │　　　　　 　　└─webapp  
 │　　　　　　　　　　├─resource  
-│　　　　　　　　　　└─WEB-INF 
-│　　　　　　　　　　　　　└─tpl  
+│　　　　　　　　　　└─WEB-INF   
+│　　　　　　　　　　　　　└─tpl   
 └─Tea ----------------------------> 茶博会模块  
 　　├─tea ----------------------> 茶博会后台  
 　　│　└─src  
@@ -70,5 +70,5 @@ XICEC-EMS
 　　　　　    ├─resources  
 　　　　　    └─webapp  
 　　　　　　　    ├─resource  
-　　　　　　　    └─WEB-INF  
-　　　　　　　　　    └─tpl  
+　　　　　　　    └─WEB-INF   
+　　　　　　　　　    └─tpl   
