@@ -4,7 +4,7 @@
 
 XICEC-EMS  
 ├─Buddha ----------------------> 佛事展模块  
-│　　├─buddha --------------> 佛事展后台([m.buddhafair.com](http://m.buddhafair.com))  
+│　　├─buddha --------------> 佛事展后台([m.buddhafair.com](http://m.buddhafair.com))   
 │　　│　　└─src  
 │　　│　　　 └─main  
 │　　│　　　 　　├─java(后端源代码)   
@@ -24,7 +24,7 @@ XICEC-EMS
 │　　│　　　　　　　　├─resource(静态资源文件)    
 │　　│　　　　　　　　└─WEB-INF  
 │　　│　　　　　　　　　　　└─tpl(Freemarker模版)   
-│　　└─buddha-manager -> 佛事展管理后台  
+│　　└─buddha-manager -> 佛事展管理后台([m.buddhafair.com/manager/login.html](http://m.buddhafair.com/manager/login.html))    
 │　　　　　└─src  
 │　　　　　 　└─main  
 │　　　　　 　　　├─java(后端源代码)   
