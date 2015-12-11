@@ -65,10 +65,10 @@ XICEC-EMS
 　　├─tea-app ----------------> 茶博会APP后端  
 　　└─tea-manager ---------> 茶博会管理后台  
 　　　 　 └─src  
-　　　　　　  └─main  
-　　　　　　    ├─java  
-　　　　　 　   ├─resources  
-　　　　　 　   └─webapp  
-　　　　　　　 　   ├─resource  
-　　　　　　　  　  └─WEB-INF   
-　　　　　　　　　   　　 └─tpl   
+　　　　　　　└─main  
+　　　　　　　　　├─java  
+　　　　　　　　　├─resources  
+　　　　　　　　　└─webapp  
+　　　　　　　　　　　├─resource  
+　　　　　　　　　　　└─WEB-INF   
+　　　　　　　　　　　　　　└─tpl   
