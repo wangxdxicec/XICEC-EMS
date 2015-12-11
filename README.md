@@ -36,7 +36,7 @@ XICEC-EMS
 │　　　　　　　　　　　　　　└─tpl(Freemarker模版)  
 ├─Common ---------------------> 公共模块  
 ├─Stone --------------------------> 石材展项目  
-│　　├─stone ------------------> 石材展后台  
+│　　├─stone ------------------> 石材展后台([m.stonefair.org.cn](http://m.stonefair.org.cn))   
 │　　│　　└─src  
 │　　│　　　 └─main  
 │　　│　　　 　　├─java(后端源代码)   
@@ -47,7 +47,7 @@ XICEC-EMS
 │　　│　　　　　　　　└─WEB-INF   
 │　　│　　　　　　　　　　　└─tpl(Freemarker模版)  
 │　　├─stone-app -----------> 石材展APP后端  
-│　　└─stone-manager ----> 石材展管理后台  
+│　　└─stone-manager ----> 石材展管理后台([m.stonefair.org.cn/manager/login.html](http://m.stonefair.org.cn/manager/login.html))    
 │　　　　　└─src  
 │　　　　　　 └─main  
 │　　　　　 　　　├─java(后端源代码)   
