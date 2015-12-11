@@ -12,7 +12,7 @@ XICEC-EMS
 │　　│　　　 └─webapp  
 │　　│　　　　　　├─resource  
 │　　│　　　　　　└─WEB-INF  
-│　　│　　　　　　└─tpl  
+│　　│　　　　　　　　　└─tpl  
 │　　├─buddha-app --------> 佛事展APP后端  
 │　　└─buddha-manager -> 佛事展管理后台  
 ├─Common ---------------------> 公共模块  
