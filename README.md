@@ -56,12 +56,12 @@ XICEC-EMS
 　　├─tea ----------------------> 茶博会后台  
 　　│　└─src  
 　　│　　└─main  
-　　│　　　├─java  
-　　│　　　├─resources  
-　　│　　　└─webapp  
-　　│　　　　　├─resource  
-　　│　　　　　└─WEB-INF   
-　　│　　　　　　　└─tpl  
+　　│　　　　├─java  
+　　│　　　　├─resources  
+　　│　　　　└─webapp  
+　　│　　　　　　　├─resource  
+　　│　　　　　　　└─WEB-INF   
+　　│　　　　　　　　　　└─tpl  
 　　├─tea-app ----------------> 茶博会APP后端  
 　　└─tea-manager ---------> 茶博会管理后台  
 　　　 　 └─src  
