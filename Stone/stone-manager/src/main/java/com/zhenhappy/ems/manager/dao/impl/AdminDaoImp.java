@@ -7,7 +7,7 @@ import com.zhenhappy.ems.manager.entity.TAdminUser;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by wujianbin on 2014-04-22.
+ * Created by lianghaijian on 2014-04-22.
  */
 @Repository
 public class AdminDaoImp extends BaseDaoHibernateImp<TAdminUser> implements AdminDao {

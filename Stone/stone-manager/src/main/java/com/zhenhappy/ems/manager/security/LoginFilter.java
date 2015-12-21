@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by wujianbin on 2014-04-27.
+ * Created by lianghaijian on 2014-04-27.
  */
 public class LoginFilter implements Filter {
 	List<String> whiteList = new ArrayList<String>();

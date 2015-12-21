@@ -19,7 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by wujianbin on 2014-04-20.
+ * Created by lianghaijian on 2014-04-20.
  */
 @Controller
 @SessionAttributes(value = Principle.PRINCIPLE_SESSION_ATTRIBUTE)

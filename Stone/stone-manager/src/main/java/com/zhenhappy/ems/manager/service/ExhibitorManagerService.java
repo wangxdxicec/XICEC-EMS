@@ -175,13 +175,15 @@ public class ExhibitorManagerService extends ExhibitorService {
                                     }else{
                                         //在2015-08-01 00:00:00之后
                                         if (joiners.size() > 0) {
-                                            if (exhibitor.getArea() == 1) {
-                                                TInvoiceApply invoice = invoiceService.getByEid(exhibitorInfo.getEid());
-                                                if (invoice != null) {
-                                                    if (StringUtils.isNotEmpty(invoice.getInvoiceNo()) && StringUtils.isNotEmpty(invoice.getTitle())){
-                                                        return 4;
-                                                    }
+                                            if (exhibitor.getArea() != null) {
+                                                if (exhibitor.getArea() == 1) {
+                                                    TInvoiceApply invoice = invoiceService.getByEid(exhibitorInfo.getEid());
+                                                    if (invoice != null) {
+                                                        if (StringUtils.isNotEmpty(invoice.getInvoiceNo()) && StringUtils.isNotEmpty(invoice.getTitle())){
+                                                            return 4;
+                                                        }
 
+                                                    }
                                                 }
                                             }
                                         }
@@ -803,6 +805,9 @@ public class ExhibitorManagerService extends ExhibitorService {
     public void modifyExhibitorInfo(ModifyExhibitorInfoRequest request,Integer eid, Integer adminId) throws Exception {
     	if(eid != null){
     		TExhibitor exhibitor = loadExhibitorByEid(eid);
+            exhibitor.setCompany(request.getCompany().trim());
+            exhibitor.setCompanye(request.getCompanyEn().trim());
+            exhibitor.setCompanyt(JChineseConvertor.getInstance().s2t(request.getCompany().trim()));
     		if(exhibitor != null){
     			TExhibitorInfo exhibitorInfo = new TExhibitorInfo();
     			if(request.getEinfoid() != null) {
@@ -819,8 +824,8 @@ public class ExhibitorManagerService extends ExhibitorService {
     				exhibitorInfo.setCreateTime(new Date());
     				if(adminId != null) exhibitorInfo.setAdminUser(adminId);
     			}
-				exhibitorInfo.setCompany(request.getCompany());
-				exhibitorInfo.setCompanyEn(request.getCompanyEn());
+				exhibitorInfo.setCompany(request.getCompany().trim());
+				exhibitorInfo.setCompanyEn(request.getCompanyEn().trim());
     			exhibitorInfo.setPhone(request.getPhone());
 				exhibitorInfo.setFax(request.getFax());
 				exhibitorInfo.setEmail(request.getEmail());
@@ -831,12 +836,13 @@ public class ExhibitorManagerService extends ExhibitorService {
 				exhibitorInfo.setMainProduct(request.getMainProduct());
 				exhibitorInfo.setMainProductEn(request.getMainProductEn());
 				exhibitorInfo.setMark(request.getMark());
-                /*石材展需求开始*/
                 exhibitorInfo.setMeipai(request.getMeipai());
                 exhibitorInfo.setMeipaiEn(request.getMeipaiEn());
-                /*石材展需求结束*/
 				if(StringUtils.isNotEmpty(request.getLogo())) exhibitorInfo.setLogo(request.getLogo());
-				if(request.getEinfoid() != null) exhibitorInfoDao.update(exhibitorInfo);
+				if(request.getEinfoid() != null) {
+                    exhibitorInfoDao.update(exhibitorInfo);
+                    exhibitorDao.update(exhibitor);
+                }
 				else exhibitorInfoDao.create(exhibitorInfo);
                 modifyInvoice(request.getInvoiceTitle(),request.getInvoiceNo(),request.getEid());
                 modifyProductType(request.getProductType(), request.getEinfoid(), adminId);

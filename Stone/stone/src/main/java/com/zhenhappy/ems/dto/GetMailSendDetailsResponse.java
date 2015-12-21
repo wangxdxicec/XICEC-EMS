@@ -3,7 +3,7 @@ package com.zhenhappy.ems.dto;
 import com.zhenhappy.util.Page;
 
 /**
- * Created by wujianbin on 2014-08-25.
+ * Created by lianghaijian on 2014-08-25.
  */
 public class GetMailSendDetailsResponse extends Page{
 

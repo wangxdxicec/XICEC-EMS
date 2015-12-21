@@ -3,7 +3,7 @@ package com.zhenhappy.ems.manager.dto;
 import com.zhenhappy.ems.dto.BaseRequest;
 
 /**
- * Created by wujianbin on 2014-04-28.
+ * Created by lianghaijian on 2014-04-28.
  */
 public class ModifyExhibitorRequest extends BaseRequest {
 

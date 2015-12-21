@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by wujianbin on 2014-04-10.
+ * Created by lianghaijian on 2014-04-10.
  */
 @Controller
 @RequestMapping(value = "/user")

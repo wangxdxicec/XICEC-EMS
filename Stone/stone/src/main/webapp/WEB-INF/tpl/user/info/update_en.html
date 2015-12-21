@@ -93,8 +93,7 @@
                   enctype="multipart/form-data">
                 <div style="color: #f1b426;font-size: 16px;border-bottom: 1px #dbdbdb solid;line-height: 32px;font-weight: bolder"><@spring.message "info.update.exhibition.title"/></div>
                 <#if rc.locale=="zh_CN">
-                    <div class="alert alert-block">
-                        2015.12.15截止，所提交的信息将同步到官网、会刊、App和微信公众号等平台供采购商查阅。
+                    <div class="alert alert-block"> 2015.12.20截止，所提交的信息将同步到官网、会刊、App和微信公众号等平台供采购商查阅。
                     </div>
                     <#else>
                         <div class="alert alert-block">
@@ -122,10 +121,10 @@
 
 					<div class="controls">
 						<#if area?exists && area==2>
-							<input placeholder="国家代码" id="inputPhone" catValidate="required:true" name="phoneCountryNumber" type="text" style="width: 25px;" value="" />-
+							<input placeholder="Country" id="inputPhone" catValidate="required:true" name="phoneCountryNumber" type="text" style="width: 25px;" value="" />-
 							<#else>
-								<input placeholder="国家代码" id="inputPhone" catValidate="required:true" name="phoneCountryNumber" type="text" style="width: 25px;" value="+86" />-
-						</#if><input placeholder="区号" catValidate="required:true" name="areaNumber" type="text" style="width: 40px;" />-<input catValidate="required:true" placeholder="电话号码" name="phoneNumber" type="text" style="width: 105px;" /><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+								<input placeholder="Country" id="inputPhone" catValidate="required:true" name="phoneCountryNumber" type="text" style="width: 25px;" value="+86" />-
+						</#if><input placeholder="Area" catValidate="required:true" name="areaNumber" type="text" style="width: 40px;" />-<input catValidate="required:true" placeholder="Phone" name="phoneNumber" type="text" style="width: 105px;" /><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
 					</div>
 				</div>
 				<div class="control-group">
@@ -133,10 +132,10 @@
 
 					<div class="controls">
 						<#if area?exists && area==2>
-							<input placeholder="国家代码" id="inputFax" catValidate="required:false" name="faxCountryNumber" type="text" style="width: 25px;" value="" />-
+							<input placeholder="Country" id="inputFax" catValidate="required:false" name="faxCountryNumber" type="text" style="width: 25px;" value="" />-
 							<#else>
-								<input placeholder="国家代码" id="inputFax" catValidate="required:false" name="faxCountryNumber" type="text" style="width: 25px;" value="+86" />-
-						</#if><input placeholder="区号" catValidate="required:false" name="faxAreaNumber" type="text" style="width: 40px;" />-<input catValidate="required:false" placeholder="号码" name="faxNumber" type="text" style="width: 105px;" />
+								<input placeholder="Country" id="inputFax" catValidate="required:false" name="faxCountryNumber" type="text" style="width: 25px;" value="+86" />-
+						</#if><input placeholder="Area" catValidate="required:false" name="faxAreaNumber" type="text" style="width: 40px;" />-<input catValidate="required:false" placeholder="Fax" name="faxNumber" type="text" style="width: 105px;" />
 					</div>
 				</div>
                 <div class="control-group">

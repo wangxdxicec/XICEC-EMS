@@ -22,7 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by wujianbin on 2014-04-24.
+ * Created by lianghaijian on 2014-04-24.
  */
 @Service
 public class JoinerManagerService extends JoinerService {

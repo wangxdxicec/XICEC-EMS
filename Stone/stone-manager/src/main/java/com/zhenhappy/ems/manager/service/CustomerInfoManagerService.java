@@ -44,7 +44,7 @@ public class CustomerInfoManagerService {
 		Page page = new Page();
 		page.setPageSize(request.getRows());
 		page.setPageIndex(request.getPage());
-		List<WCustomer> customers = customerInfoDao.queryPageByHQL("select count(*) from WCustomer where country = 44", "from WCustomer where country = 44 order by createdTime DESC", new Object[]{}, page);
+		List<WCustomer> customers = customerInfoDao.queryPageByHQL("select count(*) from WCustomer where country = 44", "from WCustomer where country = 44 order by updateTime DESC", new Object[]{}, page);
 		QueryCustomerResponse response = new QueryCustomerResponse();
 		response.setResultCode(0);
 		response.setRows(customers);
@@ -93,7 +93,7 @@ public class CustomerInfoManagerService {
 		if(StringUtils.isNotEmpty(request.getSort()) && StringUtils.isNotEmpty(request.getOrder())){
 			conditionsSqlOrder = conditionsSql + " order by " + request.getSort() + " " + request.getOrder() + " ";
 		}else{
-			conditionsSqlOrder = conditionsSql + " order by createdTime DESC ";
+			conditionsSqlOrder = conditionsSql + " order by updateTime DESC ";
 		}
 		Page page = new Page();
 		page.setPageSize(request.getRows());

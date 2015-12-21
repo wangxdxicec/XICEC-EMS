@@ -29,7 +29,7 @@ import java.io.*;
 import java.util.Locale;
 
 /**
- * Created by wujianbin on 2014-03-31.
+ * Created by lianghaijian on 2014-03-31.
  */
 @Controller
 @RequestMapping(value = "/")

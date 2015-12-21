@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 /**
- * Created by wujianbin on 2014-05-15.
+ * Created by lianghaijian on 2014-05-15.
  */
 @Controller
 @RequestMapping(value = "/user/contact")

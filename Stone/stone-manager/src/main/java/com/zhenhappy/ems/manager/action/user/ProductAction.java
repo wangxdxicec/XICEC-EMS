@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by wujianbin on 2014-04-24.
+ * Created by lianghaijian on 2014-04-24.
  */
 @Controller
 @RequestMapping(value = "/user")

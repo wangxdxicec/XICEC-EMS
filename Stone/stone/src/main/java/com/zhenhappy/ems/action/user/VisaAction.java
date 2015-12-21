@@ -21,12 +21,17 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * Created by wujianbin on 2014-05-10.
+ * Created by lianghaijian on 2014-05-10.
  */
 @Controller
 @RequestMapping(value = "/user")
@@ -62,6 +67,9 @@ public class VisaAction extends BaseAction {
         QueryVisaResponse response = null;
         try {
             List<TVisa> visas = visaService.queryVisasByEid(principle.getExhibitor().getEid());
+            for(TVisa visa:visas){
+                eachProperties(visa);
+            }
             response = new QueryVisaResponse();
             response.setRows(visas);
             response.setResultCode(0);
@@ -70,6 +78,33 @@ public class VisaAction extends BaseAction {
             response.setResultCode(1);
         }
         return response;
+    }
+
+    private void eachProperties(Object model) throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Field[] field = model.getClass().getDeclaredFields(); //获取实体类的所有属性，返回Field数组
+        for(int j=0 ; j<field.length ; j++){ //遍历所有属性
+            String name = field[j].getName(); //获取属性的名字
+
+            System.out.println("attribute name:"+name);
+            name = name.substring(0,1).toUpperCase()+name.substring(1); //将属性的首字符大写，方便构造get，set方法
+            String type = field[j].getGenericType().toString(); //获取属性的类型
+            if(type.equals("class java.lang.String")){ //如果type是类类型，则前面包含"class "，后面跟类名
+                Method get = model.getClass().getMethod("get"+name);
+                String value = (String) get.invoke(model);
+                Method set = model.getClass().getMethod("set"+name, new Class[] {String.class});
+                set.invoke(model,new Object[] { replaceBlank(value) });
+            }
+        }
+    }
+
+    private String replaceBlank(String str) {
+        String dest = "";
+        if (str!=null) {
+            Pattern p = Pattern.compile("\t|\r|\n");
+            Matcher m = p.matcher(str);
+            dest = m.replaceAll("");
+        }
+        return dest;
     }
 
     @RequestMapping(value = "/visa/saveVisa", method = RequestMethod.POST)

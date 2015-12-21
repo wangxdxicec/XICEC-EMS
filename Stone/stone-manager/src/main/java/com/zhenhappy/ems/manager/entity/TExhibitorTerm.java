@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by wujianbin on 2014-04-26.
+ * Created by lianghaijian on 2014-04-26.
  */
 @Entity
 @Table(name = "t_exhibitor_term", schema = "dbo")

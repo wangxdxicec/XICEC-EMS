@@ -3,7 +3,7 @@ package com.zhenhappy.ems.manager.dto;
 import com.zhenhappy.ems.dto.BaseRequest;
 
 /**
- * Created by wujianbin on 2014-04-26.
+ * Created by lianghaijian on 2014-04-26.
  */
 public class BindBoothRequest extends BaseRequest {
 	private Integer id;

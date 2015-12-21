@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by wujianbin on 2014-04-08.
+ * Created by lianghaijian on 2014-04-08.
  */
 @Controller
 @SessionAttributes(value = Principle.PRINCIPLE_SESSION_ATTRIBUTE)

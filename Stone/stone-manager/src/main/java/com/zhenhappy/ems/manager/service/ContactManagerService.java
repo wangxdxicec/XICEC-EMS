@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Created by wujianbin on 2014-04-24.
+ * Created by lianghaijian on 2014-04-24.
  */
 @Service
 public class ContactManagerService extends ContactService {

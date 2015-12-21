@@ -5,7 +5,7 @@ import javax.persistence.*;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
- * Created by wujianbin on 2014-04-22.
+ * Created by lianghaijian on 2014-04-22.
  */
 @Entity
 @Table(name = "t_admin_user", schema = "dbo")

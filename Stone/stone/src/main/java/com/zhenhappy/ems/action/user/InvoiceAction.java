@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Date;
 
 /**
- * Created by wujianbin on 2014-05-13.
+ * Created by lianghaijian on 2014-05-13.
  */
 @Controller
 @RequestMapping(value = "/user/invoice")

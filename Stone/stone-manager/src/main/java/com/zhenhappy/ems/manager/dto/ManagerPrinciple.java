@@ -4,7 +4,7 @@ package com.zhenhappy.ems.manager.dto;
 import com.zhenhappy.ems.manager.entity.TAdminUser;
 
 /**
- * Created by wujianbin on 2014-04-22.
+ * Created by lianghaijian on 2014-04-22.
  */
 public class ManagerPrinciple {
 

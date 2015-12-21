@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Created by wujianbin on 2014-08-28.
+ * Created by lianghaijian on 2014-08-28.
  */
 @Controller
 @SessionAttributes(value = Principle.PRINCIPLE_SESSION_ATTRIBUTE)

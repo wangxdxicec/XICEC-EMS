@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by wujianbin on 2014-08-25.
+ * Created by lianghaijian on 2014-08-25.
  */
 @Entity
 @Table(name = "t_email_send_detail")

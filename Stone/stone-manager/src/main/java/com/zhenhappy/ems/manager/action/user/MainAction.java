@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Created by wujianbin on 2014-04-23.
+ * Created by lianghaijian on 2014-04-23.
  */
 @Controller
 @RequestMapping(value = "user")

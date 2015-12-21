@@ -64,7 +64,7 @@ public class TVisaAction extends BaseAction {
 		try {
 			String logoFileName = tVisaManagerService.queryByVid(vid).getPassportPage();
 			if (StringUtils.isNotEmpty(logoFileName)) {
-                if(logoFileName.contains(".pdf")) response.setContentType("application/pdf");
+                if(logoFileName.toLowerCase().contains(".pdf")) response.setContentType("application/pdf");
 				File logo = new File(logoFileName);
 				if (!logo.exists()) return;
 				OutputStream outputStream = response.getOutputStream();

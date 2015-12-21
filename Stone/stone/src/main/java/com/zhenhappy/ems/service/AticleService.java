@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Created by wujianbin on 2014-07-07.
+ * Created by lianghaijian on 2014-07-07.
  */
 @Service
 public class AticleService {

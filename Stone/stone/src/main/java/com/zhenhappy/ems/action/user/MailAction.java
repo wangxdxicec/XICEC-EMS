@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 /**
- * Created by wujianbin on 2014-08-12.
+ * Created by lianghaijian on 2014-08-12.
  */
 @Controller
 @SessionAttributes(value = Principle.PRINCIPLE_SESSION_ATTRIBUTE)

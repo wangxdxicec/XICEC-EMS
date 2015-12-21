@@ -5,7 +5,7 @@ import com.zhenhappy.ems.dto.BaseResponse;
 import java.util.List;
 
 /**
- * Created by wujianbin on 2014-04-24.
+ * Created by lianghaijian on 2014-04-24.
  */
 public class EasyuiResponse extends BaseResponse {
 

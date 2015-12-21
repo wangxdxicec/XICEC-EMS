@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 /**
- * Created by wujianbin on 2014-04-24.
+ * Created by lianghaijian on 2014-04-24.
  */
 @Controller
 @RequestMapping(value = "/user")
