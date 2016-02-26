@@ -105,12 +105,39 @@
             <div style="clear:both;"></div>
         </div>
         <div style="margin-top: 18px">
-            <div class="boxClose">
-                <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
-                    <h4><a href="${base}/user/info.html"><@spring.message "module.exhibitor"/></a></h4>
-                    <h6><a href="${base}/user/info.html"><@spring.message "module.exhibitor.desc"/></a></h6>
-                </div>
-            </div>
+            <#if rc.locale=="zh_CN">
+                <#if .now?date gt "2015-12-20"?date>
+                    <div class="boxClose">
+                        <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                            <h4><a href="#"><@spring.message "module.exhibitor"/></a></h4>
+                            <h6><a href="#"><@spring.message "module.exhibitor.descNo"/></a></h6>
+                        </div>
+                    </div>
+                <#else>
+                    <div class="boxOff">
+                        <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                            <h4><a href="${base}/user/info.html"><@spring.message "module.exhibitor"/></a></h4>
+                            <h6><a href="${base}/user/info.html"><@spring.message "module.exhibitor.desc"/></a></h6>
+                        </div>
+                    </div>
+                </#if>
+            <#else>
+                <#if .now?date gt "2015-12-28"?date>
+                    <div class="boxClose">
+                        <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                            <h4><a href="#"><@spring.message "module.exhibitor"/></a></h4>
+                            <h6><a href="#"><@spring.message "module.exhibitor.descNo"/></a></h6>
+                        </div>
+                    </div>
+                <#else>
+                    <div class="boxOff">
+                        <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
+                            <h4><a href="${base}/user/info.html"><@spring.message "module.exhibitor"/></a></h4>
+                            <h6><a href="${base}/user/info.html"><@spring.message "module.exhibitor.desc"/></a></h6>
+                        </div>
+                    </div>
+                </#if>
+            </#if>
             <div class="boxClose" style="margin-left: 14px">
                 <div style="width: 200px;margin: 0px auto;margin-top: 40px;">
                     <!--<h4><a href="${base}/user/products.html"><@spring.message "module.product"/></a></h4>-->

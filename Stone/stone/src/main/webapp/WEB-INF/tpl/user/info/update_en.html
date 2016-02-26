@@ -124,7 +124,7 @@
 							<input placeholder="Country" id="inputPhone" catValidate="required:true" name="phoneCountryNumber" type="text" style="width: 25px;" value="" />-
 							<#else>
 								<input placeholder="Country" id="inputPhone" catValidate="required:true" name="phoneCountryNumber" type="text" style="width: 25px;" value="+86" />-
-						</#if><input placeholder="Area" catValidate="required:true" name="areaNumber" type="text" style="width: 40px;" />-<input catValidate="required:true" placeholder="Phone" name="phoneNumber" type="text" style="width: 105px;" /><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+						</#if><input placeholder="Area" catValidate="required:true" id="areaNumber" name="areaNumber" type="text" style="width: 40px;" />-<input catValidate="required:true" placeholder="Phone" id="phoneNumber" name="phoneNumber" type="text" style="width: 105px;" /><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
 					</div>
 				</div>
 				<div class="control-group">
@@ -135,7 +135,7 @@
 							<input placeholder="Country" id="inputFax" catValidate="required:false" name="faxCountryNumber" type="text" style="width: 25px;" value="" />-
 							<#else>
 								<input placeholder="Country" id="inputFax" catValidate="required:false" name="faxCountryNumber" type="text" style="width: 25px;" value="+86" />-
-						</#if><input placeholder="Area" catValidate="required:false" name="faxAreaNumber" type="text" style="width: 40px;" />-<input catValidate="required:false" placeholder="Fax" name="faxNumber" type="text" style="width: 105px;" />
+						</#if><input placeholder="Area" catValidate="required:false" id="faxAreaNumber" name="faxAreaNumber" type="text" style="width: 40px;" />-<input catValidate="required:false" placeholder="Fax" id="faxNumber" name="faxNumber" type="text" style="width: 105px;" />
 					</div>
 				</div>
                 <div class="control-group">
@@ -159,7 +159,7 @@
 
                     <div class="controls">
                         <input type="text" catValidate="required:false" name="address" value="${updateInfo.address!""}" class="form-control"
-                        id="inputAddress" placeholder='<@spring.message "info.update.exhibition.address_zh"/>'>
+                        id="inputAddressZh" name="inputAddressZh" placeholder='<@spring.message "info.update.exhibition.address_zh"/>'>
                     </div>
                 </div>
                 <div class="control-group">
@@ -167,7 +167,7 @@
 
                     <div class="controls">
                         <input type="text" catValidate="required:true" name="addressEn" value="${updateInfo.addressEn!""}" class="form-control"
-                        id="inputAddressEn" placeholder='<@spring.message "info.update.exhibition.address_en"/>'><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                        id="inputAddressEn" name="inputAddressEn" placeholder='<@spring.message "info.update.exhibition.address_en"/>'><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
                     </div>
                 </div>
                 <div class="control-group">
@@ -183,7 +183,7 @@
 
                     <div class="controls">
                         <input type="text" catValidate="required:false" name="mainProduct" value="${updateInfo.mainProduct!""}" class="form-control"
-                        id="inputProduct" placeholder='<@spring.message "info.update.exhibition.product_zh"/>'>
+                        id="inputProductZh" name="inputProductZh" placeholder='<@spring.message "info.update.exhibition.product_zh"/>'>
                     </div>
                 </div>
                 <div class="control-group">
@@ -191,7 +191,7 @@
 
                     <div class="controls">
                         <input type="text" catValidate="required:true" name="mainProductEn" value="${updateInfo.mainProductEn!""}" class="form-control"
-                        id="inputProductEn" placeholder='<@spring.message "info.update.exhibition.product_en"/>'><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
+                        id="inputProductEn" name="inputProductEn" placeholder='<@spring.message "info.update.exhibition.product_en"/>'><span style="font-weight: bolder;color: red;padding-left: 5px;">*</span>
                     </div>
                 </div>
                 <!--<div class="control-group">-->
@@ -281,7 +281,7 @@
                         </#list>
                     </div>
                 </div>
-                <button type="button" style="margin-top: 10px;" name="previewCatagory" class="btn btn-warning"><@spring.message "info.update.exhibition.preview"/></button><button type="button" style="margin-top: 10px;margin-left: 10px" name="saveButton" class="btn btn-warning"><@spring.message "info.update.exhibition.save"/></button>
+                <button type="button" style="margin-top: 10px;" name="previewCatagory" class="btn btn-warning"><@spring.message "info.update.exhibition.preview"/></button><button type="button" style="margin-top: 10px;margin-left: 10px" id="saveButton" name="saveButton" class="btn btn-warning"><@spring.message "info.update.exhibition.save"/></button>
                 <input name="einfoid" value="${updateInfo.einfoid!""}" type="hidden">
                 <input name="logo" value="${updateInfo.logo!""}" type="hidden">
                 <input name="classjson" id="classjson" type="hidden">
@@ -322,7 +322,9 @@
         }else{
             $("[name='phoneNumber']").val(p[0]);
         }
-//        DisableInput();
+        <#if .now?date gt "2015-12-28"?date>
+            DisableInput();
+        </#if>
         $("#nav_einfo").addClass("active")
     });
 </script>

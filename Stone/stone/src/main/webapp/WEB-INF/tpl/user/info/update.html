@@ -94,9 +94,9 @@
                   enctype="multipart/form-data">
                 <div style="color: #f1b426;font-size: 16px;border-bottom: 1px #dbdbdb solid;line-height: 32px;font-weight: bolder"><@spring.message "info.update.exhibition.title"/></div>
                 <#if rc.locale=="zh_CN">
-                    <div class="alert alert-block"> 2015.12.20截止，所提交的信息将同步到官网、会刊、App和微信公众号等平台供采购商查阅。
-                    </div>
-                <#else>
+                    <!--<div class="alert alert-block"> 2015.12.20截止，所提交的信息将同步到官网、会刊、App和微信公众号等平台供采购商查阅。</div>-->
+                    <div class="alert alert-block">已截止</div>
+                    <#else>
                     <div class="alert alert-block">
                         The information will be published simultaneously on Official Website, Catalogue, APP and WeChat.
                         Submitting Deadline: Dec 15, 2015
@@ -283,6 +283,7 @@
                         </#list>
                     </div>
                 </div>
+                <!--<button type="button" style="margin-top: 10px;" name="previewCatagory" class="btn btn-warning"><@spring.message "info.update.exhibition.preview"/></button><button type="button" style="margin-top: 10px;margin-left: 10px" id="saveButton" name="saveButton" class="btn btn-warning"><@spring.message "info.update.exhibition.save"/></button>-->
                 <input name="einfoid" value="${updateInfo.einfoid!""}" type="hidden">
                 <input name="logo" value="${updateInfo.logo!""}" type="hidden">
                 <input name="classjson" id="classjson" type="hidden">
@@ -339,7 +340,9 @@
         }else{
             $("[name='phoneNumber']").val(p[0]);
         }
-//        DisableInput();
+        <#if .now?date gt "2015-12-20"?date>
+            DisableInput();
+        </#if>
         $("#nav_einfo").addClass("active")
     });
 </script>
